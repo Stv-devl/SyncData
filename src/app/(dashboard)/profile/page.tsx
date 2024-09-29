@@ -1,6 +1,8 @@
+'use client';
+
 import React from 'react';
 
-const Profile = () => {
+const Profile: React.FC = (): JSX.Element => {
   return (
     <div>
       <h1>Profile</h1>

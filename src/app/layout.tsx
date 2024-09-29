@@ -3,6 +3,7 @@
 import React from 'react';
 import '../../src/globals.css';
 import Banner from '@/components/banner/Banner';
+import { SessionProvider } from 'next-auth/react';
 
 /**
  * RootLayout component serves as the main layout wrapper for the application.
@@ -19,16 +20,17 @@ const RootLayout: React.FC<{ children: React.ReactNode }> = ({
 }: {
   children: React.ReactNode;
 }): JSX.Element => (
-  <html lang="en">
-    <head>
-      <title>Link-sharing-app</title>
-      <meta name="description" content="link sharing app" />
-    </head>
-    <body>
-      <Banner />
-      {children}
-    </body>
-  </html>
+  <SessionProvider>
+    <html lang="en">
+      <head>
+        <title>SyncData</title>
+        <meta name="description" content="SyncData app" />
+      </head>
+      <body className="text-dark-gray bg-lightest-gray text-4 text-base leading-12 w-full max-w-[1950px] h-screen ">
+        {children}
+      </body>
+    </html>
+  </SessionProvider>
 );
 
 export default RootLayout;

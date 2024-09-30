@@ -2,7 +2,6 @@
 
 import React from 'react';
 import '../../src/globals.css';
-import Banner from '@/components/banner/Banner';
 import { SessionProvider } from 'next-auth/react';
 
 /**

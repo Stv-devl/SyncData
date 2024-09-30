@@ -15,6 +15,10 @@ const config: Config = {
         'dark-gray': '#737373',
         'darkest-gray': '#333333',
       },
+
+      fontFamily: {
+        Instrument: ['Outfit', 'sans-serif'],
+      },
       fontSize: {
         title: ['32px', { fontWeight: '700' }],
         titleSmall: ['24px', { fontWeight: '700' }],

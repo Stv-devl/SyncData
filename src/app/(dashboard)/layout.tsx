@@ -14,9 +14,9 @@ const MainLayout: React.FC<{ children: React.ReactNode }> = ({
 }: {
   children: React.ReactNode;
 }): JSX.Element => (
-  <main className="w-full">
+  <main className="w-full h-full p-5">
     <Banner />
-    <section className="w-full px-[4%] sm:px-0 ">{children}</section>
+    <section className="w-full h-full ">{children}</section>
   </main>
 );
 

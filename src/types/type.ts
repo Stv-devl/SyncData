@@ -1,29 +1,5 @@
 import { FormEvent } from 'react';
 
-//input props
-export interface CustomsInputProps {
-  name: string;
-  type: string;
-  handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  value: string;
-  label: string;
-  placeholder?: string;
-  error?: string;
-  autoComplete?: string;
-  IconComponent: React.FunctionComponent<React.SVGProps<SVGSVGElement>>;
-}
-
-//button component
-export interface ButtonComponent {
-  label: string;
-  onClick?: (e: FormEvent) => void;
-  type?: 'button' | 'submit';
-  color?: 'empty' | 'full';
-  iconSrc?: string;
-  disabled?: boolean;
-  IconComponent?: React.FunctionComponent<React.SVGProps<SVGSVGElement>>;
-}
-
 //signup
 export interface FormDataSignUp {
   email: string;
@@ -53,4 +29,35 @@ export interface UseLoginReturn {
   formData: FormDataLogin;
   loginErrors: FormDataLogin;
   isLoading: boolean;
+}
+
+//nav props
+export interface NavWrapperProps {
+  type: string;
+  isSelected: boolean;
+  link: string;
+}
+
+//input props
+export interface CustomsInputProps {
+  name: string;
+  type: string;
+  handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  value: string;
+  label: string;
+  placeholder?: string;
+  error?: string;
+  autoComplete?: string;
+  IconComponent: React.FunctionComponent<React.SVGProps<SVGSVGElement>>;
+}
+
+//button component
+export interface ButtonComponent {
+  label: string;
+  onClick?: (e: FormEvent) => void;
+  type?: 'button' | 'submit';
+  color?: 'empty' | 'full';
+  iconSrc?: string;
+  disabled?: boolean;
+  IconComponent?: React.FunctionComponent<React.SVGProps<SVGSVGElement>>;
 }

@@ -20,22 +20,19 @@ const Login = (): JSX.Element => {
 
   return (
     <main>
-      <section className="flex flex-col bg-white sm:bg-lightest-gray justify-center w-full h-screen">
-        <div className="flex flex-col items-center gap-[51px] w-full px-[8%] sm:px-[0]">
-          <div>
-            <p className="text-title">Icone</p>
-          </div>
-
-          <div className="flex flex-col items-start gap-[40px] sm:p-[40px] sm:w-[476px] bg-white">
+      <section className="sm:bg-lightest-gray flex h-screen w-full flex-col bg-white sm:justify-center">
+        <div className="flex w-full flex-col items-center gap-[51px] px-[8%] sm:px-0">
+          <icones.Iconlogo />
+          <div className="flex flex-col items-start gap-[40px] bg-white sm:w-[476px] sm:p-[40px]">
             <div className="flex flex-col gap-[24px]">
-              <h1 className="text-titleSmall sm:text-title text-darkest-gray">
+              <h1 className="text-titleSmall sm:text-title text-darkest-blue">
                 Login
               </h1>
               <p>Add your details below to get back into the app</p>
             </div>
             <form
               onSubmit={handleSubmit}
-              className="flex flex-col gap-[24px] w-full"
+              className="flex w-full flex-col gap-[24px]"
             >
               <div className="flex flex-col gap-[24px]">
                 <div className="flex flex-col gap-1">
@@ -82,10 +79,10 @@ const Login = (): JSX.Element => {
                 IconComponent={icones.Icongoogle}
                 disabled={isLoading}
               />
-              <p className="text-base px-[5%] sm:px-[10%] text-center ">
+              <p className="px-[5%] text-center text-base sm:px-[10%] ">
                 Don&apos;t have an account?{' '}
                 <Link href="/signup">
-                  <span className="font-semibold text-darkest-blue">
+                  <span className="text-darkest-blue font-semibold">
                     Create account
                   </span>
                 </Link>

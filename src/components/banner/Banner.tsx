@@ -1,55 +1,53 @@
-'use client';
-
-import React from 'react';
-import Image from 'next/image';
-import Link from 'next/link';
+import React, { useEffect, useState } from 'react';
 import { usePathname } from 'next/navigation';
 import { icones, navItems } from '../../constantes/constantes';
-import { signOut } from 'next-auth/react';
 import NavWrapper from './NavWrapper';
+import { useMediaQuery } from 'react-responsive';
+import NavMobile from './NavMobile';
+import ProfileWrapper from './ProfileWrapper';
 
 const Banner = () => {
-  const isImage = false;
+  const [isMounted, setIsMounted] = useState(false);
 
   const pathname = usePathname();
 
-  console.log(pathname);
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  const isMobile = useMediaQuery({ maxWidth: 640 });
+
+  if (!isMounted) return null;
 
   return (
-    <nav className=" fixed z-3 bg-white w-[118px] h-[97%] rounded-lg py-8">
-      <div className="mb-11 text-center">SyncData</div>
-      <div className="flex flex-col justify-between items-center h-[97%] py-8 ">
-        <ul className="flex flex-col gap-5 w-full text-darkest-blue font-semibold ">
-          {navItems.map((item) => (
-            <NavWrapper
-              key={item.path}
-              type={item.type}
-              isSelected={pathname === item.path}
-              link={item.path}
-            />
-          ))}
-        </ul>
-        <div className="flex flex-col gap-7 items-center">
-          <Link href="/profile">
-            {!isImage ? (
-              <icones.Iconprofile className="w-12 h-12 rounded-full border-2 border-blue-600 " />
-            ) : (
-              <Image
-                src=""
-                width={48}
-                height={48}
-                className="rounded-full border-2 text-darkest-blue"
-                alt="Profile"
-                priority
-              />
-            )}
-          </Link>
-          <div className="cursor-pointer ml-2" onClick={() => signOut()}>
-            <icones.Iconlogout className="text-darkest-blue" />
+    <>
+      {isMobile ? (
+        <NavMobile />
+      ) : (
+        <nav className="mb-5 h-[100px] w-full rounded-lg bg-white py-0 pl-1 pr-5 lg:sticky lg:h-full lg:w-[118px] lg:px-0 lg:py-5">
+          <div className="flex size-full flex-row items-center justify-between lg:flex-col">
+            <div className="flex size-full flex-row lg:block">
+              <div className="flex items-center justify-center lg:mb-11">
+                <icones.Iconlogo className="size-[80px] lg:h-[110px] lg:w-[105px]" />
+              </div>
+              <div className="text-darkest-blue boxShadow-custom-gray ml-7 flex w-full flex-row items-center gap-3 font-semibold lg:ml-0 lg:flex-col lg:gap-5">
+                {navItems.map((item) => (
+                  <NavWrapper
+                    key={item.path}
+                    type={item.type}
+                    isSelected={pathname === item.path}
+                    link={item.path}
+                  />
+                ))}
+              </div>
+            </div>
+            <div className="flex flex-row items-center gap-1 lg:flex-col lg:gap-7">
+              <ProfileWrapper />
+            </div>
           </div>
-        </div>
-      </div>
-    </nav>
+        </nav>
+      )}
+    </>
   );
 };
 

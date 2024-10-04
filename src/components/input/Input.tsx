@@ -29,7 +29,7 @@ const Input: React.FC<CustomsInputProps> = ({
   const inputClasses = twMerge(
     'w-full border bg-white placeholder:text-medium-gray h-12 rounded-lg focus:outline-none focus:border-focus-border focus:shadow-custom-blue',
     clsx(
-      haveIcon ? 'pl-10 pb-1' : 'pl-5 ',
+      haveIcon ? 'pb-1 pl-10' : 'pl-5 ',
       error
         ? 'border-error-border text-error-red'
         : 'border-input-border text-dark-gray'
@@ -48,7 +48,11 @@ const Input: React.FC<CustomsInputProps> = ({
       </label>
       <div className="relative w-full">
         {haveIcon && IconComponent && (
-          <IconComponent className="absolute left-3 top-1/2 transform -translate-y-1/2 w-max h-max" />
+          <IconComponent
+            width={16}
+            height={16}
+            className="absolute left-3 top-1/2 size-max -translate-y-1/2"
+          />
         )}
         <input
           className={inputClasses}
@@ -63,7 +67,7 @@ const Input: React.FC<CustomsInputProps> = ({
         {error && (
           <span
             id={errorId}
-            className="text-error-red relative sm:absolute right-0 sm:right-3 top-auto sm:top-1/2 transform-none sm:transform sm:-translate-y-1/2"
+            className="text-error-red relative right-0 top-auto transform-none sm:absolute sm:right-3 sm:top-1/2 sm:-translate-y-1/2"
           >
             {error}
           </span>

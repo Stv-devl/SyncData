@@ -25,7 +25,7 @@ const RootLayout: React.FC<{ children: React.ReactNode }> = ({
         <title>SyncData</title>
         <meta name="description" content="SyncData app" />
       </head>
-      <body className="text-dark-gray bg-lightest-gray text-4 text-base leading-12 w-full max-w-[1950px] h-screen ">
+      <body className="text-dark-gray bg-lightest-gray text- leading-12 flex h-screen w-screen max-w-[1950px] flex-col p-0 text-base sm:p-5">
         {children}
       </body>
     </html>

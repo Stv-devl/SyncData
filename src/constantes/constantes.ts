@@ -1,26 +1,38 @@
 'use client';
 
-import Iconemail from '../assets/icon-email.svg';
-import Iconpassword from '../assets/icon-password.svg';
-import Icongoogle from '../assets/icon-google.svg';
-import Iconprofile from '../assets/icon-profile.svg';
-import Iconlogout from '../assets/incon-logout.svg';
+import Iconemail from '../assets/IconEmail';
+import Iconpassword from '../assets/IconPassword';
+import Icongoogle from '../assets/IconGoogle';
+import Iconprofile from '../assets/iconProfile';
+import Iconlogout from '../assets/IconLogout';
+import Iconlogo from '../assets/IconLogo';
+import IconSearch from '../assets/IconSearch';
+import IconBin from '../assets/IconBin';
+import IconLinks from '../assets/IconLinks';
+import IconAddFile from '../assets/IconAddFile';
+import IconDownload from '../assets/IconDownload';
+import IconUpload from '../assets/IconUpload';
+import IconVector from '../assets/IconVector';
 
-type IconComponents = {
-  [key: string]: React.FunctionComponent<React.SVGProps<SVGSVGElement>>;
-};
-
-export const icones: IconComponents = {
+export const icones = {
   Iconemail,
   Iconpassword,
   Icongoogle,
   Iconprofile,
   Iconlogout,
+  Iconlogo,
+  IconSearch,
+  IconBin,
+  IconLinks,
+  IconAddFile,
+  IconDownload,
+  IconUpload,
+  IconVector,
 };
 
 export const navItems = [
   { path: '/home', type: 'Home' },
   { path: '/favorite', type: 'Favorite' },
   { path: '/pricing', type: 'Pricing' },
-  { path: '/bin', type: 'Recycle bin' },
+  { path: '/bin', type: 'Bin' },
 ];

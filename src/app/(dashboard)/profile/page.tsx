@@ -3,12 +3,7 @@
 import React from 'react';
 
 const Profile: React.FC = (): JSX.Element => {
-  return (
-    <div>
-      <h1>Profile</h1>
-      <p>This is the profile page.</p>
-    </div>
-  );
+  return <div></div>;
 };
 
 export default Profile;

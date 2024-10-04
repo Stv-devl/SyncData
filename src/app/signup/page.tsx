@@ -20,14 +20,12 @@ const SignUp = (): JSX.Element => {
 
   return (
     <main>
-      <section className="flex flex-col bg-white sm:bg-lightest-gray justify-center w-full h-screen">
+      <section className="flex flex-col bg-white sm:bg-lightest-gray sm:justify-center w-full h-screen">
         <div className="flex flex-col items-center gap-[51px] w-full px-[5%] sm:px-[0]">
-          <div>
-            <p className="text-title">Icone</p>
-          </div>
+          <icones.Iconlogo />
           <div className="flex flex-col items-start gap-[40px] sm:p-[40px] sm:w-[476px] bg-white">
             <div className="flex flex-col gap-[24px]">
-              <h1 className="text-titleSmall sm:text-title text-darkest-gray">
+              <h1 className="text-titleSmall sm:text-title text-darkest-blued">
                 Create account
               </h1>
               <p>Let&apos;s get you started sharing your links!</p>

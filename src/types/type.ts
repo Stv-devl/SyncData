@@ -1,4 +1,4 @@
-import { FormEvent } from 'react';
+import { FormEvent, SVGProps } from 'react';
 
 //signup
 export interface FormDataSignUp {
@@ -48,7 +48,7 @@ export interface CustomsInputProps {
   placeholder?: string;
   error?: string;
   autoComplete?: string;
-  IconComponent: React.FunctionComponent<React.SVGProps<SVGSVGElement>>;
+  IconComponent?: React.FunctionComponent<React.SVGProps<SVGSVGElement>>;
 }
 
 //button component
@@ -60,4 +60,12 @@ export interface ButtonComponent {
   iconSrc?: string;
   disabled?: boolean;
   IconComponent?: React.FunctionComponent<React.SVGProps<SVGSVGElement>>;
+}
+
+//icone
+export interface IconCustomProps extends SVGProps<SVGSVGElement> {
+  width?: number;
+  height?: number;
+  fill?: string;
+  className?: string;
 }

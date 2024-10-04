@@ -25,11 +25,12 @@ const Input: React.FC<CustomsInputProps> = ({
 }: CustomsInputProps) => {
   const errorId = `error-${name}`;
   const haveIcon = Boolean(IconComponent);
+  const isSearch = name === 'search';
 
   const inputClasses = twMerge(
-    'w-full border bg-white placeholder:text-medium-gray h-12 rounded-lg focus:outline-none focus:border-focus-border focus:shadow-custom-blue',
+    'size-full border bg-white placeholder:text-dark-gray rounded-lg focus:outline-none focus:border-focus-border focus:shadow-custom-blue',
     clsx(
-      haveIcon ? 'pb-1 pl-10' : 'pl-5 ',
+      haveIcon ? 'pl-9 sm:pl-10' : 'pl-5 ',
       error
         ? 'border-error-border text-error-red'
         : 'border-input-border text-dark-gray'
@@ -46,13 +47,14 @@ const Input: React.FC<CustomsInputProps> = ({
       <label htmlFor={name} className={labelClasses}>
         {label}
       </label>
-      <div className="relative w-full">
+      <div
+        className={twMerge(
+          clsx(isSearch ? 'h-[35px] sm:h-[40px]' : 'h-[46px]'),
+          'relative  w-full'
+        )}
+      >
         {haveIcon && IconComponent && (
-          <IconComponent
-            width={16}
-            height={16}
-            className="absolute left-3 top-1/2 size-max -translate-y-1/2"
-          />
+          <IconComponent className="absolute left-3 top-1/2 mt-0.5 size-max -translate-y-1/2" />
         )}
         <input
           className={inputClasses}

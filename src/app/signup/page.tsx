@@ -3,7 +3,7 @@
 import React from 'react';
 import Link from 'next/link';
 import useSignUp from '../../hook/auth/useSignup';
-import Input from '../../components/input/Input';
+import Input from '../../components/form/Input';
 import Button from '../../components/button/Button';
 import Loading from '@/components/loading/Loading';
 import { icones } from '@/constantes/constantes';
@@ -20,19 +20,19 @@ const SignUp = (): JSX.Element => {
 
   return (
     <main>
-      <section className="flex flex-col bg-white sm:bg-lightest-gray sm:justify-center w-full h-screen">
-        <div className="flex flex-col items-center gap-[51px] w-full px-[5%] sm:px-[0]">
+      <section className="sm:bg-lightest-gray flex h-screen w-full flex-col bg-white sm:justify-center">
+        <div className="flex w-full flex-col items-center gap-[51px] px-[5%] sm:px-0">
           <icones.Iconlogo />
-          <div className="flex flex-col items-start gap-[40px] sm:p-[40px] sm:w-[476px] bg-white">
+          <div className="flex flex-col items-start gap-[40px] bg-white sm:w-[476px] sm:p-[40px]">
             <div className="flex flex-col gap-[24px]">
-              <h1 className="text-titleSmall sm:text-title text-darkest-blued">
+              <h1 className="text-titleSmall sm:text-title text-darkest-blue">
                 Create account
               </h1>
               <p>Let&apos;s get you started sharing your links!</p>
             </div>
             <form
               onSubmit={handleSubmit}
-              className="flex flex-col gap-[20px] w-full "
+              className="flex w-full flex-col gap-[20px] "
             >
               <div className="input-wrapper">
                 <Input
@@ -75,23 +75,27 @@ const SignUp = (): JSX.Element => {
               </div>
 
               {isLoading && <Loading />}
-              <Button
-                label={'Create a new account'}
-                color={'full'}
-                type="submit"
-                disabled={isLoading}
-              />
-              <Button
-                label={'Signup with Google'}
-                onClick={handleGoogleSignIn}
-                color={'empty'}
-                IconComponent={icones.Icongoogle}
-                disabled={isLoading}
-              />
-              <p className="text-base px-[5%] sm:px-[10%] text-center ">
+              <div className="mt-4 h-[46px] w-full">
+                <Button
+                  label={'Create a new account'}
+                  color={'full'}
+                  type="submit"
+                  disabled={isLoading}
+                />
+              </div>
+              <div className="h-[46px] w-full">
+                <Button
+                  label={'Signup with Google'}
+                  onClick={handleGoogleSignIn}
+                  color={'empty'}
+                  IconComponent={icones.Icongoogle}
+                  disabled={isLoading}
+                />
+              </div>
+              <p className="px-[5%] text-center text-base sm:px-[10%] ">
                 Already have an account?{' '}
                 <Link href="/login">
-                  <span className="text-dark-purple">Login</span>
+                  <span className="text-darkest-blue font-semibold">Login</span>
                 </Link>
               </p>
             </form>

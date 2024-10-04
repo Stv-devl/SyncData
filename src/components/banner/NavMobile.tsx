@@ -12,7 +12,7 @@ const NavMobile = () => {
 
   return (
     <>
-      <nav className="flex flex-row justify-between gap-5 bg-white p-5">
+      <nav className="mb-5 flex flex-row justify-between gap-5 bg-white p-2">
         <div
           className="flex cursor-pointer items-center"
           onClick={toggleBurger}

@@ -14,9 +14,9 @@ const MainLayout: React.FC<{ children: React.ReactNode }> = ({
 }: {
   children: React.ReactNode;
 }): JSX.Element => (
-  <div className="flex flex-col lg:flex-row h-screen">
+  <div className="flex h-screen flex-col lg:flex-row">
     <Banner />
-    <main className="overflow-y-auto flex flex-col gap-10 relative w-full h-full pl-5">
+    <main className="relative flex size-full flex-col gap-10 overflow-y-auto pl-0 lg:pl-5">
       {children}
     </main>
   </div>

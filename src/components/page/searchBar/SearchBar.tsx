@@ -1,8 +1,45 @@
+import Button from '@/components/button/Button';
+import useManageFilter from '@/hook/manage/useManageFilter';
 import React from 'react';
+import { icones } from '@/constantes/constantes';
+import Input from '../../form/Input';
 
 const SearchBar = () => {
+  const data = {};
+  const { searchBar, filteredData, handleChange } = useManageFilter({ data });
+
+  const handleAddTeam = () => {
+    console.log('add team');
+  };
+
   return (
-    <section className="w-full h-[90px] bg-white rounded-lg mx-auto"></section>
+    <section className="mx-auto flex h-[80px] w-full flex-row items-center justify-between rounded-lg bg-white px-2 sm:h-[100px] sm:px-7">
+      <div className="flex w-3/6 items-center gap-2 text-sm sm:w-[250px] sm:text-base lg:w-[400px]">
+        <Input
+          name="search"
+          type="text"
+          value={searchBar}
+          handleChange={handleChange}
+          placeholder={`search for a files`}
+          autoComplete="off"
+          IconComponent={icones.IconSearch}
+        />
+      </div>
+      <div className="h-[35px] w-2/5 text-sm sm:h-[40px] sm:w-[210px] sm:text-base">
+        <Button
+          label={
+            <>
+              <span className="block sm:hidden">Add team</span>
+              <span className="hidden sm:block">Add a team member</span>
+            </>
+          }
+          color={'empty'}
+          onClick={handleAddTeam}
+          disabled={false}
+          IconComponent={icones.IconAddTeam}
+        />
+      </div>
+    </section>
   );
 };
 

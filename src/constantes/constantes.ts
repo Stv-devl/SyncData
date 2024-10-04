@@ -13,6 +13,7 @@ import IconAddFile from '../assets/IconAddFile';
 import IconDownload from '../assets/IconDownload';
 import IconUpload from '../assets/IconUpload';
 import IconVector from '../assets/IconVector';
+import IconAddTeam from '../assets/IconAddTeam';
 
 export const icones = {
   Iconemail,
@@ -28,6 +29,7 @@ export const icones = {
   IconDownload,
   IconUpload,
   IconVector,
+  IconAddTeam,
 };
 
 export const navItems = [

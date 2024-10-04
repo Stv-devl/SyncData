@@ -23,8 +23,8 @@ const Button: React.FC<ButtonComponent> = ({
 }: ButtonComponent): JSX.Element => {
   const colorStyle = clsx(
     color === 'empty'
-      ? 'bg-white text-darkest-blue border border-darkest-blue hover:bg-light-blue'
-      : 'bg-regular-blue text-white hover:bg-dark-blue'
+      ? 'text-darkest-blue border-darkest-blue hover:bg-light-blue border bg-white'
+      : 'bg-regular-blue hover:bg-dark-blue text-white'
   );
 
   return (
@@ -34,10 +34,10 @@ const Button: React.FC<ButtonComponent> = ({
       disabled={disabled || false}
       className={twMerge(
         colorStyle,
-        'flex items-center justify-center gap-2 duration-500 ease-in-out font-semibold rounded-lg w-full h-[46px]'
+        'flex items-center justify-center gap-2 duration-500 ease-in-out font-semibold rounded-lg w-full h-full'
       )}
     >
-      {IconComponent && <IconComponent className="mt-1" />}
+      {IconComponent && <IconComponent className="mt-1 " />}
       {label}
     </button>
   );

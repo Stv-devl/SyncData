@@ -53,7 +53,7 @@ export interface CustomsInputProps {
 
 //button component
 export interface ButtonComponent {
-  label: string;
+  label: string | JSX.Element;
   onClick?: (e: FormEvent) => void;
   type?: 'button' | 'submit';
   color?: 'empty' | 'full';
@@ -68,4 +68,10 @@ export interface IconCustomProps extends SVGProps<SVGSVGElement> {
   height?: number;
   fill?: string;
   className?: string;
+}
+
+export interface SearchProps {
+  searchBar: string;
+  handleChange: (value: { [key: string]: string }) => void;
+  placeholder: string;
 }

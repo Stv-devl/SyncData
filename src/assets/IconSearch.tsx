@@ -3,8 +3,8 @@ import React, { SVGProps } from 'react';
 const IconSearch: React.FC<SVGProps<SVGSVGElement>> = (props) => {
   return (
     <svg
-      width={props.width || 25}
-      height={props.height || 25}
+      width={props.width || 20}
+      height={props.height || 20}
       viewBox="0 0 25 25"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"

@@ -2,7 +2,7 @@
 
 import React from 'react';
 import useLogin from '../../hook/auth/useLogin';
-import Input from '../../components/input/Input';
+import Input from '../../components/form/Input';
 import Link from 'next/link';
 import Button from '../../components/button/Button';
 import Loading from '@/components/loading/Loading';
@@ -66,19 +66,23 @@ const Login = (): JSX.Element => {
                 <p className="text-red-500">{loginErrors.general}</p>
               )}
               {isLoading && <Loading />}
-              <Button
-                label={'Login'}
-                color={'full'}
-                type="submit"
-                disabled={isLoading}
-              />
-              <Button
-                label={'Login with Google'}
-                onClick={handleGoogleSignIn}
-                color={'empty'}
-                IconComponent={icones.Icongoogle}
-                disabled={isLoading}
-              />
+              <div className="h-[46px] w-full">
+                <Button
+                  label={'Login'}
+                  color={'full'}
+                  type="submit"
+                  disabled={isLoading}
+                />
+              </div>
+              <div className="h-[46px] w-full">
+                <Button
+                  label={'Login with Google'}
+                  onClick={handleGoogleSignIn}
+                  color={'empty'}
+                  IconComponent={icones.Icongoogle}
+                  disabled={isLoading}
+                />
+              </div>
               <p className="px-[5%] text-center text-base sm:px-[10%] ">
                 Don&apos;t have an account?{' '}
                 <Link href="/signup">

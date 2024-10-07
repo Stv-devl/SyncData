@@ -60,6 +60,7 @@ export interface ButtonComponent {
   iconSrc?: string;
   disabled?: boolean;
   IconComponent?: React.FunctionComponent<React.SVGProps<SVGSVGElement>>;
+  iconColor?: string;
 }
 
 //icone

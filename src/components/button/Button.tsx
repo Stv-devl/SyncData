@@ -20,6 +20,7 @@ const Button: React.FC<ButtonComponent> = ({
   IconComponent,
   disabled,
   type,
+  iconColor,
 }: ButtonComponent): JSX.Element => {
   const colorStyle = clsx(
     color === 'empty'
@@ -34,10 +35,10 @@ const Button: React.FC<ButtonComponent> = ({
       disabled={disabled || false}
       className={twMerge(
         colorStyle,
-        'flex items-center justify-center gap-2 duration-500 ease-in-out font-semibold rounded-lg w-full h-full'
+        'flex items-center justify-center gap-1 lg:gap-2 duration-500 ease-in-out font-semibold rounded-lg w-full h-full px-3 '
       )}
     >
-      {IconComponent && <IconComponent className="mt-1 " />}
+      {IconComponent && <IconComponent fill={iconColor} />}
       {label}
     </button>
   );

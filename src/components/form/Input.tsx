@@ -38,7 +38,10 @@ const Input: React.FC<CustomsInputProps> = ({
   );
 
   const labelClasses = twMerge(
-    clsx(error && label !== 'Link' ? 'text-error-red' : 'text-darkest-gray'),
+    clsx(
+      isSearch ? 'hidden' : '',
+      error && label !== 'Link' ? 'text-error-red' : 'text-darkest-gray'
+    ),
     'text-xs'
   );
 

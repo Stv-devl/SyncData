@@ -13,7 +13,7 @@ const SearchBar = () => {
   };
 
   return (
-    <section className="mx-auto flex h-[80px] w-full flex-row items-center justify-between rounded-lg bg-white px-2 sm:h-[100px] sm:px-7">
+    <section className="mx-auto flex h-[80px] w-full flex-row items-center justify-between rounded-lg bg-white px-2 sm:h-[100px] sm:px-4 md:px-10 ">
       <div className="flex w-3/6 items-center gap-2 text-sm sm:w-[250px] sm:text-base lg:w-[400px]">
         <Input
           name="search"

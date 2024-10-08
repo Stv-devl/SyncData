@@ -76,3 +76,11 @@ export interface SearchProps {
   handleChange: (value: { [key: string]: string }) => void;
   placeholder: string;
 }
+
+export type ToolsBarWrapperProps = {
+  label: string;
+  icon: React.FunctionComponent<SVGProps<SVGSVGElement>>;
+  color?: 'empty' | 'full' | undefined;
+  iconColor?: string;
+  onClick: () => void;
+};

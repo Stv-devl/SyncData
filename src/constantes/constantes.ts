@@ -42,3 +42,39 @@ export const navItems = [
   { path: '/pricing', type: 'Pricing' },
   { path: '/bin', type: 'Bin' },
 ];
+
+export const toolsBtn = [
+  {
+    label: 'Upload',
+    icon: icones.IconUpload,
+    color: 'full',
+    iconColor: '#FFFFFF',
+  },
+  {
+    label: 'Create a file',
+    icon: icones.IconAddFile,
+    color: 'empty',
+    iconColor: '#08396F',
+  },
+];
+
+export const selectedToolsBtn = [
+  {
+    label: 'Download',
+    icon: icones.IconDownload,
+    color: 'full',
+    iconColor: '#FFFFFF',
+  },
+  {
+    label: 'Share',
+    icon: icones.IconShare,
+    color: 'empty',
+    iconColor: '#08396F',
+  },
+  {
+    label: 'Delete',
+    icon: icones.IconDelete,
+    color: 'full',
+    iconColor: '#FFFFFF',
+  },
+];

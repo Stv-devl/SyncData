@@ -84,3 +84,20 @@ export type ToolsBarWrapperProps = {
   iconColor?: string;
   onClick: () => void;
 };
+
+export interface ArrayContentProps {
+  file: FileType;
+}
+
+export interface ArrayHeaderProps {
+  name: string;
+  label: string;
+  icon?: React.FunctionComponent<SVGProps<SVGSVGElement>>;
+}
+
+interface FileType {
+  checked: boolean;
+  filename?: string;
+  modified: string;
+  acces: string;
+}

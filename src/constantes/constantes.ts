@@ -16,6 +16,13 @@ import IconVector from '../icones/IconVector';
 import IconAddTeam from '../icones/IconAddTeam';
 import IconDelete from '../icones/IconeDelete';
 import IconShare from '../icones/IconShare';
+import IconSort from '../icones/iconSort';
+import IconSortFiles from '../icones/IconSortFiles';
+import IconFiles from '../icones/IconFiles';
+import IconFriends from '../icones/IconFriends';
+import IconSortList from '@/icones/IconSortList';
+import IconFavorite from '@/icones/IconFavorite';
+import IconInfo from '../icones/IconeInfo';
 
 export const icones = {
   Iconemail,
@@ -34,6 +41,13 @@ export const icones = {
   IconAddTeam,
   IconDelete,
   IconShare,
+  IconSort,
+  IconSortFiles,
+  IconSortList,
+  IconFiles,
+  IconFriends,
+  IconFavorite,
+  IconInfo,
 };
 
 export const navItems = [
@@ -77,4 +91,18 @@ export const selectedToolsBtn = [
     color: 'full',
     iconColor: '#FFFFFF',
   },
+];
+
+export const arrayHeader = [
+  { name: 'checked', label: '' },
+  { name: 'filename', label: 'Name', icon: icones.IconSort },
+  { name: 'modified', label: 'Modified', icon: icones.IconSort },
+  { name: 'acces', label: 'Access' },
+];
+
+export const arrayIcone = [
+  { icon: icones.IconFavorite },
+  { icon: icones.IconShare },
+  { icon: icones.IconDownload },
+  { icon: icones.IconDelete },
 ];

@@ -3,6 +3,7 @@ import { arrayHeader, arrayIcone } from '@/constantes/constantes';
 import { headerClass } from '@/utils/headerClass';
 import { icones } from '@/constantes/constantes';
 import { ArrayContentProps } from '@/types/type';
+import IconWrapper from '../wrapper/IconWrapper';
 
 const ListContent: React.FC<ArrayContentProps> = ({ testFile }) => {
   return (
@@ -11,7 +12,7 @@ const ListContent: React.FC<ArrayContentProps> = ({ testFile }) => {
         testFile.map((file) => (
           <ul
             key={file.filename}
-            className="flex h-16 w-full cursor-pointer items-center px-3 lg:px-6"
+            className="hover:bg-light-blue flex h-16 w-full cursor-pointer items-center px-3 transition-colors duration-500 lg:px-6  "
           >
             {arrayHeader.map((item) => (
               <li key={item.name} className={headerClass(item.name)}>
@@ -23,7 +24,7 @@ const ListContent: React.FC<ArrayContentProps> = ({ testFile }) => {
                     />
                   ) : item.name === 'filename' ? (
                     <>
-                      <icones.IconFiles className="size-8" />
+                      <IconWrapper type={file.type} className="size-8" />
                       <span>{file[item.name as keyof typeof file]}</span>
                     </>
                   ) : (

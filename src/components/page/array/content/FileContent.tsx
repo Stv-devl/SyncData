@@ -1,5 +1,6 @@
 import React from 'react';
-import { icones } from '../../../../constantes/constantes';
+
+import IconWrapper from '../wrapper/IconWrapper';
 
 const FileContent = ({ testFile }) => {
   return (
@@ -8,10 +9,10 @@ const FileContent = ({ testFile }) => {
         testFile.map((file, index) => (
           <>
             <li
-              className="relative flex size-28 cursor-pointer flex-col items-center justify-center gap-2 rounded-lg bg-white"
+              className="hover:bg-light-blue relative flex size-28 cursor-pointer flex-col items-center justify-center gap-2 rounded-lg bg-white transition-colors duration-500"
               key={'file' + index}
             >
-              <icones.IconFiles />
+              <IconWrapper type={file.type} />
               <span className="text-sm"> {file.filename}</span>
               <div className="absolute right-2 top-2">
                 <input

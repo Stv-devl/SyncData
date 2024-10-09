@@ -25,7 +25,7 @@ const ToolsBar = () => {
     console.log('delete');
   }, []);
 
-  const getOnClickHandler = useCallback(
+  const getActionByType = useCallback(
     (label: string) => {
       switch (label) {
         case 'Upload':
@@ -52,7 +52,7 @@ const ToolsBar = () => {
           <ToolsBarWrapper
             key={item.label}
             {...item}
-            onClick={getOnClickHandler(item.label)}
+            onClick={getActionByType(item.label)}
             color={item.color as 'empty' | 'full'}
           />
         ))}
@@ -61,7 +61,7 @@ const ToolsBar = () => {
             <ToolsBarWrapper
               key={item.label}
               {...item}
-              onClick={getOnClickHandler(item.label)}
+              onClick={getActionByType(item.label)}
               color={item.color as 'empty' | 'full'}
             />
           ))}

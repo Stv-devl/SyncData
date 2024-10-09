@@ -18,11 +18,16 @@ import IconDelete from '../icones/IconeDelete';
 import IconShare from '../icones/IconShare';
 import IconSort from '../icones/iconSort';
 import IconSortFiles from '../icones/IconSortFiles';
-import IconFiles from '../icones/IconFiles';
+import IconFiles from '../icones/iconeFiles/IconFiles';
 import IconFriends from '../icones/IconFriends';
 import IconSortList from '@/icones/IconSortList';
 import IconFavorite from '@/icones/IconFavorite';
 import IconInfo from '../icones/IconeInfo';
+import IconFilesTeam from '../icones/iconeFiles/IconFilesTeam';
+import IconDwg from '../icones/iconeFiles/IconDwg';
+import IconPdf from '../icones/iconeFiles/IconPdf';
+import IconImage from '../icones/iconeFiles/IconImage';
+import IconUnknown from '@/icones/iconeFiles/IconUnknown';
 
 export const icones = {
   Iconemail,
@@ -48,6 +53,11 @@ export const icones = {
   IconFriends,
   IconFavorite,
   IconInfo,
+  IconFilesTeam,
+  IconDwg,
+  IconPdf,
+  IconImage,
+  IconUnknown,
 };
 
 export const navItems = [

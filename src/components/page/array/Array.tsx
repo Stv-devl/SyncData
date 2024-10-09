@@ -18,64 +18,56 @@ const Array = () => {
     {
       checked: false,
       filename: '01 Drawing ',
+      type: 'file',
       modified: '10/10/2022',
       acces: 'only you',
     },
     {
       checked: false,
       filename: '02 Surveying',
+      type: 'file',
       modified: '10/10/2022',
       acces: 'only you',
     },
     {
       checked: false,
       filename: '03 Price',
-      modified: '10/10/2022',
-      acces: 'only you',
-    } /*
-    {
-      checked: false,
-      filename: '03 Price',
+      type: 'file',
       modified: '10/10/2022',
       acces: 'only you',
     },
     {
       checked: false,
-      filename: '03 Price',
+      filename: 'Dupon-DCE.pdf',
+      type: 'pdf',
       modified: '10/10/2022',
       acces: 'only you',
     },
     {
       checked: false,
-      filename: '03 Price',
+      filename: 'Dupon-house.png',
+      type: 'image',
       modified: '10/10/2022',
       acces: 'only you',
     },
+
     {
       checked: false,
-      filename: '03 Price',
+      filename: 'Dupont-house.xbg',
+      type: 'unknown',
       modified: '10/10/2022',
       acces: 'only you',
     },
+
     {
       checked: false,
-      filename: '03 Price',
+      filename: 'Dupont-house.dwg',
+      type: 'dwg',
       modified: '10/10/2022',
       acces: 'only you',
     },
-    {
-      checked: false,
-      filename: '03 Price',
-      modified: '10/10/2022',
-      acces: 'only you',
-    },
-    {
-      checked: false,
-      filename: '03 Price',
-      modified: '10/10/2022',
-      acces: 'only you',
-    },
-    {
+
+    /* {
       checked: false,
       filename: '03 Price',
       modified: '10/10/2022',
@@ -128,7 +120,43 @@ const Array = () => {
       filename: '03 Price',
       modified: '10/10/2022',
       acces: 'only you',
-    },*/,
+    },
+    {
+      checked: false,
+      filename: '03 Price',
+      modified: '10/10/2022',
+      acces: 'only you',
+    },
+    {
+      checked: false,
+      filename: '03 Price',
+      modified: '10/10/2022',
+      acces: 'only you',
+    },
+    {
+      checked: false,
+      filename: '03 Price',
+      modified: '10/10/2022',
+      acces: 'only you',
+    },
+    {
+      checked: false,
+      filename: '03 Price',
+      modified: '10/10/2022',
+      acces: 'only you',
+    },
+    {
+      checked: false,
+      filename: '03 Price',
+      modified: '10/10/2022',
+      acces: 'only you',
+    },
+    {
+      checked: false,
+      filename: '03 Price',
+      modified: '10/10/2022',
+      acces: 'only you',
+    },*/
   ];
 
   return (

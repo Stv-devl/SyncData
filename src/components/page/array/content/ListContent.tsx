@@ -4,15 +4,27 @@ import { headerClass } from '@/utils/headerClass';
 import { icones } from '@/constantes/constantes';
 import { ArrayContentProps } from '@/types/type';
 import IconWrapper from '../wrapper/IconWrapper';
+import usePopupStore from '@/store/usePopup';
+import Popup from '@/components/popup/Popup';
 
 const ListContent: React.FC<ArrayContentProps> = ({ testFile }) => {
+  const { openPopup, closePopup } = usePopupStore();
+
+  const handleMouseEnter = (event: React.MouseEvent, label: string) => {
+    const rect = (event.currentTarget as HTMLElement).getBoundingClientRect();
+    const x = rect.left;
+    const y = rect.top;
+
+    openPopup(label, x, y);
+  };
+
   return (
     <>
       {testFile &&
         testFile.map((file) => (
           <ul
             key={file.filename}
-            className="hover:bg-light-blue flex h-16 w-full cursor-pointer items-center px-3 transition-colors duration-500 lg:px-6  "
+            className="hover:bg-light-blue flex h-16 w-full cursor-pointer items-center px-3 transition-colors duration-500 lg:px-6"
           >
             {arrayHeader.map((item) => (
               <li key={item.name} className={headerClass(item.name)}>
@@ -37,16 +49,25 @@ const ListContent: React.FC<ArrayContentProps> = ({ testFile }) => {
               arrayIcone.map((icone, index) => (
                 <li
                   key={`icone${index}`}
-                  className="hidden w-7 flex-none px-5 sm:block lg:w-9"
+                  className="relative hidden w-7 flex-none px-5 sm:block lg:w-9"
                 >
-                  <icone.icon className="text-regular-blue hover:text-dark-blue size-6 transition-colors duration-300" />
+                  <icone.icon
+                    className="text-regular-blue hover:text-dark-blue size-6 transition-colors duration-300"
+                    onMouseEnter={(e) => handleMouseEnter(e, icone.label)}
+                    onMouseLeave={() => closePopup()}
+                  />
                 </li>
               ))}
-            <li className="block w-7 flex-none px-5 sm:hidden lg:w-9">
-              <icones.IconInfo className="text-regular-blue hover:text-dark-blue size-6 transition-colors duration-300" />
+            <li className="relative block w-7 flex-none px-5 sm:hidden lg:w-9">
+              <icones.IconInfo
+                className="text-regular-blue hover:text-dark-blue size-6 transition-colors duration-300"
+                onMouseEnter={(e) => handleMouseEnter(e, 'Info')}
+                onMouseLeave={() => closePopup()}
+              />
             </li>
           </ul>
         ))}
+      <Popup />
     </>
   );
 };

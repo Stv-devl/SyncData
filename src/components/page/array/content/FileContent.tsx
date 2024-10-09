@@ -1,5 +1,4 @@
 import React from 'react';
-
 import IconWrapper from '../wrapper/IconWrapper';
 
 const FileContent = ({ testFile }) => {

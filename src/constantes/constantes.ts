@@ -94,10 +94,10 @@ export const selectedToolsBtn = [
 ];
 
 export const arrayHeader = [
-  { name: 'checked', label: '' },
-  { name: 'filename', label: 'Name', icon: icones.IconSort },
-  { name: 'modified', label: 'Modified', icon: icones.IconSort },
-  { name: 'acces', label: 'Access' },
+  { name: 'checked' },
+  { name: 'filename' },
+  { name: 'modified' },
+  { name: 'acces' },
 ];
 
 export const arrayIcone = [

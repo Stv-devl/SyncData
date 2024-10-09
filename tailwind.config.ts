@@ -32,6 +32,10 @@ const config: Config = {
         'custom-blue': '0px 0px 32px 0px rgba(0, 121, 255, 0.25)',
         'custom-gray': '0px 0px 32px 0px rgba(0, 0, 0, 0.10)',
       },
+      gridTemplateColumns: {
+        'auto-fill-minmax': 'repeat(auto-fill, minmax(112px, max-content))',
+      },
+
       transitionProperty: {
         fill: 'fill',
       },

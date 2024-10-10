@@ -3,13 +3,19 @@ import Link from 'next/link';
 import React from 'react';
 import { icones } from '../../constantes/constantes';
 import { signOut } from 'next-auth/react';
+import usePopupStore from '@/store/usePopup';
 
 const ProfileWrapper = () => {
+  const { handleMouseEnter, handleMouseLeave } = usePopupStore();
   const isImage = false;
 
   return (
     <>
-      <Link href="/profile">
+      <Link
+        href="/profile"
+        onMouseEnter={(e) => handleMouseEnter(e, 'Profile', 'nav')}
+        onMouseLeave={handleMouseLeave}
+      >
         {!isImage ? (
           <icones.Iconprofile
             width={50}
@@ -27,8 +33,16 @@ const ProfileWrapper = () => {
           />
         )}
       </Link>
-      <div className="ml-2 cursor-pointer" onClick={() => signOut()}>
-        <icones.Iconlogout fill={'#08396F'} className="size-[25px] w-[35px]" />
+      <div
+        className="items-centerml-2 flex cursor-pointer"
+        onClick={() => signOut()}
+      >
+        <icones.Iconlogout
+          fill={'#08396F'}
+          className="size-[25px] w-[35px]"
+          onMouseEnter={(e) => handleMouseEnter(e, 'Logout', 'nav')}
+          onMouseLeave={handleMouseLeave}
+        />
       </div>
     </>
   );

@@ -1,5 +1,6 @@
 'use client';
 import Banner from '@/components/banner/Banner';
+import Popup from '@/components/popup/Popup';
 import React from 'react';
 
 /**
@@ -19,6 +20,7 @@ const MainLayout: React.FC<{ children: React.ReactNode }> = ({
     <main className="relative flex size-full flex-col gap-10 overflow-y-auto pl-0 lg:pl-5">
       {children}
     </main>
+    <Popup />
   </div>
 );
 

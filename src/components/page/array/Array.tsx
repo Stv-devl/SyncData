@@ -7,12 +7,15 @@ import ListContent from './content/ListContent';
 import FileContent from './content/FileContent';
 import { twMerge } from 'tailwind-merge';
 import clsx from 'clsx';
+import usePopupStore from '@/store/usePopup';
 
 const Array = () => {
   //mettre isList dans store + persistant
   const [isList, setIsList] = useState(true);
 
   const toggleIcon = () => setIsList((prev) => !prev);
+
+  const { handleMouseEnter, handleMouseLeave } = usePopupStore();
 
   const testFile = [
     {
@@ -66,97 +69,6 @@ const Array = () => {
       modified: '10/10/2022',
       acces: 'only you',
     },
-
-    /* {
-      checked: false,
-      filename: '03 Price',
-      modified: '10/10/2022',
-      acces: 'only you',
-    },
-    {
-      checked: false,
-      filename: '03 Price',
-      modified: '10/10/2022',
-      acces: 'only you',
-    },
-    {
-      checked: false,
-      filename: '03 Price',
-      modified: '10/10/2022',
-      acces: 'only you',
-    },
-    {
-      checked: false,
-      filename: '03 Price',
-      modified: '10/10/2022',
-      acces: 'only you',
-    },
-    {
-      checked: false,
-      filename: '03 Price',
-      modified: '10/10/2022',
-      acces: 'only you',
-    },
-    {
-      checked: false,
-      filename: '03 Price',
-      modified: '10/10/2022',
-      acces: 'only you',
-    },
-    {
-      checked: false,
-      filename: '03 Price',
-      modified: '10/10/2022',
-      acces: 'only you',
-    },
-    {
-      checked: false,
-      filename: '03 Price',
-      modified: '10/10/2022',
-      acces: 'only you',
-    },
-    {
-      checked: false,
-      filename: '03 Price',
-      modified: '10/10/2022',
-      acces: 'only you',
-    },
-    {
-      checked: false,
-      filename: '03 Price',
-      modified: '10/10/2022',
-      acces: 'only you',
-    },
-    {
-      checked: false,
-      filename: '03 Price',
-      modified: '10/10/2022',
-      acces: 'only you',
-    },
-    {
-      checked: false,
-      filename: '03 Price',
-      modified: '10/10/2022',
-      acces: 'only you',
-    },
-    {
-      checked: false,
-      filename: '03 Price',
-      modified: '10/10/2022',
-      acces: 'only you',
-    },
-    {
-      checked: false,
-      filename: '03 Price',
-      modified: '10/10/2022',
-      acces: 'only you',
-    },
-    {
-      checked: false,
-      filename: '03 Price',
-      modified: '10/10/2022',
-      acces: 'only you',
-    },*/
   ];
 
   return (
@@ -164,9 +76,9 @@ const Array = () => {
       <Header isList={isList} />
       <div className="bg-lightest-gray h-[97%] w-full rounded-lg ">
         {isList ? (
-          <ListContent testFile={testFile} />
+          <ListContent files={testFile} />
         ) : (
-          <FileContent testFile={testFile} />
+          <FileContent files={testFile} />
         )}
       </div>
 
@@ -180,6 +92,10 @@ const Array = () => {
             'absolute hidden cursor-pointer  sm:block'
           )
         )}
+        onMouseEnter={(e) =>
+          handleMouseEnter(e, isList ? 'File' : 'List', 'toogle')
+        }
+        onMouseLeave={handleMouseLeave}
       >
         {isList ? <icones.IconSortFiles /> : <icones.IconSortList />}
       </div>

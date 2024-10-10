@@ -1,11 +1,12 @@
+import { ArrayContentProps } from '@/types/type';
 import React from 'react';
 import IconWrapper from '../wrapper/IconWrapper';
 
-const FileContent = ({ testFile }) => {
+const FileContent: React.FC<ArrayContentProps> = ({ files }) => {
   return (
     <ul className="grid-cols-auto-fill-minmax grid gap-4 p-6">
-      {testFile &&
-        testFile.map((file, index) => (
+      {files &&
+        files.map((file, index) => (
           <>
             <li
               className="hover:bg-light-blue relative flex size-28 cursor-pointer flex-col items-center justify-center gap-2 rounded-lg bg-white transition-colors duration-500"

@@ -5,23 +5,14 @@ import { icones } from '@/constantes/constantes';
 import { ArrayContentProps } from '@/types/type';
 import IconWrapper from '../wrapper/IconWrapper';
 import usePopupStore from '@/store/usePopup';
-import Popup from '@/components/popup/Popup';
 
-const ListContent: React.FC<ArrayContentProps> = ({ testFile }) => {
-  const { openPopup, closePopup } = usePopupStore();
-
-  const handleMouseEnter = (event: React.MouseEvent, label: string) => {
-    const rect = (event.currentTarget as HTMLElement).getBoundingClientRect();
-    const x = rect.left;
-    const y = rect.top;
-
-    openPopup(label, x, y);
-  };
+const ListContent: React.FC<ArrayContentProps> = ({ files }) => {
+  const { handleMouseEnter, handleMouseLeave } = usePopupStore();
 
   return (
     <>
-      {testFile &&
-        testFile.map((file) => (
+      {files &&
+        files.map((file) => (
           <ul
             key={file.filename}
             className="hover:bg-light-blue flex h-16 w-full cursor-pointer items-center px-3 transition-colors duration-500 lg:px-6"
@@ -53,21 +44,22 @@ const ListContent: React.FC<ArrayContentProps> = ({ testFile }) => {
                 >
                   <icone.icon
                     className="text-regular-blue hover:text-dark-blue size-6 transition-colors duration-300"
-                    onMouseEnter={(e) => handleMouseEnter(e, icone.label)}
-                    onMouseLeave={() => closePopup()}
+                    onMouseEnter={(e) =>
+                      handleMouseEnter(e, icone.label, 'list')
+                    }
+                    onMouseLeave={handleMouseLeave}
                   />
                 </li>
               ))}
             <li className="relative block w-7 flex-none px-5 sm:hidden lg:w-9">
               <icones.IconInfo
                 className="text-regular-blue hover:text-dark-blue size-6 transition-colors duration-300"
-                onMouseEnter={(e) => handleMouseEnter(e, 'Info')}
-                onMouseLeave={() => closePopup()}
+                onMouseEnter={(e) => handleMouseEnter(e, 'Info', 'list')}
+                onMouseLeave={handleMouseLeave}
               />
             </li>
           </ul>
         ))}
-      <Popup />
     </>
   );
 };

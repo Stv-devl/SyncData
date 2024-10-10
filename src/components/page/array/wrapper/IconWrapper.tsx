@@ -1,7 +1,8 @@
 import React from 'react';
 import { icones } from '../../../../constantes/constantes';
+import { IconWrapperProps } from '@/types/type';
 
-const IconWrapper = ({ type, className }) => {
+const IconWrapper: React.FC<IconWrapperProps> = ({ type, className }) => {
   const iconMapping = {
     file: <icones.IconFiles className={className} />,
     pdf: <icones.IconPdf className={className} />,
@@ -10,7 +11,7 @@ const IconWrapper = ({ type, className }) => {
     dwg: <icones.IconDwg className={className} />,
   };
 
-  return iconMapping[type] || null;
+  return iconMapping[type as keyof typeof iconMapping] || null;
 };
 
 export default IconWrapper;

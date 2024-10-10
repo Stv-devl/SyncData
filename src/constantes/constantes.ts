@@ -111,8 +111,8 @@ export const arrayHeader = [
 ];
 
 export const arrayIcone = [
-  { icon: icones.IconFavorite, label: 'Favorite' },
-  { icon: icones.IconShare, label: 'Share' },
+  { icon: icones.IconFavorite, label: 'Add to favorite' },
+  { icon: icones.IconShare, label: 'Share acces link' },
   { icon: icones.IconDownload, label: 'Download' },
   { icon: icones.IconDelete, label: 'Delete' },
 ];

@@ -1,4 +1,5 @@
 import { FormEvent, SVGProps } from 'react';
+import IconWrapper from '../components/page/array/wrapper/IconWrapper';
 
 //signup
 export interface FormDataSignUp {
@@ -86,7 +87,7 @@ export type ToolsBarWrapperProps = {
 };
 
 export interface ArrayContentProps {
-  file: FileType;
+  files: FileType[];
 }
 
 export interface ArrayHeaderProps {
@@ -97,7 +98,13 @@ export interface ArrayHeaderProps {
 
 interface FileType {
   checked: boolean;
-  filename?: string;
+  filename: string;
+  type: string;
   modified: string;
   acces: string;
+}
+
+export interface IconWrapperProps {
+  type: string;
+  className?: string;
 }

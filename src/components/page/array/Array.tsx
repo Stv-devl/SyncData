@@ -8,78 +8,34 @@ import FileContent from './content/FileContent';
 import { twMerge } from 'tailwind-merge';
 import clsx from 'clsx';
 import usePopupStore from '@/store/usePopup';
+import { files } from '@/constantes/files';
 
 const Array = () => {
-  //mettre isList dans store + persistant
+  //mettre isList dans store + persistant, pareil pour FileContent
   const [isList, setIsList] = useState(true);
 
   const toggleIcon = () => setIsList((prev) => !prev);
 
   const { handleMouseEnter, handleMouseLeave } = usePopupStore();
 
-  const testFile = [
-    {
-      checked: false,
-      filename: '01 Drawing ',
-      type: 'file',
-      modified: '10/10/2022',
-      acces: 'only you',
-    },
-    {
-      checked: false,
-      filename: '02 Surveying',
-      type: 'file',
-      modified: '10/10/2022',
-      acces: 'only you',
-    },
-    {
-      checked: false,
-      filename: '03 Price',
-      type: 'file',
-      modified: '10/10/2022',
-      acces: 'only you',
-    },
-    {
-      checked: false,
-      filename: 'Dupon-DCE.pdf',
-      type: 'pdf',
-      modified: '10/10/2022',
-      acces: 'only you',
-    },
-    {
-      checked: false,
-      filename: 'Dupon-house.png',
-      type: 'image',
-      modified: '10/10/2022',
-      acces: 'only you',
-    },
-
-    {
-      checked: false,
-      filename: 'Dupont-house.xbg',
-      type: 'unknown',
-      modified: '10/10/2022',
-      acces: 'only you',
-    },
-
-    {
-      checked: false,
-      filename: 'Dupont-house.dwg',
-      type: 'dwg',
-      modified: '10/10/2022',
-      acces: 'only you',
-    },
-  ];
+  const mouseLabel = isList ? 'File' : 'List';
+  const mouseTransform = isList
+    ? 'translate(-20%, -110%)'
+    : 'translate(0%, -100%)';
 
   return (
     <section className="relative mx-auto size-full rounded-lg bg-white p-4 lg:p-8">
       <Header isList={isList} />
       <div className="bg-lightest-gray h-[97%] w-full rounded-lg ">
-        {isList ? (
-          <ListContent files={testFile} />
-        ) : (
-          <FileContent files={testFile} />
-        )}
+        {files && files.length > 1 ? (
+          <>
+            {isList ? (
+              <ListContent files={files} />
+            ) : (
+              <FileContent files={files} />
+            )}
+          </>
+        ) : null}
       </div>
 
       <div
@@ -92,9 +48,7 @@ const Array = () => {
             'absolute hidden cursor-pointer  sm:block'
           )
         )}
-        onMouseEnter={(e) =>
-          handleMouseEnter(e, isList ? 'File' : 'List', 'toogle')
-        }
+        onMouseEnter={(e) => handleMouseEnter(e, mouseLabel, mouseTransform)}
         onMouseLeave={handleMouseLeave}
       >
         {isList ? <icones.IconSortFiles /> : <icones.IconSortList />}

@@ -28,6 +28,8 @@ import IconDwg from '../icones/iconeFiles/IconDwg';
 import IconPdf from '../icones/iconeFiles/IconPdf';
 import IconImage from '../icones/iconeFiles/IconImage';
 import IconUnknown from '@/icones/iconeFiles/IconUnknown';
+import IconMoveFile from '../icones/IconMoveFile';
+import IconChangeName from '../icones/IconChangeName';
 
 export const icones = {
   Iconemail,
@@ -58,6 +60,8 @@ export const icones = {
   IconPdf,
   IconImage,
   IconUnknown,
+  IconMoveFile,
+  IconChangeName,
 };
 
 export const navItems = [
@@ -114,5 +118,15 @@ export const arrayIcone = [
   { icon: icones.IconFavorite, label: 'Add to favorite' },
   { icon: icones.IconShare, label: 'Share acces link' },
   { icon: icones.IconDownload, label: 'Download' },
+  { icon: icones.IconDelete, label: 'Delete' },
+];
+
+export const arrayPopup = [
+  { icon: icones.IconInfo, label: 'Information' },
+  { icon: icones.IconFavorite, label: 'Favorite' },
+  { icon: icones.IconShare, label: 'Share link' },
+  { icon: icones.IconDownload, label: 'Download' },
+  { icon: icones.IconMoveFile, label: 'Move file' },
+  { icon: icones.IconChangeName, label: 'Change name' },
   { icon: icones.IconDelete, label: 'Delete' },
 ];

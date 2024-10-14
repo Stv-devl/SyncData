@@ -72,12 +72,14 @@ export interface IconCustomProps extends SVGProps<SVGSVGElement> {
   className?: string;
 }
 
+//search
 export interface SearchProps {
   searchBar: string;
   handleChange: (value: { [key: string]: string }) => void;
   placeholder: string;
 }
 
+//toolbar
 export type ToolsBarWrapperProps = {
   label: string;
   icon: React.FunctionComponent<SVGProps<SVGSVGElement>>;
@@ -86,14 +88,13 @@ export type ToolsBarWrapperProps = {
   onClick: () => void;
 };
 
-export interface ArrayContentProps {
-  files: FileType[];
+//array
+export interface HeaderProps {
+  isList: boolean;
 }
 
-export interface ArrayHeaderProps {
-  name: string;
-  label: string;
-  icon?: React.FunctionComponent<SVGProps<SVGSVGElement>>;
+export interface ArrayContentProps {
+  files: FileType[];
 }
 
 interface FileType {
@@ -107,4 +108,8 @@ interface FileType {
 export interface IconWrapperProps {
   type: string;
   className?: string;
+}
+
+export interface InfoWrapperProps {
+  fileName: string | null;
 }

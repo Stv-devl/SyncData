@@ -6,15 +6,21 @@ export interface BurgerState {
 export interface PopupState {
   isOpen: boolean;
   content: string | null;
-  type: string | null;
   x: number;
   y: number;
-  openPopup: (content: string, x: number, y: number, type: string) => void;
+  transformStyle: string | null;
+  isInfo: boolean;
   closePopup: () => void;
+  handleClickOpen: (
+    event: React.MouseEvent,
+    label: string,
+    rect: DOMRect
+  ) => void;
+  handleClickClose: (event: MouseEvent) => void;
   handleMouseEnter: (
     event: React.MouseEvent,
     label: string,
-    type: string
+    transformStyle: string
   ) => void;
   handleMouseLeave: () => void;
 }

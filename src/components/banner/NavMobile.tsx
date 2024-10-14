@@ -20,7 +20,7 @@ const NavMobile = () => {
           {!isOpen ? <icones.IconVector fill={'#08396F'} /> : ''}
         </div>
         <icones.Iconlogo className="ml-2 h-[75px] w-[70px]" />
-        <div className="flex flex-row items-center gap-1 lg:flex-col lg:gap-7">
+        <div className="flex flex-row items-center gap-2 lg:flex-col ">
           <ProfileWrapper />
         </div>
       </nav>

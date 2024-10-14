@@ -41,7 +41,7 @@ const Banner = () => {
                 ))}
               </div>
             </div>
-            <div className="flex flex-row items-center gap-1 lg:flex-col lg:gap-7">
+            <div className="flex flex-row items-center gap-3 lg:flex-col lg:gap-7">
               <ProfileWrapper />
             </div>
           </div>

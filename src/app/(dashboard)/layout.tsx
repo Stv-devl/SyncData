@@ -1,5 +1,6 @@
 'use client';
 import Banner from '@/components/banner/Banner';
+import Modal from '@/components/modal/Modal';
 import Popup from '@/components/popup/Popup';
 import React from 'react';
 
@@ -21,6 +22,7 @@ const MainLayout: React.FC<{ children: React.ReactNode }> = ({
       {children}
     </main>
     <Popup />
+    <Modal />
   </div>
 );
 

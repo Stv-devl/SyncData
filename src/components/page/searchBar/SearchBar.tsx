@@ -3,14 +3,11 @@ import useManageFilter from '@/hook/manage/useManageFilter';
 import React from 'react';
 import { icones } from '@/constantes/constantes';
 import Input from '../../form/Input';
+import useModalStore from '@/store/useModale';
 
 const SearchBar = () => {
   const data = {};
   const { searchBar, filteredData, handleChange } = useManageFilter({ data });
-
-  const handleAddTeam = () => {
-    console.log('add team');
-  };
 
   return (
     <section className="mx-auto flex h-[80px] w-full flex-row items-center justify-between rounded-lg bg-white px-2 sm:h-[100px] sm:px-4 md:px-10 ">
@@ -34,7 +31,7 @@ const SearchBar = () => {
             </>
           }
           color={'empty'}
-          onClick={handleAddTeam}
+          onClick={() => useModalStore.getState().openModal('AddTeam')}
           disabled={false}
           IconComponent={icones.IconAddTeam}
         />

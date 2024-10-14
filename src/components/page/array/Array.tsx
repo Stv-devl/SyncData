@@ -3,12 +3,12 @@
 import React, { useState } from 'react';
 import { icones } from '../../../constantes/constantes';
 import { files } from '@/constantes/files';
-import Header from './Header';
-import ListContent from './content/ListContent';
-import FileContent from './content/FileContent';
 import { twMerge } from 'tailwind-merge';
 import clsx from 'clsx';
 import usePopupStore from '@/store/usePopup';
+import Header from './Header';
+import ListContent from './content/ListContent';
+import FileContent from './content/FileContent';
 import EmptyContent from './content/EmptyContent';
 
 const Array = () => {

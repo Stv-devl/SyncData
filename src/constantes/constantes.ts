@@ -30,6 +30,7 @@ import IconImage from '../icones/iconeFiles/IconImage';
 import IconUnknown from '@/icones/iconeFiles/IconUnknown';
 import IconMoveFile from '../icones/IconMoveFile';
 import IconChangeName from '../icones/IconChangeName';
+import IconEmpty from '../icones/iconEmpty';
 
 export const icones = {
   Iconemail,
@@ -62,6 +63,7 @@ export const icones = {
   IconUnknown,
   IconMoveFile,
   IconChangeName,
+  IconEmpty,
 };
 
 export const navItems = [

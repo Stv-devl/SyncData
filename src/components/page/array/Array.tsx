@@ -2,13 +2,14 @@
 
 import React, { useState } from 'react';
 import { icones } from '../../../constantes/constantes';
+import { files } from '@/constantes/files';
 import Header from './Header';
 import ListContent from './content/ListContent';
 import FileContent from './content/FileContent';
 import { twMerge } from 'tailwind-merge';
 import clsx from 'clsx';
 import usePopupStore from '@/store/usePopup';
-import { files } from '@/constantes/files';
+import EmptyContent from './content/EmptyContent';
 
 const Array = () => {
   //mettre isList dans store + persistant, pareil pour FileContent
@@ -35,7 +36,9 @@ const Array = () => {
               <FileContent files={files} />
             )}
           </>
-        ) : null}
+        ) : (
+          <EmptyContent />
+        )}
       </div>
 
       <div

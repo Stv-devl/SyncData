@@ -13,7 +13,7 @@ const IconChevronDown: React.FC<SVGProps<SVGSVGElement>> = (props) => {
     >
       <path
         d="M4.5 6.75L9 11.25L13.5 6.75"
-        stroke="#333333"
+        stroke="#737373"
         strokeWidth="1.5"
         strokeLinecap="round"
         strokeLinejoin="round"

@@ -33,6 +33,7 @@ import IconChangeName from '../icones/IconChangeName';
 import IconEmpty from '../icones/iconEmpty';
 import IconChevronDown from '../icones/iconeChevronDown';
 import IconChevronRight from '../icones/IconChevronRight';
+import IconCross from '@/icones/IconCross';
 
 export const icones = {
   Iconemail,
@@ -68,6 +69,7 @@ export const icones = {
   IconEmpty,
   IconChevronDown,
   IconChevronRight,
+  IconCross,
 };
 
 export const navItems = [

@@ -13,21 +13,21 @@ const AccordionItem: React.FC<AccordeonItemProps> = ({ file }) => {
     isOpen ? <icones.IconChevronDown /> : <icones.IconChevronRight />;
 
   return (
-    <div className="ml-1 py-1">
+    <div className="ml-1">
       <div
         onClick={toggleOpen}
         className="flex cursor-pointer items-center gap-2 "
       >
-        <div>{file.files && file.files.length > 0 && getChevronIcon()}</div>
+        <div>{getChevronIcon()}</div>
         <input type="checkbox" className="border-dark-gray size-4 border-2" />
         <div className="icon-wrapper">
           <IconFileWrapper type={file.type} className="size-5" />
         </div>
-        <p>{file.filename}</p>
+        <p className="py-1">{file.filename}</p>
       </div>
 
       {isOpen && file.files && file.files.length > 0 && (
-        <div className="py-1">
+        <div className="">
           {filteredFiles(file.files).map((child: FileType, index: number) => (
             <AccordionItem key={index} file={child} />
           ))}

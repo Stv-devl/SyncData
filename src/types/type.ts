@@ -1,5 +1,5 @@
 import { FormEvent, SVGProps } from 'react';
-import IconWrapper from '../components/page/array/wrapper/IconWrapper';
+import IconWrapper from '../utils/IconFileWrapper';
 
 //signup
 export interface FormDataSignUp {
@@ -97,12 +97,17 @@ export interface ArrayContentProps {
   files: FileType[];
 }
 
-interface FileType {
+export interface AccordeonItemProps {
+  file: FileType;
+}
+
+export interface FileType {
   checked: boolean;
   filename: string;
   type: string;
   modified: string;
   acces: string;
+  files?: [FileType];
 }
 
 export interface IconWrapperProps {

@@ -3,7 +3,7 @@ import { arrayHeader, arrayIcone } from '@/constantes/constantes';
 import { headerClass } from '@/utils/headerClass';
 import { icones } from '@/constantes/constantes';
 import { ArrayContentProps } from '@/types/type';
-import IconWrapper from '../wrapper/IconWrapper';
+import IconWrapper from '../../../../utils/IconFileWrapper';
 import usePopupStore from '@/store/usePopup';
 
 const ListContent: React.FC<ArrayContentProps> = ({ files }) => {

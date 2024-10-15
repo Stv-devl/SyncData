@@ -31,6 +31,8 @@ import IconUnknown from '@/icones/iconeFiles/IconUnknown';
 import IconMoveFile from '../icones/IconMoveFile';
 import IconChangeName from '../icones/IconChangeName';
 import IconEmpty from '../icones/iconEmpty';
+import IconChevronDown from '../icones/iconeChevronDown';
+import IconChevronRight from '../icones/IconChevronRight';
 
 export const icones = {
   Iconemail,
@@ -64,6 +66,8 @@ export const icones = {
   IconMoveFile,
   IconChangeName,
   IconEmpty,
+  IconChevronDown,
+  IconChevronRight,
 };
 
 export const navItems = [

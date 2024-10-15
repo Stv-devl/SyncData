@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
-import IconWrapper from '../wrapper/IconWrapper';
 import usePopupStore from '@/store/usePopup';
 import { ArrayContentProps } from '@/types/type';
+import IconFileWrapper from '../../../../utils/IconFileWrapper';
 
 const FileContent: React.FC<ArrayContentProps> = ({ files }) => {
   const { isOpen, handleClickOpen, handleClickClose } = usePopupStore();
@@ -35,7 +35,7 @@ const FileContent: React.FC<ArrayContentProps> = ({ files }) => {
               handleClickOpen(e, file.filename, rect);
             }}
           >
-            <IconWrapper type={file.type} />
+            <IconFileWrapper type={file.type} />
             <span className="text-sm"> {file.filename}</span>
             <div className="absolute right-2 top-2">
               <input

@@ -34,6 +34,7 @@ import IconEmpty from '../icones/iconEmpty';
 import IconChevronDown from '../icones/iconeChevronDown';
 import IconChevronRight from '../icones/IconChevronRight';
 import IconCross from '@/icones/IconCross';
+import { on } from 'events';
 
 export const icones = {
   Iconemail,
@@ -124,7 +125,7 @@ export const arrayHeader = [
 
 export const arrayIcone = [
   { icon: icones.IconFavorite, label: 'Add to favorite' },
-  { icon: icones.IconShare, label: 'Share acces link' },
+  { icon: icones.IconShare, label: 'Copie acces link' },
   { icon: icones.IconDownload, label: 'Download' },
   { icon: icones.IconDelete, label: 'Delete' },
 ];

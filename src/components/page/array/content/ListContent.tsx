@@ -35,6 +35,14 @@ const ListContent: React.FC<ArrayContentProps> = ({ files }) => {
           <ul
             key={file.filename}
             className="hover:bg-light-blue flex h-16 w-full cursor-pointer items-center px-3 transition-colors duration-500 lg:px-6"
+            onContextMenu={(e) => {
+              e.preventDefault();
+              const rect = {
+                x: e.clientX,
+                y: e.clientY,
+              };
+              handleClickOpen(e, file.filename, rect);
+            }}
           >
             {arrayHeader.map((item) => (
               <li key={item.name} className={headerClass(item.name)}>
@@ -47,10 +55,12 @@ const ListContent: React.FC<ArrayContentProps> = ({ files }) => {
                   ) : item.name === 'filename' ? (
                     <>
                       <IconWrapper type={file.type} className="size-8" />
-                      <span>{file[item.name as keyof typeof file]}</span>
+                      <span>
+                        {String(file[item.name as keyof typeof file])}
+                      </span>
                     </>
                   ) : (
-                    <span>{file[item.name as keyof typeof file]}</span>
+                    <span>{String(file[item.name as keyof typeof file])}</span>
                   )}
                 </div>
               </li>

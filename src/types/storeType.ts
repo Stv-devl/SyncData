@@ -14,7 +14,7 @@ export interface PopupState {
   handleClickOpen: (
     event: React.MouseEvent,
     label: string,
-    rect: DOMRect
+    rect: DOMRect | { x: number; y: number }
   ) => void;
   handleClickClose: (event: MouseEvent) => void;
   handleMouseEnter: (

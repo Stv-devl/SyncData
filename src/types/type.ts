@@ -45,7 +45,7 @@ export interface CustomsInputProps {
   type: string;
   handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   value: string;
-  label: string;
+  label?: string;
   placeholder?: string;
   error?: string;
   autoComplete?: string;

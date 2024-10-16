@@ -1,9 +1,8 @@
 import React, { useCallback, useState } from 'react';
 import { files } from '@/constantes/files';
-import useModalStore from '@/store/useModale';
 import AccordionMenu from '@/components/accordeon/AccordionMenu';
-import Button from '@/components/button/Button';
 import { filteredFiles } from '@/utils/filteredFiles';
+import ButtonModalWrapper from '@/components/button/ButtonModalWrapper';
 import clsx from 'clsx';
 
 const UploadFile = () => {
@@ -40,8 +39,8 @@ const UploadFile = () => {
     'file:font-regular file:mr-3 file:px-2 file:py-1 file:duration-500 file:ease-in-out file:sm:mr-5 file:sm:px-3 file:sm:py-1.5 file:sm:font-semibold'
   );
   return (
-    <>
-      <h1 className="text-darkest-blue text-titleSmall sm:text-title pb-4 sm:pb-7 ">
+    <div className="h-full ">
+      <h1 className="text-darkest-blue text-titleSmall sm:text-title pb-4 text-center sm:pb-7 ">
         Upload a document
       </h1>
       <form action="submit" className="w-full">
@@ -54,26 +53,12 @@ const UploadFile = () => {
           />
         </div>
         <AccordionMenu files={filteredFiles(files)} />
-        <div className="flex justify-between">
-          <div className="mt-5 h-[35px] w-[120px]">
-            <Button
-              label={'Cancel'}
-              color={'empty'}
-              type={'submit'}
-              onClick={() => useModalStore.getState().closeModal()}
-            />
-          </div>
-          <div className="mt-5 h-[35px] w-[120px]">
-            <Button
-              label={'Upload'}
-              color={'full'}
-              type={'submit'}
-              onClick={(e) => handleUpload(e)}
-            />
-          </div>
-        </div>
+        <ButtonModalWrapper
+          actionLabel="Upload"
+          handleAction={(e) => handleUpload(e)}
+        />
       </form>
-    </>
+    </div>
   );
 };
 

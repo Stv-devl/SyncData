@@ -48,11 +48,15 @@ const usePopupStore = create<PopupState>((set) => ({
     set({ isOpen: true, content: label, x, y, transformStyle, isInfo: false });
   },
 
-  handleClickOpen: (event: React.MouseEvent, label: string, rect: DOMRect) => {
+  handleClickOpen: (
+    event: React.MouseEvent,
+    label: string,
+    rect: DOMRect | { x: number; y: number }
+  ) => {
     event.preventDefault();
     setTimeout(() => {
-      const x = rect.left;
-      const y = rect.bottom;
+      const x = 'left' in rect ? rect.left : rect.x;
+      const y = 'bottom' in rect ? rect.bottom : rect.y;
       set({ isOpen: true, content: label, x, y, isInfo: true });
     }, 100);
   },

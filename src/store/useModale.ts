@@ -1,4 +1,4 @@
-import { ModalState } from '@/types/types';
+import { ModalState } from '@/types/storeType';
 import { create } from 'zustand';
 
 /**

@@ -34,7 +34,6 @@ import IconEmpty from '../icones/iconEmpty';
 import IconChevronDown from '../icones/iconeChevronDown';
 import IconChevronRight from '../icones/IconChevronRight';
 import IconCross from '@/icones/IconCross';
-import { on } from 'events';
 
 export const icones = {
   Iconemail,
@@ -86,12 +85,14 @@ export const toolsBtn = [
     icon: icones.IconUpload,
     color: 'full',
     iconColor: '#FFFFFF',
+    type: 'UploadFile',
   },
   {
     label: 'Create a file',
     icon: icones.IconAddFile,
     color: 'empty',
     iconColor: '#08396F',
+    type: 'CreateFile',
   },
 ];
 
@@ -101,18 +102,21 @@ export const selectedToolsBtn = [
     icon: icones.IconDownload,
     color: 'full',
     iconColor: '#FFFFFF',
+    type: 'DownloadFile',
   },
   {
     label: 'Share',
     icon: icones.IconShare,
     color: 'empty',
     iconColor: '#08396F',
+    type: 'ShareFile',
   },
   {
     label: 'Delete',
     icon: icones.IconDelete,
     color: 'full',
     iconColor: '#FFFFFF',
+    type: 'DeleteFile',
   },
 ];
 
@@ -124,18 +128,18 @@ export const arrayHeader = [
 ];
 
 export const arrayIcone = [
-  { icon: icones.IconFavorite, label: 'Add to favorite' },
-  { icon: icones.IconShare, label: 'Copie acces link' },
-  { icon: icones.IconDownload, label: 'Download' },
-  { icon: icones.IconDelete, label: 'Delete' },
+  { icon: icones.IconFavorite, type: 'favorite', label: 'Add to favorite' },
+  { icon: icones.IconShare, type: 'share', label: 'Copie acces link' },
+  { icon: icones.IconDownload, type: 'download', label: 'Download' },
+  { icon: icones.IconDelete, type: 'delete', label: 'Delete' },
 ];
 
 export const arrayPopup = [
-  { icon: icones.IconInfo, label: 'Information' },
-  { icon: icones.IconFavorite, label: 'Favorite' },
-  { icon: icones.IconShare, label: 'Share link' },
-  { icon: icones.IconDownload, label: 'Download' },
-  { icon: icones.IconMoveFile, label: 'Move file' },
-  { icon: icones.IconChangeName, label: 'Change name' },
-  { icon: icones.IconDelete, label: 'Delete' },
+  { icon: icones.IconInfo, type: 'information', label: 'Information' },
+  { icon: icones.IconFavorite, type: 'favorite', label: 'Favorite' },
+  { icon: icones.IconShare, type: 'share', label: 'Share link' },
+  { icon: icones.IconDownload, type: 'download', label: 'Download' },
+  { icon: icones.IconMoveFile, type: 'move', label: 'Move file' },
+  { icon: icones.IconChangeName, type: 'change', label: 'Change name' },
+  { icon: icones.IconDelete, type: 'delete', label: 'Delete' },
 ];

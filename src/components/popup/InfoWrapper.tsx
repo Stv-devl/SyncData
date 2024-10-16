@@ -1,57 +1,12 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import { arrayPopup } from '@/constantes/constantes';
+import useManageFonctions from '@/hook/manage/useManageFonctions';
+import { InfoWrapperProps } from '@/types/type';
 import { twMerge } from 'tailwind-merge';
 import clsx from 'clsx';
-import { InfoWrapperProps } from '@/types/type';
 
 const InfoWrapper: React.FC<InfoWrapperProps> = ({ fileName }) => {
-  const handleInformation = () => {
-    console.log('information');
-  };
-
-  const handleDownload = () => {
-    console.log('download');
-  };
-
-  const handleShare = () => {
-    console.log('share');
-  };
-
-  const handleDelete = () => {
-    console.log('delete');
-  };
-  const handleFavorite = () => {
-    console.log('favorite');
-  };
-
-  const handleMoveFile = () => {
-    console.log('move file');
-  };
-
-  const handleChangeName = () => {
-    console.log('change name');
-  };
-
-  const getActionByType = useCallback((label: string) => {
-    switch (label) {
-      case 'Information':
-        return handleInformation;
-      case 'Favorite':
-        return handleFavorite;
-      case 'Share link':
-        return handleShare;
-      case 'Download':
-        return handleDownload;
-      case 'Move file':
-        return handleMoveFile;
-      case 'Change name':
-        return handleChangeName;
-      case 'Delete':
-        return handleDelete;
-      default:
-        return () => {};
-    }
-  }, []);
+  const { getActionByType } = useManageFonctions();
 
   return (
     <div className="flex flex-col items-center">
@@ -62,7 +17,7 @@ const InfoWrapper: React.FC<InfoWrapperProps> = ({ fileName }) => {
         <div
           key={item.label}
           className="hover:bg-light-blue flex w-full cursor-pointer items-center gap-2 p-2 transition-colors duration-500 lg:gap-4"
-          onClick={getActionByType(item.label)}
+          onClick={() => getActionByType(item.type)}
         >
           <item.icon
             className={twMerge(

@@ -24,3 +24,10 @@ export interface PopupState {
   ) => void;
   handleMouseLeave: () => void;
 }
+
+export interface ModalState {
+  isOpen: boolean;
+  type: string | null;
+  closeModal: () => void;
+  openModal: (type: string) => void;
+}

@@ -6,6 +6,8 @@ import { ArrayContentProps } from '@/types/type';
 import IconWrapper from '../../../../utils/IconFileWrapper';
 import usePopupStore from '@/store/usePopup';
 
+import useManageFonctions from '@/hook/manage/useManageFonctions';
+
 const ListContent: React.FC<ArrayContentProps> = ({ files }) => {
   const {
     isOpen,
@@ -14,6 +16,8 @@ const ListContent: React.FC<ArrayContentProps> = ({ files }) => {
     handleMouseLeave,
     handleClickClose,
   } = usePopupStore();
+
+  const { getActionByType } = useManageFonctions();
 
   const containerRefs = useRef<HTMLLIElement[]>([]);
 
@@ -66,15 +70,16 @@ const ListContent: React.FC<ArrayContentProps> = ({ files }) => {
               </li>
             ))}
             {arrayIcone &&
-              arrayIcone.map((icone, index) => (
+              arrayIcone.map((icon, index) => (
                 <li
                   key={`icone${index}`}
                   className="relative hidden w-7 flex-none px-5 sm:block lg:w-9"
+                  onClick={() => getActionByType(icon.type)}
                 >
-                  <icone.icon
+                  <icon.icon
                     className="text-regular-blue hover:text-dark-blue size-6 transition-colors duration-300"
                     onMouseEnter={(e) =>
-                      handleMouseEnter(e, icone.label, 'translate(-40%, -110%)')
+                      handleMouseEnter(e, icon.type, 'translate(-40%, -110%)')
                     }
                     onMouseLeave={handleMouseLeave}
                   />

@@ -6,12 +6,11 @@ import useModalStore from '@/store/useModale';
 const ToolsBar = () => {
   const isSelected = true;
 
-  const handleButtonClick = useCallback((label: string) => {
-    if (label === 'Download') {
+  const handleButtonClick = useCallback((type: string) => {
+    if (type === 'download') {
       console.log('download');
     } else {
-      const modalName = label.split(' ')[0] + 'File';
-      useModalStore.getState().openModal(modalName);
+      useModalStore.getState().openModal(type);
     }
   }, []);
 
@@ -26,7 +25,7 @@ const ToolsBar = () => {
           <ToolsBarWrapper
             key={item.label}
             {...item}
-            onClick={() => handleButtonClick(item.label)}
+            onClick={() => handleButtonClick(item.type)}
             color={item.color as 'empty' | 'full'}
           />
         ))}

@@ -1,4 +1,4 @@
-import { UserType } from './type';
+import { FileType, UserProfile, UserType } from './type';
 
 export interface BurgerState {
   isOpen: boolean;
@@ -36,15 +36,12 @@ export interface ModalState {
 
 export interface UserState {
   user: UserType | null;
+  files: FileType[] | null;
+  profile: UserProfile | null;
   loading: boolean;
   error: string | null;
   setUser: (user: UserType) => void;
   fetchData: () => Promise<void>;
-  createFolder: ({
-    name,
-    parentId,
-  }: {
-    name: string;
-    parentId: string;
-  }) => Promise<void>;
+  createFolder: (payload: { name: string; parentId?: string }) => Promise<void>;
+  uploadFolder: (payload: { name: string; parentId?: string }) => Promise<void>;
 }

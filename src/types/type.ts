@@ -113,6 +113,10 @@ export interface HeaderProps {
 
 export interface ArrayContentProps {
   files: FileType[];
+}
+
+export interface AccordionMenuProps {
+  files: FileType[];
   handleCheck: (fileId: string, isChecked: boolean) => void;
   checkedFile: string | null;
 }
@@ -128,6 +132,7 @@ export interface FileType {
   id: string;
   filename: string;
   type: string;
+  url: string;
   modified?: string;
   acces?: string;
   files?: FileType[];

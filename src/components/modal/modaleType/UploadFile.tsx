@@ -1,25 +1,24 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useState } from 'react';
 import clsx from 'clsx';
 import AccordionMenu from '@/components/accordeon/AccordionMenu';
-import { filteredFiles } from '@/utils/filteredFiles';
 import ButtonModalWrapper from '@/components/button/ButtonModalWrapper';
-import { useUserStore } from '@/store/useUserStore';
 import useManageChecked from '@/hook/manage/useManageChecked';
+import { filteredFiles } from '@/utils/filteredFiles';
+import { ulpoadFileSchema } from '../../../utils/validationShema';
+import useModalStore from '@/store/useModale';
+import { useUserStore } from '@/store/useUserStore';
+import * as Yup from 'yup';
 
 const UploadFile = () => {
-  const { userFiles } = useUserStore();
+  const { files, uploadFolder } = useUserStore();
 
   const { fileName, setFileName, checkedFile, handleCheck } =
     useManageChecked();
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    if (checkedFile) {
-      console.log('Create a file', { fileName, checkedFile });
-    } else {
-      console.log('Aucun fichier sélectionné.');
-    }
-  };
+  const [errors, setErrors] = useState({
+    name: '',
+    checkbox: '',
+  });
 
   const handleFileChange = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -28,18 +27,42 @@ const UploadFile = () => {
         setFileName('No file chosen.');
         return;
       }
-
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        const result = e.target?.result;
-        if (typeof result === 'string') {
-          setFileName(result);
-        }
-      };
-      reader.readAsText(file);
+      const fileName = file.name;
+      setFileName(fileName);
     },
     [setFileName]
   );
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    try {
+      await ulpoadFileSchema.validate(
+        { name: fileName, checkbox: checkedFile },
+        { abortEarly: false }
+      );
+      const parentId: string = checkedFile ? checkedFile : '';
+      const newFolder = {
+        name: fileName,
+        parentId,
+      };
+      await uploadFolder(newFolder);
+      useModalStore.getState().closeModal();
+    } catch (error) {
+      if (error instanceof Yup.ValidationError) {
+        const fieldErrors = error.inner.reduce<{ [key: string]: string }>(
+          (acc, err) => {
+            if (err.path) acc[err.path] = err.message;
+            return acc;
+          },
+          { name: '', checkbox: '' }
+        );
+        setErrors((prev) => ({ ...prev, ...fieldErrors }));
+      } else {
+        console.error('Login failed:', error);
+        setErrors((prev) => ({ ...prev, general: 'Failed to log in' }));
+      }
+    }
+  };
 
   const browseClass = clsx(
     'file:border-darkest-blue file:text-darkest-blue file:cursor-pointer',
@@ -59,15 +82,21 @@ const UploadFile = () => {
             onChange={handleFileChange}
             className={browseClass}
           />
+          <span className="text-error-red text-sm">{errors.name}</span>
         </div>
-        <AccordionMenu
-          files={filteredFiles(userFiles)}
-          handleCheck={handleCheck}
-          checkedFile={checkedFile}
-        />
+        <div>
+          <AccordionMenu
+            files={files && files.length > 0 ? filteredFiles(files) : []}
+            handleCheck={handleCheck}
+            checkedFile={checkedFile}
+          />
+          <span className="text-error-red text-sm">{errors.checkbox}</span>
+        </div>
         <ButtonModalWrapper
           actionLabel="Upload"
-          handleAction={(e) => handleSubmit(e)}
+          handleAction={(e: React.FormEvent<HTMLFormElement>) =>
+            handleSubmit(e)
+          }
         />
       </form>
     </div>

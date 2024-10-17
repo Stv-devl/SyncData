@@ -10,11 +10,9 @@ import { createFolderSchema } from '@/utils/validationShema';
 import * as Yup from 'yup';
 
 const CreateFolder = () => {
-  const { user, createFolder } = useUserStore();
+  const { files, createFolder } = useUserStore();
   const { fileName, checkedFile, handleCheck, handleChange } =
     useManageChecked();
-
-  const files = user ? user.files : [];
 
   const [errors, setErrors] = useState({
     name: '',
@@ -70,7 +68,7 @@ const CreateFolder = () => {
         </div>
         <div>
           <AccordionMenu
-            files={filteredFiles(files)}
+            files={files && files.length > 0 ? filteredFiles(files) : []}
             handleCheck={handleCheck}
             checkedFile={checkedFile}
           />

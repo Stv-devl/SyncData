@@ -15,7 +15,7 @@ const Array = () => {
   //mettre isList dans store + persistant, pareil pour FileContent
   const [isList, setIsList] = useState(true);
 
-  const { user } = useUserStore();
+  const { files } = useUserStore();
 
   const toggleIcon = () => setIsList((prev) => !prev);
 
@@ -30,12 +30,12 @@ const Array = () => {
     <section className="relative mx-auto size-full rounded-lg bg-white p-4 lg:p-8">
       <Header isList={isList} />
       <div className="bg-lightest-gray h-[97%] w-full rounded-lg ">
-        {user && user.files.length > 1 ? (
+        {files && files.length > 1 ? (
           <>
             {isList ? (
-              <ListContent files={user.files} />
+              <ListContent files={files} />
             ) : (
-              <FileContent files={user.files} />
+              <FileContent files={files} />
             )}
           </>
         ) : (

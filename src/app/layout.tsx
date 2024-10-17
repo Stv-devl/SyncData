@@ -1,8 +1,10 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import '../../src/globals.css';
 import { SessionProvider } from 'next-auth/react';
+import Loading from '@/components/loading/Loading';
+import { useUserStore } from '@/store/useUserStore';
 
 /**
  * RootLayout component serves as the main layout wrapper for the application.

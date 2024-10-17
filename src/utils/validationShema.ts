@@ -29,3 +29,8 @@ export const createFolderSchema = Yup.object().shape({
     .required('Folder name is required'),
   checkbox: Yup.string().required('You must select a folder'),
 });
+
+export const ulpoadFileSchema = Yup.object().shape({
+  name: Yup.string().required('You should browse a file'),
+  checkbox: Yup.string().required('You must select a folder'),
+});

@@ -22,3 +22,10 @@ export const signupValidationSchema = Yup.object({
     .oneOf([Yup.ref('password'), undefined], 'Passwords must match')
     .required('Password is required'),
 });
+
+export const createFolderSchema = Yup.object().shape({
+  name: Yup.string()
+    .min(2, 'Folder name must be at least 2 characters')
+    .required('Folder name is required'),
+  checkbox: Yup.string().required('You must select a folder'),
+});

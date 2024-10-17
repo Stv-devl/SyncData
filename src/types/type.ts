@@ -1,5 +1,23 @@
 import { FormEvent, SVGProps } from 'react';
-import IconWrapper from '../utils/IconFileWrapper';
+
+//user
+export interface UserType {
+  _id: string;
+  credentials: UserCredentials;
+  profile: UserProfile;
+  files: FileType[];
+}
+
+export interface UserProfile {
+  firstname: string;
+  lastname: string;
+  picture: string;
+}
+
+export interface UserCredentials {
+  email: string;
+  password: string;
+}
 
 //signup
 export interface FormDataSignUp {
@@ -95,19 +113,24 @@ export interface HeaderProps {
 
 export interface ArrayContentProps {
   files: FileType[];
+  handleCheck: (fileId: string, isChecked: boolean) => void;
+  checkedFile: string | null;
 }
 
-export interface AccordeonItemProps {
+export interface AccordionItemProps {
   file: FileType;
+  initiallyOpen?: boolean;
+  onCheck: (fileId: string, isChecked: boolean) => void;
+  checkedFile: string | null;
 }
 
 export interface FileType {
-  checked: boolean;
+  id: string;
   filename: string;
   type: string;
-  modified: string;
-  acces: string;
-  files?: [FileType];
+  modified?: string;
+  acces?: string;
+  files?: FileType[];
 }
 
 export interface IconWrapperProps {

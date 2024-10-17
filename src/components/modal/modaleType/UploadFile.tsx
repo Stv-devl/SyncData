@@ -1,23 +1,31 @@
-import React, { useCallback, useState } from 'react';
-import { files } from '@/constantes/files';
+import React, { useCallback } from 'react';
+import clsx from 'clsx';
 import AccordionMenu from '@/components/accordeon/AccordionMenu';
 import { filteredFiles } from '@/utils/filteredFiles';
 import ButtonModalWrapper from '@/components/button/ButtonModalWrapper';
-import clsx from 'clsx';
+import { useUserStore } from '@/store/useUserStore';
+import useManageChecked from '@/hook/manage/useManageChecked';
 
 const UploadFile = () => {
-  const [fileContent, setFileContent] = useState('');
+  const { userFiles } = useUserStore();
 
-  const handleUpload = (e) => {
+  const { fileName, setFileName, checkedFile, handleCheck } =
+    useManageChecked();
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log('upload');
+    if (checkedFile) {
+      console.log('Create a file', { fileName, checkedFile });
+    } else {
+      console.log('Aucun fichier sélectionné.');
+    }
   };
 
   const handleFileChange = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
       const file = event.target.files?.[0];
       if (!file) {
-        setFileContent('No file chosen.');
+        setFileName('No file chosen.');
         return;
       }
 
@@ -25,12 +33,12 @@ const UploadFile = () => {
       reader.onload = (e) => {
         const result = e.target?.result;
         if (typeof result === 'string') {
-          setFileContent(result);
+          setFileName(result);
         }
       };
       reader.readAsText(file);
     },
-    []
+    [setFileName]
   );
 
   const browseClass = clsx(
@@ -52,10 +60,14 @@ const UploadFile = () => {
             className={browseClass}
           />
         </div>
-        <AccordionMenu files={filteredFiles(files)} />
+        <AccordionMenu
+          files={filteredFiles(userFiles)}
+          handleCheck={handleCheck}
+          checkedFile={checkedFile}
+        />
         <ButtonModalWrapper
           actionLabel="Upload"
-          handleAction={(e) => handleUpload(e)}
+          handleAction={(e) => handleSubmit(e)}
         />
       </form>
     </div>

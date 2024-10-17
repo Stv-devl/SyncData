@@ -1,25 +1,42 @@
 import React, { useState } from 'react';
 import { icones } from '@/constantes/constantes';
-import IconFileWrapper from '../../utils/IconFileWrapper';
+import IconFileWrapper from '../wrapper/IconFileWrapper';
 import { filteredFiles } from '@/utils/filteredFiles';
-import { AccordeonItemProps, FileType } from '@/types/type';
+import { AccordionItemProps, FileType } from '@/types/type';
 
-const AccordionItem: React.FC<AccordeonItemProps> = ({ file }) => {
-  const [isOpen, setIsOpen] = useState(false);
+const AccordionItem: React.FC<AccordionItemProps> = ({
+  file,
+  initiallyOpen = false,
+  onCheck,
+  checkedFile,
+}) => {
+  const [isOpen, setIsOpen] = useState(initiallyOpen);
 
   const toggleOpen = () => setIsOpen(!isOpen);
+
+  const isChecked = checkedFile === file.id;
+
+  const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const checked = e.target.checked;
+    onCheck(file.id, checked);
+  };
 
   const getChevronIcon = () =>
     isOpen ? <icones.IconChevronDown /> : <icones.IconChevronRight />;
 
   return (
     <div className="ml-1">
-      <div
-        onClick={toggleOpen}
-        className="flex cursor-pointer items-center gap-2 "
-      >
-        <div>{getChevronIcon()}</div>
-        <input type="checkbox" className="border-dark-gray size-4 border-2" />
+      <div className="flex items-center gap-2">
+        <div onClick={toggleOpen} className="cursor-pointer">
+          {getChevronIcon()}
+        </div>
+        <input
+          type="checkbox"
+          className="border-dark-gray size-4 border-2"
+          checked={isChecked}
+          onChange={handleCheckboxChange}
+          onClick={(e) => e.stopPropagation()}
+        />
         <div className="icon-wrapper">
           <IconFileWrapper type={file.type} className="size-5" />
         </div>
@@ -27,9 +44,14 @@ const AccordionItem: React.FC<AccordeonItemProps> = ({ file }) => {
       </div>
 
       {isOpen && file.files && file.files.length > 0 && (
-        <div className="">
-          {filteredFiles(file.files).map((child: FileType, index: number) => (
-            <AccordionItem key={index} file={child} />
+        <div className="pl-4">
+          {filteredFiles(file.files).map((child: FileType) => (
+            <AccordionItem
+              key={child.id}
+              file={child}
+              onCheck={onCheck}
+              checkedFile={checkedFile}
+            />
           ))}
         </div>
       )}

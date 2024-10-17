@@ -3,7 +3,7 @@ import { arrayHeader, arrayIcone } from '@/constantes/constantes';
 import { headerClass } from '@/utils/headerClass';
 import { icones } from '@/constantes/constantes';
 import { ArrayContentProps } from '@/types/type';
-import IconWrapper from '../../../../utils/IconFileWrapper';
+import IconWrapper from '../../../wrapper/IconFileWrapper';
 import usePopupStore from '@/store/usePopup';
 
 import useManageFonctions from '@/hook/manage/useManageFonctions';

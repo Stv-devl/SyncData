@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
-import usePopupStore from '@/store/usePopup';
+import usePopupStore from '../../../../store/usePopup';
 import { ArrayContentProps } from '@/types/type';
-import IconFileWrapper from '../../../../utils/IconFileWrapper';
+import IconFileWrapper from '../../../wrapper/IconFileWrapper';
 
 const FileContent: React.FC<ArrayContentProps> = ({ files }) => {
   const { isOpen, handleClickOpen, handleClickClose } = usePopupStore();

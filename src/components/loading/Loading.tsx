@@ -7,8 +7,8 @@ import React from 'react';
 
 const Loading = (): JSX.Element => {
   return (
-    <div className="flex items-center justify-center min-h-100vh w-full z-11 top-0 left-0 bg-slate-400 opacity-30 my-auto">
-      <span className="absolute top-[40vh] border-[10px] border-dark-blue border-t-gray-200 rounded-full mx-auto w-[60px] h-[60px] animate-spin"></span>
+    <div className="min-h-100vh z-11 left-0 top-0 my-auto flex w-full items-center justify-center bg-slate-400 opacity-30">
+      <span className="border-dark-blue absolute top-[40vh] mx-auto size-[60px] animate-spin rounded-full border-[10px] border-t-gray-200"></span>
     </div>
   );
 };

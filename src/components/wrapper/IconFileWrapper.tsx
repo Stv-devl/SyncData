@@ -1,10 +1,11 @@
 import React from 'react';
-import { icones } from '../constantes/constantes';
+import { icones } from '../../constantes/constantes';
 import { IconWrapperProps } from '@/types/type';
 
 const IconFileWrapper: React.FC<IconWrapperProps> = ({ type, className }) => {
   const iconMapping = {
-    files: icones.IconFiles,
+    home: icones.IconHomeFile,
+    folder: icones.IconFiles,
     pdf: icones.IconPdf,
     image: icones.IconImage,
     unknown: icones.IconUnknown,

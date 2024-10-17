@@ -1,36 +1,36 @@
 export const files = [
   {
-    checked: false,
+    id: '354354354351',
     filename: '01 Drawing ',
-    type: 'files',
+    type: 'folder',
     modified: '10/10/2022',
     acces: 'only you',
     files: [
       {
-        checked: false,
+        id: '6135468544645',
         filename: 'test04',
-        type: 'files',
+        type: 'folder',
         modified: '10/10/2022',
         acces: 'only you',
         files: [
           {
-            checked: false,
+            id: '35413354645',
             filename: 'test0.pdf',
-            type: 'files',
+            type: 'folder',
             modified: '10/10/2022',
             acces: 'only you',
             files: [
               {
-                checked: false,
+                id: '6151651585',
                 filename: 'test06',
-                type: 'files',
+                type: 'folder',
                 modified: '10/10/2022',
                 acces: 'only you',
                 files: [
                   {
-                    checked: false,
+                    id: '354684632645',
                     filename: 'test07',
-                    type: 'files',
+                    type: 'folder',
                     modified: '10/10/2022',
                     acces: 'only you',
                   },
@@ -41,14 +41,14 @@ export const files = [
         ],
       },
       {
-        checked: false,
+        id: '63543513545',
         filename: 'test02.pdf',
         type: 'pdf',
         modified: '10/10/2022',
         acces: 'only you',
       },
       {
-        checked: false,
+        id: '654684322',
         filename: 'test03.pdf',
         type: 'pdf',
         modified: '10/10/2022',
@@ -57,28 +57,28 @@ export const files = [
     ],
   },
   {
-    checked: false,
+    id: '321679465465',
     filename: '02 Surveying',
-    type: 'files',
+    type: 'folder',
     modified: '10/10/2022',
     acces: 'only you',
   },
   {
-    checked: false,
+    id: '65453544645',
     filename: '03 Price',
-    type: 'files',
+    type: 'folder',
     modified: '10/10/2022',
     acces: 'only you',
   },
   {
-    checked: false,
+    id: '5153254645',
     filename: 'Dupon-DCE.pdf',
     type: 'pdf',
     modified: '10/10/2022',
     acces: 'only you',
   },
   {
-    checked: false,
+    id: '6153354645',
     filename: 'Dupon-house.png',
     type: 'image',
     modified: '10/10/2022',
@@ -86,7 +86,7 @@ export const files = [
   },
 
   {
-    checked: false,
+    id: '6143354655',
     filename: 'Dupont-house.xbg',
     type: 'unknown',
     modified: '10/10/2022',
@@ -94,12 +94,12 @@ export const files = [
   },
 
   {
-    checked: false,
+    id: '6143354654',
     filename: 'Dupont-house.dwg',
     type: 'dwg',
     modified: '10/10/2022',
     acces: 'only you',
   },
 ];
-
-/*const files = [];*/
+/*
+export const files = [];*/

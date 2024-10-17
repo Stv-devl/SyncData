@@ -34,6 +34,7 @@ import IconEmpty from '../icones/iconEmpty';
 import IconChevronDown from '../icones/iconeChevronDown';
 import IconChevronRight from '../icones/IconChevronRight';
 import IconCross from '@/icones/IconCross';
+import IconHomeFile from '../icones/iconeFiles/IconHomeFile';
 
 export const icones = {
   Iconemail,
@@ -70,6 +71,7 @@ export const icones = {
   IconChevronDown,
   IconChevronRight,
   IconCross,
+  IconHomeFile,
 };
 
 export const navItems = [
@@ -92,7 +94,7 @@ export const toolsBtn = [
     icon: icones.IconAddFile,
     color: 'empty',
     iconColor: '#08396F',
-    type: 'CreateFile',
+    type: 'CreateFolder',
   },
 ];
 

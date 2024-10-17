@@ -1,3 +1,5 @@
+import { UserType } from './type';
+
 export interface BurgerState {
   isOpen: boolean;
   toggleBurger: () => void;
@@ -30,4 +32,19 @@ export interface ModalState {
   type: string | null;
   closeModal: () => void;
   openModal: (type: string) => void;
+}
+
+export interface UserState {
+  user: UserType | null;
+  loading: boolean;
+  error: string | null;
+  setUser: (user: UserType) => void;
+  fetchData: () => Promise<void>;
+  createFolder: ({
+    name,
+    parentId,
+  }: {
+    name: string;
+    parentId: string;
+  }) => Promise<void>;
 }

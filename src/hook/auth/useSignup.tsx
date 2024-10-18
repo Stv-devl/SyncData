@@ -1,5 +1,5 @@
 import { FormEvent, useCallback, useState } from 'react';
-import apiSignup from '../../service/apiSignup';
+import getSignup from '../../service/getSignup';
 import { FormDataSignUp, UseSignUpReturn } from '../../types/type';
 import { useRouter } from 'next/navigation';
 import { signupValidationSchema } from '../../utils/validationShema';
@@ -68,7 +68,7 @@ const useSignUp = (): UseSignUpReturn => {
     try {
       await signupValidationSchema.validate(formData, { abortEarly: false });
 
-      const newUser = await apiSignup(formData.email, formData.password);
+      const newUser = await getSignup(formData.email, formData.password);
       console.log('Signup successful', newUser);
 
       const result = await signIn('credentials', {

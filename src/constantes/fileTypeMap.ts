@@ -1,4 +1,4 @@
-export const fileTypeMapping = {
+export const fileTypeMap = {
   //Document types
   pdf: 'pdf',
   doc: 'doc',

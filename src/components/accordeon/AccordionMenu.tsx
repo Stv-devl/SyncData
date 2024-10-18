@@ -1,13 +1,13 @@
 import React from 'react';
 import AccordionItem from './AccordionItem';
-import { AccordionMenuProps, FileType } from '@/types/type';
+import { AccordionFirstFileType, AccordionMenuProps } from '@/types/type';
 
 const AccordionMenu: React.FC<AccordionMenuProps> = ({
   files,
   handleCheck,
   checkedFile,
 }) => {
-  const firstFile: FileType = {
+  const firstFile: AccordionFirstFileType = {
     id: 'root',
     filename: 'Home',
     type: 'home',

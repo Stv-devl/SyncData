@@ -5,7 +5,7 @@ import Input from '@/components/form/Input';
 import useManageChecked from '@/hook/manage/useManageChecked';
 import { useUserStore } from '@/store/useUserStore';
 import useModalStore from '@/store/useModale';
-import { filteredFiles } from '@/utils/filteredFiles';
+import { filteredFolders } from '@/utils/filteredFolders';
 import { createFolderSchema } from '@/utils/validationShema';
 import * as Yup from 'yup';
 
@@ -68,7 +68,7 @@ const CreateFolder = () => {
         </div>
         <div>
           <AccordionMenu
-            files={files && files.length > 0 ? filteredFiles(files) : []}
+            files={files && files.length > 0 ? filteredFolders(files) : []}
             handleCheck={handleCheck}
             checkedFile={checkedFile}
           />

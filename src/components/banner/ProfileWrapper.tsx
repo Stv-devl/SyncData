@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
-import { icones } from '../../constantes/constantes';
+import { iconsMap } from '../../constantes/iconsMap';
 import { signOut } from 'next-auth/react';
 import usePopupStore from '@/store/usePopup';
 import { useMediaQuery } from 'react-responsive';
@@ -27,7 +27,7 @@ const ProfileWrapper = () => {
         onMouseLeave={handleMouseLeave}
       >
         {!isImage ? (
-          <icones.Iconprofile
+          <iconsMap.Iconprofile
             width={50}
             height={50}
             className=" size-[40px] rounded-full border-2 border-blue-600"
@@ -47,7 +47,7 @@ const ProfileWrapper = () => {
         className="items-centerml-2 flex cursor-pointer"
         onClick={() => signOut()}
       >
-        <icones.Iconlogout
+        <iconsMap.Iconlogout
           fill={'#08396F'}
           className="size-[25px] w-[35px]"
           onMouseEnter={(e) => handleMouseEnter(e, 'Logout', transformLogout)}

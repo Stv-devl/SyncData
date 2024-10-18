@@ -4,6 +4,7 @@ import Loading from '@/components/loading/Loading';
 import Modal from '@/components/modal/Modal';
 import Popup from '@/components/popup/Popup';
 import { useUserStore } from '@/store/useUserStore';
+import { useSession } from 'next-auth/react';
 import React, { useEffect } from 'react';
 
 /**
@@ -18,11 +19,14 @@ const MainLayout: React.FC<{ children: React.ReactNode }> = ({
 }: {
   children: React.ReactNode;
 }): JSX.Element => {
-  const { fetchData, loading, error } = useUserStore();
+  const { data: session } = useSession();
+  const { loading, error, fetchData } = useUserStore();
 
   useEffect(() => {
-    fetchData();
-  }, [fetchData]);
+    if (session?.user?.id) {
+      fetchData(session.user.id);
+    }
+  }, [session, fetchData]);
 
   if (loading) {
     return <Loading />;

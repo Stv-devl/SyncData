@@ -1,6 +1,4 @@
 import React from 'react';
-import Button from '../../button/Button';
-import useModalStore from '@/store/useModale';
 import ButtonModalWrapper from '@/components/button/ButtonModalWrapper';
 
 const DeleteFile = () => {

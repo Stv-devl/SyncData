@@ -1,11 +1,13 @@
 import { create } from 'zustand';
 import { userData } from '@/constantes/user';
+import { useSession } from 'next-auth/react';
 import { getCurrentDate } from '@/utils/getCurrentDate';
 import { generateId } from '@/utils/generateId';
 import { addFileToParent } from '@/utils/addFileToParent';
 import { UserState } from '@/types/storeType';
 import { FileType } from '@/types/type';
 import { getFileType } from '@/utils/getFileType';
+import getUsers from '@/service/getUsers';
 
 export const useUserStore = create<UserState>((set) => ({
   user: null,
@@ -16,12 +18,11 @@ export const useUserStore = create<UserState>((set) => ({
 
   setUser: (user) => set({ user }),
 
-  fetchData: async (): Promise<void> => {
-    const userId = '61e4d0e8c9b4c1a6c4a5a2a3';
+  fetchData: async (userId: string): Promise<void> => {
     set({ loading: true, error: null });
     try {
-      const response = userData;
-      const user = response.find((u) => u._id === userId) || null;
+      const response = await getUsers();
+      const user = response.users.find((u) => u._id === userId) || null;
       if (user) {
         set({
           user: user,

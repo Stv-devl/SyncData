@@ -3,7 +3,7 @@ import clsx from 'clsx';
 import AccordionMenu from '@/components/accordeon/AccordionMenu';
 import ButtonModalWrapper from '@/components/button/ButtonModalWrapper';
 import useManageChecked from '@/hook/manage/useManageChecked';
-import { filteredFiles } from '@/utils/filteredFiles';
+import { filteredFolders } from '@/utils/filteredFolders';
 import { ulpoadFileSchema } from '../../../utils/validationShema';
 import useModalStore from '@/store/useModale';
 import { useUserStore } from '@/store/useUserStore';
@@ -86,7 +86,7 @@ const UploadFile = () => {
         </div>
         <div>
           <AccordionMenu
-            files={files && files.length > 0 ? filteredFiles(files) : []}
+            files={files && files.length > 0 ? filteredFolders(files) : []}
             handleCheck={handleCheck}
             checkedFile={checkedFile}
           />

@@ -6,7 +6,7 @@ import useSignUp from '../../hook/auth/useSignup';
 import Input from '../../components/form/Input';
 import Button from '../../components/button/Button';
 import Loading from '@/components/loading/Loading';
-import { icones } from '@/constantes/constantes';
+import { iconsMap } from '@/constantes/iconsMap';
 
 const SignUp = (): JSX.Element => {
   const {
@@ -22,7 +22,7 @@ const SignUp = (): JSX.Element => {
     <main>
       <section className="sm:bg-lightest-gray flex h-screen w-full flex-col bg-white sm:mt-20 sm:rounded-lg">
         <div className="sm:mt:0 mt-10 flex w-full flex-col items-center gap-[51px] px-[5%] sm:px-0">
-          <icones.Iconlogo />
+          <iconsMap.Iconlogo />
           <div className="flex flex-col items-start gap-[40px] bg-white sm:w-[476px] sm:p-[40px]">
             <div className="flex flex-col gap-[24px]">
               <h1 className="text-titleSmall sm:text-title text-darkest-blue">
@@ -44,7 +44,7 @@ const SignUp = (): JSX.Element => {
                   value={formData.email}
                   error={signupErrors.email}
                   autoComplete={'email'}
-                  IconComponent={icones.Iconemail}
+                  IconComponent={iconsMap.Iconemail}
                 />
               </div>
               <div className="input-wrapper">
@@ -57,7 +57,7 @@ const SignUp = (): JSX.Element => {
                   value={formData.password}
                   error={signupErrors.password}
                   autoComplete={'new-password'}
-                  IconComponent={icones.Iconpassword}
+                  IconComponent={iconsMap.Iconpassword}
                 />
               </div>
               <div className="input-wrapper mb-2">
@@ -70,7 +70,7 @@ const SignUp = (): JSX.Element => {
                   value={formData.repeat}
                   error={signupErrors.repeat}
                   autoComplete={'new-password'}
-                  IconComponent={icones.Iconpassword}
+                  IconComponent={iconsMap.Iconpassword}
                 />
               </div>
 
@@ -88,7 +88,7 @@ const SignUp = (): JSX.Element => {
                   label={'Signup with Google'}
                   onClick={handleGoogleSignIn}
                   color={'empty'}
-                  IconComponent={icones.Icongoogle}
+                  IconComponent={iconsMap.Icongoogle}
                   disabled={isLoading}
                 />
               </div>

@@ -41,7 +41,7 @@ export interface UserState {
   loading: boolean;
   error: string | null;
   setUser: (user: UserType) => void;
-  fetchData: () => Promise<void>;
+  fetchData: (userId: string) => Promise<void>;
   createFolder: (payload: { name: string; parentId?: string }) => Promise<void>;
   uploadFolder: (payload: { name: string; parentId?: string }) => Promise<void>;
 }

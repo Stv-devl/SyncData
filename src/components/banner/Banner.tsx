@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { usePathname } from 'next/navigation';
-import { icones, navItems } from '../../constantes/constantes';
+import { iconsMap } from '../../constantes/iconsMap';
+import { navItems } from '../../constantes/constantes';
 import NavWrapper from './NavWrapper';
 import { useMediaQuery } from 'react-responsive';
 import NavMobile from './NavMobile';
@@ -28,7 +29,7 @@ const Banner = () => {
           <div className="flex size-full flex-row items-center justify-between lg:flex-col">
             <div className="flex size-full flex-row lg:block">
               <div className="flex items-center justify-center lg:mb-11">
-                <icones.Iconlogo className="size-[80px] lg:h-[110px] lg:w-[105px]" />
+                <iconsMap.Iconlogo className="size-[80px] lg:h-[110px] lg:w-[105px]" />
               </div>
               <div className="text-darkest-blue boxShadow-custom-gray ml-7 flex w-full flex-row items-center gap-3 font-semibold lg:ml-0 lg:flex-col lg:gap-5">
                 {navItems.map((item) => (

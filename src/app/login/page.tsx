@@ -6,7 +6,7 @@ import Input from '../../components/form/Input';
 import Link from 'next/link';
 import Button from '../../components/button/Button';
 import Loading from '@/components/loading/Loading';
-import { icones } from '../../constantes/constantes';
+import { iconsMap } from '../../constantes/iconsMap';
 
 const Login = (): JSX.Element => {
   const {
@@ -22,7 +22,7 @@ const Login = (): JSX.Element => {
     <main>
       <section className="sm:bg-lightest-gray  flex h-screen w-full flex-col bg-white sm:mt-20 sm:rounded-lg">
         <div className="sm:mt:0 mt-10 flex w-full flex-col items-center gap-[51px] px-[8%] sm:px-0">
-          <icones.Iconlogo />
+          <iconsMap.Iconlogo />
           <div className="flex flex-col items-start gap-[40px] bg-white sm:w-[476px] sm:p-[40px]">
             <div className="flex flex-col gap-[24px]">
               <h1 className="text-titleSmall sm:text-title text-darkest-blue">
@@ -45,7 +45,7 @@ const Login = (): JSX.Element => {
                     value={formData.email}
                     error={loginErrors.email}
                     autoComplete={'email'}
-                    IconComponent={icones.Iconemail}
+                    IconComponent={iconsMap.Iconemail}
                   />
                 </div>
                 <div className="flex flex-col gap-1">
@@ -58,7 +58,7 @@ const Login = (): JSX.Element => {
                     value={formData.password}
                     error={loginErrors.password}
                     autoComplete={'current-password'}
-                    IconComponent={icones.Iconpassword}
+                    IconComponent={iconsMap.Iconpassword}
                   />
                 </div>
               </div>
@@ -79,7 +79,7 @@ const Login = (): JSX.Element => {
                   label={'Login with Google'}
                   onClick={handleGoogleSignIn}
                   color={'empty'}
-                  IconComponent={icones.Icongoogle}
+                  IconComponent={iconsMap.Icongoogle}
                   disabled={isLoading}
                 />
               </div>

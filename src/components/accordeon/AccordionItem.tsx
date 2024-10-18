@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { icones } from '@/constantes/constantes';
+import { iconsMap } from '@/constantes/iconsMap';
 import IconFileWrapper from '../wrapper/IconFileWrapper';
-import { filteredFiles } from '@/utils/filteredFiles';
+import { filteredFolders } from '@/utils/filteredFolders';
 import { AccordionItemProps, FileType } from '@/types/type';
 
 const AccordionItem: React.FC<AccordionItemProps> = ({
@@ -22,7 +22,7 @@ const AccordionItem: React.FC<AccordionItemProps> = ({
   };
 
   const getChevronIcon = () =>
-    isOpen ? <icones.IconChevronDown /> : <icones.IconChevronRight />;
+    isOpen ? <iconsMap.IconChevronDown /> : <iconsMap.IconChevronRight />;
 
   return (
     <div className="ml-1">
@@ -45,7 +45,7 @@ const AccordionItem: React.FC<AccordionItemProps> = ({
 
       {isOpen && file.files && file.files.length > 0 && (
         <div className="pl-4">
-          {filteredFiles(file.files).map((child: FileType) => (
+          {filteredFolders(file.files).map((child: FileType) => (
             <AccordionItem
               key={child.id}
               file={child}

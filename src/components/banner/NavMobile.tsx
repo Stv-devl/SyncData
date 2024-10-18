@@ -1,5 +1,6 @@
 import React from 'react';
-import { icones, navItems } from '../../constantes/constantes';
+import { iconsMap } from '@/constantes/iconsMap';
+import { navItems } from '../../constantes/constantes';
 import NavWrapper from './NavWrapper';
 import { usePathname } from 'next/navigation';
 import useBurgerStore from '@/store/useBurgerMenu';
@@ -17,9 +18,9 @@ const NavMobile = () => {
           className="flex cursor-pointer items-center"
           onClick={toggleBurger}
         >
-          {!isOpen ? <icones.IconVector fill={'#08396F'} /> : ''}
+          {!isOpen ? <iconsMap.IconVector fill={'#08396F'} /> : ''}
         </div>
-        <icones.Iconlogo className="ml-2 h-[75px] w-[70px]" />
+        <iconsMap.Iconlogo className="ml-2 h-[75px] w-[70px]" />
         <div className="flex flex-row items-center gap-2 lg:flex-col ">
           <ProfileWrapper />
         </div>

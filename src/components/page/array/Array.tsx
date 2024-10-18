@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { icones } from '../../../constantes/constantes';
+import { iconsMap } from '../../../constantes/iconsMap';
 import { twMerge } from 'tailwind-merge';
 import clsx from 'clsx';
 import usePopupStore from '@/store/usePopup';
@@ -56,7 +56,7 @@ const Array = () => {
         onMouseEnter={(e) => handleMouseEnter(e, mouseLabel, mouseTransform)}
         onMouseLeave={handleMouseLeave}
       >
-        {isList ? <icones.IconSortFiles /> : <icones.IconSortList />}
+        {isList ? <iconsMap.IconSortFiles /> : <iconsMap.IconSortList />}
       </div>
     </section>
   );

@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { arrayHeader, arrayIcone } from '@/constantes/constantes';
 import { headerClass } from '@/utils/headerClass';
-import { icones } from '@/constantes/constantes';
+import { iconsMap } from '@/constantes/iconsMap';
 import { ArrayContentProps } from '@/types/type';
 import IconWrapper from '../../../wrapper/IconFileWrapper';
 import usePopupStore from '@/store/usePopup';
@@ -97,7 +97,7 @@ const ListContent: React.FC<ArrayContentProps> = ({ files }) => {
                 handleClickOpen(e, file.filename, rect);
               }}
             >
-              <icones.IconInfo className="text-regular-blue hover:text-dark-blue size-6 transition-colors duration-300" />
+              <iconsMap.IconInfo className="text-regular-blue hover:text-dark-blue size-6 transition-colors duration-300" />
             </li>
           </ul>
         ))}

@@ -1,6 +1,6 @@
 import ButtonModalWrapper from '@/components/button/ButtonModalWrapper';
 import Input from '@/components/form/Input';
-import { icones } from '@/constantes/constantes';
+import { iconsMap } from '@/constantes/iconsMap';
 import React from 'react';
 
 const ShareFile = () => {
@@ -29,7 +29,7 @@ const ShareFile = () => {
             handleChange={(e) => handleChange(e)}
             autoComplete="off"
             error=""
-            IconComponent={icones.IconSearch}
+            IconComponent={iconsMap.IconSearch}
           />
         </div>
         <div className="flex items-center justify-center">
@@ -47,7 +47,7 @@ const ShareFile = () => {
             handleChange={(e) => handleChange(e)}
             autoComplete="off"
             error=""
-            IconComponent={icones.IconSearch}
+            IconComponent={iconsMap.IconSearch}
           />
         </div>
       </div>

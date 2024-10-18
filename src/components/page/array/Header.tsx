@@ -1,7 +1,8 @@
 'use client';
 
 import React from 'react';
-import { arrayIcone, icones } from '../../../constantes/constantes';
+import { iconsMap } from '../../../constantes/iconsMap';
+import { arrayIcone } from '../../../constantes/constantes';
 import clsx from 'clsx';
 import { twMerge } from 'tailwind-merge';
 import usePopupStore from '@/store/usePopup';
@@ -32,7 +33,7 @@ const Header: React.FC<HeaderProps> = ({ isList }) => {
           onMouseLeave={handleMouseLeave}
         >
           <span>Name</span>
-          <icones.IconSort />
+          <iconsMap.IconSort />
         </div>
       </li>
       <li className="w-25 hidden cursor-pointer px-2 sm:block lg:w-32">
@@ -44,7 +45,7 @@ const Header: React.FC<HeaderProps> = ({ isList }) => {
           onMouseLeave={handleMouseLeave}
         >
           <span>Modified</span>
-          <icones.IconSort />
+          <iconsMap.IconSort />
         </div>
       </li>
       {isList && (
@@ -54,7 +55,7 @@ const Header: React.FC<HeaderProps> = ({ isList }) => {
       )}
       <>
         {isList &&
-          arrayIcone.map((icone, index) => (
+          arrayIcone.map((icon, index) => (
             <li
               key={'header-icon-' + index}
               className="hidden w-7 flex-none px-5 sm:block lg:w-9"

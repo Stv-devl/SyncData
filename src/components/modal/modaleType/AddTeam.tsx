@@ -1,5 +1,5 @@
 import React from 'react';
-import { icones } from '@/constantes/constantes';
+import { iconsMap } from '@/constantes/iconsMap';
 import Input from '@/components/form/Input';
 import ButtonModalWrapper from '@/components/button/ButtonModalWrapper';
 
@@ -28,7 +28,7 @@ const AddTeam = () => {
             handleChange={(e) => handleChange(e)}
             autoComplete="off"
             error=""
-            IconComponent={icones.IconSearch}
+            IconComponent={iconsMap.IconSearch}
           />
         </div>
         <div className="flex items-center justify-center">
@@ -46,7 +46,7 @@ const AddTeam = () => {
             handleChange={(e) => handleChange(e)}
             autoComplete="off"
             error=""
-            IconComponent={icones.IconSearch}
+            IconComponent={iconsMap.IconSearch}
           />
         </div>
       </div>

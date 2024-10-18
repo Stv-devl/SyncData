@@ -1,14 +1,14 @@
 import React from 'react';
 import useModalStore from '@/store/useModale';
-import { modalComponent } from '../../constantes/modalComponent';
-import { icones } from '../../constantes/constantes';
+import { modalsMap } from '../../constantes/modalsMap';
+import { iconsMap } from '../../constantes/iconsMap';
 
 const Modal = () => {
   const { isOpen, type } = useModalStore();
 
   if (!isOpen) return null;
 
-  const ModalContent = modalComponent[type as keyof typeof modalComponent];
+  const ModalContent = modalsMap[type as keyof typeof modalsMap];
 
   return (
     <div className="bg-dark-gray/40 z-99 fixed inset-0 flex justify-center sm:items-center">
@@ -18,7 +18,7 @@ const Modal = () => {
           className="absolute right-2 top-1 cursor-pointer"
           onClick={() => useModalStore.getState().closeModal()}
         >
-          <icones.IconCross />
+          <iconsMap.IconCross />
         </div>
       </div>
     </div>

@@ -1,7 +1,7 @@
 import Button from '@/components/button/Button';
 import useManageFilter from '@/hook/manage/useManageFilter';
 import React from 'react';
-import { icones } from '@/constantes/constantes';
+import { iconsMap } from '@/constantes/iconsMap';
 import Input from '../../form/Input';
 import useModalStore from '@/store/useModale';
 
@@ -19,7 +19,7 @@ const SearchBar = () => {
           handleChange={handleChange}
           placeholder={`search for a files`}
           autoComplete="off"
-          IconComponent={icones.IconSearch}
+          IconComponent={iconsMap.IconSearch}
         />
       </div>
       <div className="h-[35px] w-2/5 text-sm sm:h-[40px] sm:w-[210px] sm:text-base">
@@ -33,7 +33,7 @@ const SearchBar = () => {
           color={'empty'}
           onClick={() => useModalStore.getState().openModal('AddTeam')}
           disabled={false}
-          IconComponent={icones.IconAddTeam}
+          IconComponent={iconsMap.IconAddTeam}
         />
       </div>
     </section>

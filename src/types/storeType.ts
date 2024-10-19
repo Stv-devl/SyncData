@@ -8,6 +8,7 @@ export interface BurgerState {
 export interface PopupState {
   isOpen: boolean;
   content: string | null;
+  fileId?: string | null;
   x: number;
   y: number;
   transformStyle: string | null;
@@ -16,7 +17,8 @@ export interface PopupState {
   handleClickOpen: (
     event: React.MouseEvent,
     label: string,
-    rect: DOMRect | { x: number; y: number }
+    rect: DOMRect | { x: number; y: number },
+    fileId: string
   ) => void;
   handleClickClose: (event: MouseEvent) => void;
   handleMouseEnter: (
@@ -30,8 +32,9 @@ export interface PopupState {
 export interface ModalState {
   isOpen: boolean;
   type: string | null;
+  fileId?: string | null;
   closeModal: () => void;
-  openModal: (type: string) => void;
+  openModal: (type: string, fileId: string) => void;
 }
 
 export interface UserState {
@@ -42,6 +45,17 @@ export interface UserState {
   error: string | null;
   setUser: (user: UserType) => void;
   fetchData: (userId: string) => Promise<void>;
-  createFolder: (payload: { name: string; parentId?: string }) => Promise<void>;
-  uploadFolder: (payload: { name: string; parentId?: string }) => Promise<void>;
+  createFiles: (payload: {
+    name: string;
+    parentId: string;
+    type: string;
+  }) => Promise<void>;
+  removeFile: (fileId: string) => Promise<void>;
+}
+
+export interface CreateFileResponse {
+  userId: string;
+  file: FileType;
+  parentId: string;
+  type: string;
 }

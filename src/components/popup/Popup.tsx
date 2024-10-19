@@ -8,7 +8,10 @@ import clsx from 'clsx';
 const Popup = () => {
   const popupRef = useRef<HTMLDivElement>(null);
 
-  const { isOpen, content, x, y, transformStyle, isInfo } = usePopupStore();
+  const { isOpen, content, fileId, x, y, transformStyle, isInfo } =
+    usePopupStore();
+
+  console.log(fileId);
 
   const { popupPosition } = useManagePosition(popupRef);
 
@@ -40,7 +43,7 @@ const Popup = () => {
           )}
           style={{ top: popupPosition.top, left: popupPosition.left }}
         >
-          <InfoWrapper fileName={content} />
+          <InfoWrapper fileName={content} fileId={fileId} />
         </div>
       ) : (
         <div

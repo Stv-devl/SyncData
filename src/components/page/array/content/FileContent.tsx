@@ -32,7 +32,7 @@ const FileContent: React.FC<ArrayContentProps> = ({ files }) => {
             onContextMenu={(e) => {
               e.preventDefault();
               const rect = containerRefs.current[index].getBoundingClientRect();
-              handleClickOpen(e, file.filename, rect);
+              handleClickOpen(e, file.filename, rect, file.id);
             }}
           >
             <IconFileWrapper type={file.type} />

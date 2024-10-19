@@ -15,7 +15,9 @@ import { create } from 'zustand';
 const useModalStore = create<ModalState>((set) => ({
   isOpen: false,
   type: null,
-  openModal: (type: string) => set({ isOpen: true, type }),
+  fileId: null,
+  openModal: (type: string, fileId: string) =>
+    set({ isOpen: true, type, fileId }),
   closeModal: () => set({ isOpen: false, type: null }),
 }));
 

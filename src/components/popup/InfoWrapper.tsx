@@ -5,7 +5,7 @@ import { InfoWrapperProps } from '@/types/type';
 import { twMerge } from 'tailwind-merge';
 import clsx from 'clsx';
 
-const InfoWrapper: React.FC<InfoWrapperProps> = ({ fileName }) => {
+const InfoWrapper: React.FC<InfoWrapperProps> = ({ fileName, fileId }) => {
   const { getActionByType } = useManageFonctions();
 
   return (
@@ -17,7 +17,7 @@ const InfoWrapper: React.FC<InfoWrapperProps> = ({ fileName }) => {
         <div
           key={item.label}
           className="hover:bg-light-blue flex w-full cursor-pointer items-center gap-2 p-2 transition-colors duration-500 lg:gap-4"
-          onClick={() => getActionByType(item.type)}
+          onClick={() => getActionByType(item.type, fileId)}
         >
           <item.icon
             className={twMerge(

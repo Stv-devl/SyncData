@@ -10,7 +10,7 @@ import { createFolderSchema } from '@/utils/validationShema';
 import * as Yup from 'yup';
 
 const CreateFolder = () => {
-  const { files, createFolder } = useUserStore();
+  const { files, createFiles } = useUserStore();
   const { fileName, checkedFile, handleCheck, handleChange } =
     useManageChecked();
 
@@ -28,8 +28,8 @@ const CreateFolder = () => {
         { abortEarly: false }
       );
       const parentId: string = checkedFile ? checkedFile : '';
-      const newFolder = { name: fileName, parentId };
-      await createFolder(newFolder);
+      const newFolder = { name: fileName, parentId, type: 'folder' };
+      await createFiles(newFolder);
       useModalStore.getState().closeModal();
     } catch (error) {
       if (error instanceof Yup.ValidationError) {

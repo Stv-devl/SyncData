@@ -1,15 +1,14 @@
 import { create } from 'zustand';
-import { userData } from '@/constantes/user';
-import { useSession } from 'next-auth/react';
+import { CreateFileResponse, UserState } from '@/types/storeType';
+import getUsers from '@/service/getUsers';
+import { addFileToParent } from '@/utils/addFileToParent';
 import { getCurrentDate } from '@/utils/getCurrentDate';
 import { generateId } from '@/utils/generateId';
-import { addFileToParent } from '@/utils/addFileToParent';
-import { UserState } from '@/types/storeType';
 import { FileType } from '@/types/type';
-import { getFileType } from '@/utils/getFileType';
-import getUsers from '@/service/getUsers';
+import putFile from '@/service/putFile';
+import deleteFile from '@/service/deleteFile';
 
-export const useUserStore = create<UserState>((set) => ({
+export const useUserStore = create<UserState>((set, get) => ({
   user: null,
   files: null,
   profile: null,
@@ -40,19 +39,34 @@ export const useUserStore = create<UserState>((set) => ({
     }
   },
 
-  createFolder: async ({ name, parentId }) => {
-    set({ loading: true, error: null });
+  createFiles: async ({ name, parentId, type }) => {
+    const { user } = get();
+
+    if (!user) {
+      set({ loading: false, error: 'User not logged in' });
+      return;
+    }
+    const userId = user._id;
+
     try {
       const newFile: FileType = {
         id: generateId(),
         filename: name,
-        type: 'folder',
+        type: type,
         url: '',
         files: [],
         acces: 'only you',
         modified: getCurrentDate(),
       };
 
+      //backend
+      const response: CreateFileResponse = await putFile(
+        userId,
+        parentId,
+        newFile
+      );
+      console.log('File successfully created', response);
+      //local
       set((state) => ({
         user: state.user
           ? {
@@ -60,10 +74,11 @@ export const useUserStore = create<UserState>((set) => ({
               files: addFileToParent(state.user.files, newFile, parentId || ''),
             }
           : null,
+        files: state.files
+          ? addFileToParent(state.files, newFile, parentId || '')
+          : [newFile],
         loading: false,
       }));
-
-      console.log('File successfully created:', newFile);
     } catch (error: unknown) {
       console.error('Error while creating file:', error);
       set({
@@ -76,40 +91,23 @@ export const useUserStore = create<UserState>((set) => ({
     }
   },
 
-  uploadFolder: async ({ name, parentId }) => {
-    set({ loading: true, error: null });
-
+  /**
+   * Removes a file from the backend and updates the local state.
+   * @param {string} fileId - The Id of the file to remove.
+   * @returns {Promise<void>} A promise that resolves when the file is removed.
+   */
+  removeFile: async (fileId: string): Promise<void> => {
+    const { user } = get();
+    if (!user) return;
     try {
-      const newFile: FileType = {
-        id: generateId(),
-        filename: name,
-        type: getFileType(name),
-        url: '',
-        files: [],
-        acces: 'only you',
-        modified: getCurrentDate(),
-      };
-
+      await deleteFile(user._id, fileId);
       set((state) => ({
-        user: state.user
-          ? {
-              ...state.user,
-              files: addFileToParent(state.user.files, newFile, parentId || ''),
-            }
-          : null,
-        loading: false,
+        files: state.files
+          ? state.files.filter((file) => file.id !== fileId)
+          : [],
       }));
-
-      console.log('Folder successfully created:', newFile);
-    } catch (error: unknown) {
-      console.error('Error while creating folder:', error);
-      set({
-        loading: false,
-        error:
-          error instanceof Error
-            ? error.message
-            : 'Error while creating folder',
-      });
+    } catch (error) {
+      console.error('Error removing file:', error);
     }
   },
 }));

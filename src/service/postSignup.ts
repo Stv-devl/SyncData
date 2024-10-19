@@ -6,7 +6,7 @@
  * @throws {Error} If the sign-up request fails.
  */
 
-const getSignup = async (
+const postSignup = async (
   email: string,
   password: string
 ): Promise<{ token: string; userId: string }> => {
@@ -37,4 +37,4 @@ const getSignup = async (
   }
 };
 
-export default getSignup;
+export default postSignup;

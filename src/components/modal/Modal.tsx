@@ -4,7 +4,7 @@ import { modalsMap } from '../../constantes/modalsMap';
 import { iconsMap } from '../../constantes/iconsMap';
 
 const Modal = () => {
-  const { isOpen, type } = useModalStore();
+  const { isOpen, type, fileId } = useModalStore();
 
   if (!isOpen) return null;
 
@@ -13,7 +13,7 @@ const Modal = () => {
   return (
     <div className="bg-dark-gray/40 z-99 fixed inset-0 flex justify-center sm:items-center">
       <div className="shadow-custom-gray relative mt-24 w-full bg-white p-6 sm:mt-0 sm:w-[420px] sm:rounded-lg sm:p-8">
-        {ModalContent && <ModalContent />}
+        {ModalContent && <ModalContent fileId={fileId} />}
         <div
           className="absolute right-2 top-1 cursor-pointer"
           onClick={() => useModalStore.getState().closeModal()}

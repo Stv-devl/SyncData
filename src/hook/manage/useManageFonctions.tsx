@@ -26,7 +26,9 @@ const useManageFonctions = () => {
     console.log('change name');
   };
 
-  const getActionByType = useCallback((type: string) => {
+  const getActionByType = useCallback((type: string, fileId: string) => {
+    console.log(fileId);
+
     switch (type) {
       case 'information':
         return handleInformation();
@@ -41,7 +43,7 @@ const useManageFonctions = () => {
       case 'change':
         return handleChangeName();
       case 'delete':
-        return useModalStore.getState().openModal('DeleteFile');
+        return useModalStore.getState().openModal('DeleteFile', fileId);
       default:
         return () => {};
     }

@@ -8,9 +8,10 @@ import { ulpoadFileSchema } from '../../../utils/validationShema';
 import useModalStore from '@/store/useModale';
 import { useUserStore } from '@/store/useUserStore';
 import * as Yup from 'yup';
+import { getFileType } from '@/utils/getFileType';
 
 const UploadFile = () => {
-  const { files, uploadFolder } = useUserStore();
+  const { files, createFiles } = useUserStore();
 
   const { fileName, setFileName, checkedFile, handleCheck } =
     useManageChecked();
@@ -44,8 +45,9 @@ const UploadFile = () => {
       const newFolder = {
         name: fileName,
         parentId,
+        type: getFileType(fileName),
       };
-      await uploadFolder(newFolder);
+      await createFiles(newFolder);
       useModalStore.getState().closeModal();
     } catch (error) {
       if (error instanceof Yup.ValidationError) {

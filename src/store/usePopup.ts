@@ -22,6 +22,7 @@ import { PopupState } from '@/types/storeType';
 const usePopupStore = create<PopupState>((set) => ({
   isOpen: false,
   content: null,
+  fileId: null,
   x: -20,
   y: -20,
   transformStyle: null,
@@ -31,6 +32,7 @@ const usePopupStore = create<PopupState>((set) => ({
     set({
       isOpen: false,
       content: null,
+      fileId: null,
       x: -20,
       y: -20,
       isInfo: false,
@@ -51,13 +53,14 @@ const usePopupStore = create<PopupState>((set) => ({
   handleClickOpen: (
     event: React.MouseEvent,
     label: string,
-    rect: DOMRect | { x: number; y: number }
+    rect: DOMRect | { x: number; y: number },
+    fileId: string
   ) => {
     event.preventDefault();
     setTimeout(() => {
       const x = 'left' in rect ? rect.left : rect.x;
       const y = 'bottom' in rect ? rect.bottom : rect.y;
-      set({ isOpen: true, content: label, x, y, isInfo: true });
+      set({ isOpen: true, content: label, x, y, isInfo: true, fileId });
     }, 100);
   },
 

@@ -5,7 +5,6 @@ import { iconsMap } from '@/constantes/iconsMap';
 import { ArrayContentProps } from '@/types/type';
 import IconWrapper from '../../../wrapper/IconFileWrapper';
 import usePopupStore from '@/store/usePopup';
-
 import useManageFonctions from '@/hook/manage/useManageFonctions';
 
 const ListContent: React.FC<ArrayContentProps> = ({ files }) => {
@@ -37,7 +36,7 @@ const ListContent: React.FC<ArrayContentProps> = ({ files }) => {
       {files &&
         files.map((file, indexfiles) => (
           <ul
-            key={file.filename}
+            key={file.filename + indexfiles}
             className="hover:bg-light-blue flex h-16 w-full cursor-pointer items-center px-3 transition-colors duration-500 lg:px-6"
             onContextMenu={(e) => {
               e.preventDefault();
@@ -45,7 +44,7 @@ const ListContent: React.FC<ArrayContentProps> = ({ files }) => {
                 x: e.clientX,
                 y: e.clientY,
               };
-              handleClickOpen(e, file.filename, rect);
+              handleClickOpen(e, file.filename, rect, file.id);
             }}
           >
             {arrayHeader.map((item) => (
@@ -74,7 +73,7 @@ const ListContent: React.FC<ArrayContentProps> = ({ files }) => {
                 <li
                   key={`icone${index}`}
                   className="relative hidden w-7 flex-none px-5 sm:block lg:w-9"
-                  onClick={() => getActionByType(icon.type)}
+                  onClick={() => getActionByType(icon.type, file.id)}
                 >
                   <icon.icon
                     className="text-regular-blue hover:text-dark-blue size-6 transition-colors duration-300"
@@ -94,7 +93,7 @@ const ListContent: React.FC<ArrayContentProps> = ({ files }) => {
                 e.preventDefault();
                 const rect =
                   containerRefs.current[indexfiles].getBoundingClientRect();
-                handleClickOpen(e, file.filename, rect);
+                handleClickOpen(e, file.filename, rect, file.id);
               }}
             >
               <iconsMap.IconInfo className="text-regular-blue hover:text-dark-blue size-6 transition-colors duration-300" />

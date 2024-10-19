@@ -1,10 +1,16 @@
 import React from 'react';
 import ButtonModalWrapper from '@/components/button/ButtonModalWrapper';
+import useModalStore from '@/store/useModale';
+import { useUserStore } from '@/store/useUserStore';
 
-const DeleteFile = () => {
+const DeleteFile = ({ fileId }) => {
+  const { files, removeFile } = useUserStore();
+  console.log(fileId);
+
   const handleDelete = (e) => {
     e.preventDefault();
-    console.log('click');
+    removeFile(fileId);
+    useModalStore.getState().closeModal();
   };
   return (
     <div className="h-full ">

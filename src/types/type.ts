@@ -152,4 +152,5 @@ export interface IconWrapperProps {
 
 export interface InfoWrapperProps {
   fileName: string | null;
+  fileId: string | null;
 }

@@ -30,7 +30,7 @@ const Array = () => {
     <section className="relative mx-auto size-full rounded-lg bg-white p-4 lg:p-8">
       <Header isList={isList} />
       <div className="bg-lightest-gray h-[97%] w-full rounded-lg ">
-        {files && files.length > 1 ? (
+        {files && files.length > 0 ? (
           <>
             {isList ? (
               <ListContent files={files} />

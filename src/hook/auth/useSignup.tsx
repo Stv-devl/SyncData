@@ -1,10 +1,10 @@
 import { FormEvent, useCallback, useState } from 'react';
-import getSignup from '../../service/getSignup';
 import { FormDataSignUp, UseSignUpReturn } from '../../types/type';
 import { useRouter } from 'next/navigation';
+import postSignup from '../../service/postSignup';
+import { signIn } from 'next-auth/react';
 import { signupValidationSchema } from '../../utils/validationShema';
 import * as Yup from 'yup';
-import { signIn } from 'next-auth/react';
 
 /**
  * Custom hook for handling user sign-up functionality.
@@ -68,7 +68,7 @@ const useSignUp = (): UseSignUpReturn => {
     try {
       await signupValidationSchema.validate(formData, { abortEarly: false });
 
-      const newUser = await getSignup(formData.email, formData.password);
+      const newUser = await postSignup(formData.email, formData.password);
       console.log('Signup successful', newUser);
 
       const result = await signIn('credentials', {

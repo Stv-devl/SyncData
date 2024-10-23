@@ -13,14 +13,14 @@ export const toolsBtn = [
     icon: iconsMap.IconUpload,
     color: 'full',
     iconColor: '#FFFFFF',
-    type: 'UploadFile',
+    type: 'upload',
   },
   {
     label: 'Create a file',
     icon: iconsMap.IconAddFile,
     color: 'empty',
     iconColor: '#08396F',
-    type: 'CreateFolder',
+    type: 'create',
   },
 ];
 
@@ -30,21 +30,21 @@ export const selectedToolsBtn = [
     icon: iconsMap.IconDownload,
     color: 'full',
     iconColor: '#FFFFFF',
-    type: 'DownloadFile',
+    type: 'download',
   },
   {
     label: 'Share',
     icon: iconsMap.IconShare,
     color: 'empty',
     iconColor: '#08396F',
-    type: 'ShareFile',
+    type: 'share',
   },
   {
     label: 'Delete',
     icon: iconsMap.IconDelete,
     color: 'full',
     iconColor: '#FFFFFF',
-    type: 'DeleteFile',
+    type: 'delete',
   },
 ];
 

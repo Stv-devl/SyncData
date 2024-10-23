@@ -82,7 +82,9 @@ const ListContent: React.FC<ArrayContentProps> = ({ files }) => {
                 <li
                   key={`icone${index}`}
                   className="relative hidden w-7 flex-none px-5 sm:block lg:w-9"
-                  onClick={() => getActionByType(icon.type, file.id)}
+                  onClick={() =>
+                    getActionByType(icon.type, file.id, file.filename)
+                  }
                 >
                   <icon.icon
                     className="text-regular-blue hover:text-dark-blue size-6 transition-colors duration-300"

@@ -16,9 +16,16 @@ const useModalStore = create<ModalState>((set) => ({
   isOpen: false,
   type: null,
   fileId: null,
-  openModal: (type: string, fileId: string) =>
-    set({ isOpen: true, type, fileId }),
-  closeModal: () => set({ isOpen: false, type: null }),
+  fileName: null,
+  openModal: (
+    type: string,
+    fileId: string | string[],
+    fileName: string | string[]
+  ) => {
+    set({ isOpen: true, type, fileId, fileName });
+  },
+  closeModal: () =>
+    set({ isOpen: false, type: null, fileId: null, fileName: null }),
 }));
 
 export default useModalStore;

@@ -125,16 +125,27 @@ export const useUserStore = create<UserState>((set, get) => ({
    * @param {string} fileId - The Id of the file to remove.
    * @returns {Promise<void>} A promise that resolves when the file is removed.
    */
-  removeFile: async (fileId: string): Promise<void> => {
+  removeFile: async (fileId: string | string[]): Promise<void> => {
     const { user } = get();
     if (!user) return;
+
     try {
-      await deleteFile(user._id, fileId);
-      set((state) => ({
-        files: state.files
-          ? state.files.filter((file) => file.id !== fileId)
-          : [],
-      }));
+      if (Array.isArray(fileId)) {
+        await Promise.all(fileId.map(async (id) => deleteFile(user._id, id)));
+
+        set((state) => ({
+          files: state.files
+            ? state.files.filter((file) => !fileId.includes(file.id))
+            : [],
+        }));
+      } else {
+        await deleteFile(user._id, fileId);
+        set((state) => ({
+          files: state.files
+            ? state.files.filter((file) => file.id !== fileId)
+            : [],
+        }));
+      }
     } catch (error) {
       console.error('Error removing file:', error);
     }

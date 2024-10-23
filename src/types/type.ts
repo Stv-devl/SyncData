@@ -158,3 +158,8 @@ export interface InfoWrapperProps {
   fileName: string | null;
   fileId: string | null;
 }
+
+export interface DeleteFileProps {
+  fileId: string;
+  fileName: string | string[];
+}

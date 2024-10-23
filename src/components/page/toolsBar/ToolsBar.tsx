@@ -1,28 +1,33 @@
 import { selectedToolsBtn, toolsBtn } from '@/constantes/constantes';
 import React, { useCallback, useMemo } from 'react';
 import ToolsBarWrapper from './ToolsBarWrapper';
-import useModalStore from '@/store/useModale';
 import { useUserStore } from '@/store/useUserStore';
+import useManageCheckedItems from '@/hook/manage/useManageCheckedItems';
+import useManageFonctions from '@/hook/manage/useManageFonctions';
 
 const ToolsBar = () => {
   const { files } = useUserStore();
 
-  const checkedItems = useMemo(
-    () => files?.filter((item) => item.isChecked) || [],
-    [files]
-  );
+  const { fileId, fileName, checkedItems } = useManageCheckedItems(files);
 
-  const handleButtonClick = useCallback((type: string) => {
-    if (type === 'download') {
-      console.log('download');
-    } else {
-      useModalStore.getState().openModal(type);
-    }
-  }, []);
+  const { getActionByType } = useManageFonctions();
+
+  const handleButtonClick = useCallback(
+    (type: string) => {
+      if (type === 'download') {
+        console.log('download');
+      } else {
+        getActionByType(type, fileId, fileName);
+      }
+    },
+    [fileId, fileName, getActionByType]
+  );
 
   const combinedButtons = useMemo(
     () =>
-      checkedItems.length > 0 ? [...toolsBtn, ...selectedToolsBtn] : toolsBtn,
+      checkedItems && checkedItems.length > 0
+        ? [...toolsBtn, ...selectedToolsBtn]
+        : toolsBtn,
     [checkedItems]
   );
 

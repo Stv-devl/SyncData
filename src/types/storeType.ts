@@ -32,9 +32,14 @@ export interface PopupState {
 export interface ModalState {
   isOpen: boolean;
   type: string | null;
-  fileId?: string | null;
+  fileId?: string | string[] | null;
+  fileName?: string | string[] | null;
   closeModal: () => void;
-  openModal: (type: string, fileId: string) => void;
+  openModal: (
+    type: string,
+    fileId: string | string[],
+    fileName: string | string[]
+  ) => void;
 }
 
 export interface UserState {

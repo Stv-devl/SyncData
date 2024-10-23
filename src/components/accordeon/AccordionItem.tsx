@@ -12,6 +12,7 @@ const AccordionItem: React.FC<AccordionItemProps> = ({
   isOpen,
 }) => {
   const isChecked = checkedFile === file.id;
+  const initiallyOpen = file.id === 'root';
 
   const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const checked = e.target.checked;
@@ -19,7 +20,7 @@ const AccordionItem: React.FC<AccordionItemProps> = ({
   };
 
   const getChevronIcon = () =>
-    isOpen(file.id) ? (
+    isOpen(file.id) || initiallyOpen ? (
       <iconsMap.IconChevronDown />
     ) : (
       <iconsMap.IconChevronRight />
@@ -44,20 +45,22 @@ const AccordionItem: React.FC<AccordionItemProps> = ({
         <p className="py-1">{file.filename}</p>
       </div>
 
-      {isOpen(file.id) && file.files && file.files.length > 0 && (
-        <div className="pl-4">
-          {filteredFolders(file.files).map((child: FileType) => (
-            <AccordionItem
-              key={child.id}
-              file={child}
-              handleCheck={handleCheck}
-              checkedFile={checkedFile}
-              toggleOpen={toggleOpen}
-              isOpen={isOpen}
-            />
-          ))}
-        </div>
-      )}
+      {(isOpen(file.id) || initiallyOpen) &&
+        file.files &&
+        file.files.length > 0 && (
+          <div className="pl-4">
+            {filteredFolders(file.files).map((child: FileType) => (
+              <AccordionItem
+                key={child.id}
+                file={child}
+                handleCheck={handleCheck}
+                checkedFile={checkedFile}
+                toggleOpen={toggleOpen}
+                isOpen={isOpen}
+              />
+            ))}
+          </div>
+        )}
     </div>
   );
 };

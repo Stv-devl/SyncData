@@ -17,7 +17,7 @@ const InfoWrapper: React.FC<InfoWrapperProps> = ({ fileName, fileId }) => {
         <div
           key={item.label}
           className="hover:bg-light-blue flex w-full cursor-pointer items-center gap-2 p-2 transition-colors duration-500 lg:gap-4"
-          onClick={() => getActionByType(item.type, fileId)}
+          onClick={() => getActionByType(item.type, fileId, fileName)}
         >
           <item.icon
             className={twMerge(

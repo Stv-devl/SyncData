@@ -44,6 +44,9 @@ export interface UserState {
   loading: boolean;
   error: string | null;
   setUser: (user: UserType) => void;
+  toggleFileChecked: (fileId: string) => void;
+  setAllFilesChecked: (isChecked: boolean) => void;
+  resetCheckedFiles: () => void;
   fetchData: (userId: string) => Promise<void>;
   createFiles: (payload: {
     name: string;

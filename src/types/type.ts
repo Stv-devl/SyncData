@@ -126,13 +126,16 @@ export interface AccordionMenuProps {
   files: FileType[];
   handleCheck: (fileId: string, isChecked: boolean) => void;
   checkedFile: string | null;
+  toggleOpen: (fileId: string) => void;
+  isOpen: (fileId: string) => boolean;
 }
 
 export interface AccordionItemProps {
   file: AccordionFirstFileType;
-  initiallyOpen?: boolean;
-  onCheck: (fileId: string, isChecked: boolean) => void;
+  handleCheck: (fileId: string, isChecked: boolean) => void;
   checkedFile: string | null;
+  toggleOpen: (fileId: string) => void;
+  isOpen: (fileId: string) => boolean;
 }
 
 export interface FileType {
@@ -141,6 +144,7 @@ export interface FileType {
   type: string;
   url?: string;
   modified: string;
+  isChecked?: boolean;
   acces: string;
   files?: FileType[];
 }

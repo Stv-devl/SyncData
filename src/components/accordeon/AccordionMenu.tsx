@@ -6,6 +6,8 @@ const AccordionMenu: React.FC<AccordionMenuProps> = ({
   files,
   handleCheck,
   checkedFile,
+  toggleOpen,
+  isOpen,
 }) => {
   const firstFile: AccordionFirstFileType = {
     id: 'root',
@@ -18,9 +20,10 @@ const AccordionMenu: React.FC<AccordionMenuProps> = ({
     <div className="border-regular-gray h-[222px] w-full overflow-y-auto rounded-lg border p-3">
       <AccordionItem
         file={firstFile}
-        initiallyOpen={true}
-        onCheck={handleCheck}
+        handleCheck={handleCheck}
         checkedFile={checkedFile}
+        toggleOpen={toggleOpen}
+        isOpen={isOpen}
       />
     </div>
   );

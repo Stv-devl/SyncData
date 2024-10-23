@@ -2,17 +2,23 @@ import React, { useState } from 'react';
 import AccordionMenu from '@/components/accordeon/AccordionMenu';
 import ButtonModalWrapper from '@/components/button/ButtonModalWrapper';
 import Input from '@/components/form/Input';
-import useManageChecked from '@/hook/manage/useManageChecked';
 import { useUserStore } from '@/store/useUserStore';
 import useModalStore from '@/store/useModale';
 import { filteredFolders } from '@/utils/filteredFolders';
 import { createFolderSchema } from '@/utils/validationShema';
 import * as Yup from 'yup';
+import useManageAccordion from '@/hook/manage/useManageAccordion';
 
 const CreateFolder = () => {
   const { files, createFiles } = useUserStore();
-  const { fileName, checkedFile, handleCheck, handleChange } =
-    useManageChecked();
+  const {
+    fileName,
+    checkedFile,
+    handleCheck,
+    handleChange,
+    toggleOpen,
+    isOpen,
+  } = useManageAccordion();
 
   const [errors, setErrors] = useState({
     name: '',
@@ -49,13 +55,13 @@ const CreateFolder = () => {
   };
 
   return (
-    <div className="h-full ">
-      <h1 className="text-darkest-blue text-titleSmall sm:text-title pb-4 text-center sm:pb-7 ">
+    <div className="h-full">
+      <h1 className="text-darkest-blue text-titleSmall sm:text-title pb-4 text-center sm:pb-7">
         Create a folder
       </h1>
       <form action="submit" className="w-full">
         <div className="mb-5 flex flex-col gap-0.5">
-          <label htmlFor="name">Name your folder :</label>
+          <label htmlFor="name">Name your folder:</label>
           <Input
             name="name"
             type="text"
@@ -71,6 +77,8 @@ const CreateFolder = () => {
             files={files && files.length > 0 ? filteredFolders(files) : []}
             handleCheck={handleCheck}
             checkedFile={checkedFile}
+            toggleOpen={toggleOpen}
+            isOpen={isOpen}
           />
           <span className="text-error-red text-sm">{errors.checkbox}</span>
         </div>

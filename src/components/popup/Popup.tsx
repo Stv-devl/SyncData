@@ -11,8 +11,6 @@ const Popup = () => {
   const { isOpen, content, fileId, x, y, transformStyle, isInfo } =
     usePopupStore();
 
-  console.log(fileId);
-
   const { popupPosition } = useManagePosition(popupRef);
 
   const popupClass = useMemo(
@@ -43,7 +41,7 @@ const Popup = () => {
           )}
           style={{ top: popupPosition.top, left: popupPosition.left }}
         >
-          <InfoWrapper fileName={content} fileId={fileId} />
+          <InfoWrapper fileName={content} fileId={fileId ? fileId : null} />
         </div>
       ) : (
         <div

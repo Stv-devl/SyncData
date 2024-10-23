@@ -1,10 +1,16 @@
 import { selectedToolsBtn, toolsBtn } from '@/constantes/constantes';
-import React, { useCallback } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import ToolsBarWrapper from './ToolsBarWrapper';
 import useModalStore from '@/store/useModale';
+import { useUserStore } from '@/store/useUserStore';
 
 const ToolsBar = () => {
-  const isSelected = true;
+  const { files } = useUserStore();
+
+  const checkedItems = useMemo(
+    () => files?.filter((item) => item.isChecked) || [],
+    [files]
+  );
 
   const handleButtonClick = useCallback((type: string) => {
     if (type === 'download') {
@@ -14,9 +20,11 @@ const ToolsBar = () => {
     }
   }, []);
 
-  const combinedButtons = isSelected
-    ? [...toolsBtn, ...selectedToolsBtn]
-    : toolsBtn;
+  const combinedButtons = useMemo(
+    () =>
+      checkedItems.length > 0 ? [...toolsBtn, ...selectedToolsBtn] : toolsBtn,
+    [checkedItems]
+  );
 
   return (
     <section className="mx-auto flex h-[90px] w-full items-center justify-center rounded-lg bg-white px-2 sm:justify-start sm:px-4 md:px-10">

@@ -2,9 +2,12 @@ import React, { useEffect, useRef } from 'react';
 import usePopupStore from '../../../../store/usePopup';
 import { ArrayContentProps } from '@/types/type';
 import IconFileWrapper from '../../../wrapper/IconFileWrapper';
+import { useUserStore } from '@/store/useUserStore';
 
 const FileContent: React.FC<ArrayContentProps> = ({ files }) => {
   const { isOpen, handleClickOpen, handleClickClose } = usePopupStore();
+
+  const { toggleFileChecked } = useUserStore();
 
   const containerRefs = useRef<HTMLLIElement[]>([]);
 
@@ -18,6 +21,10 @@ const FileContent: React.FC<ArrayContentProps> = ({ files }) => {
       window.removeEventListener('click', handleClickClose);
     };
   }, [isOpen, handleClickClose]);
+
+  const handleCheckbox = (fileId: string) => {
+    toggleFileChecked(fileId);
+  };
 
   return (
     <ul className="grid-cols-auto-fill-minmax grid gap-4 p-6">
@@ -41,6 +48,8 @@ const FileContent: React.FC<ArrayContentProps> = ({ files }) => {
               <input
                 type="checkbox"
                 className="border-dark-gray size-4 border-2"
+                onChange={() => handleCheckbox(file.id)}
+                checked={file.isChecked || false}
               />
             </div>
           </li>

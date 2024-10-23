@@ -1,15 +1,30 @@
 'use client';
 
-import React from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { iconsMap } from '../../../constantes/iconsMap';
 import { arrayIcone } from '../../../constantes/constantes';
 import clsx from 'clsx';
 import { twMerge } from 'tailwind-merge';
 import usePopupStore from '@/store/usePopup';
 import { HeaderProps } from '@/types/type';
+import { useUserStore } from '@/store/useUserStore';
 
 const Header: React.FC<HeaderProps> = ({ isList }) => {
   const { handleMouseEnter, handleMouseLeave } = usePopupStore();
+
+  const { files, setAllFilesChecked } = useUserStore();
+
+  const isCheckedAll = useMemo(() => {
+    return files?.length > 0 && files.every((file) => file.isChecked);
+  }, [files]);
+
+  const handleCheckAll = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      const isChecked = e.target.checked;
+      setAllFilesChecked(isChecked);
+    },
+    [setAllFilesChecked]
+  );
 
   return (
     <ul className="flex items-center px-3 pb-3 lg:px-6">
@@ -21,7 +36,12 @@ const Header: React.FC<HeaderProps> = ({ isList }) => {
           }
           onMouseLeave={handleMouseLeave}
         >
-          <input type="checkbox" className="size-5" />
+          <input
+            type="checkbox"
+            className="size-5"
+            checked={isCheckedAll}
+            onChange={handleCheckAll}
+          />
         </div>
       </li>
       <li className={twMerge(clsx(isList && 'grow', 'cursor-pointer px-2'))}>

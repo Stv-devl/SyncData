@@ -17,6 +17,35 @@ export const useUserStore = create<UserState>((set, get) => ({
 
   setUser: (user) => set({ user }),
 
+  toggleFileChecked: (fileId: string) =>
+    set((state) => ({
+      files: state.files
+        ? state.files.map((file) =>
+            file.id === fileId ? { ...file, isChecked: !file.isChecked } : file
+          )
+        : [],
+    })),
+
+  setAllFilesChecked: (isChecked: boolean) =>
+    set((state) => ({
+      files: state.files
+        ? state.files.map((file) => ({
+            ...file,
+            isChecked,
+          }))
+        : [],
+    })),
+
+  resetCheckedFiles: () =>
+    set((state) => ({
+      files: state.files
+        ? state.files.map((file) => ({
+            ...file,
+            isChecked: false,
+          }))
+        : [],
+    })),
+
   fetchData: async (userId: string): Promise<void> => {
     set({ loading: true, error: null });
     try {

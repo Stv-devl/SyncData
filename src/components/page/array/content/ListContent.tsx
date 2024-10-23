@@ -6,6 +6,7 @@ import { ArrayContentProps } from '@/types/type';
 import IconWrapper from '../../../wrapper/IconFileWrapper';
 import usePopupStore from '@/store/usePopup';
 import useManageFonctions from '@/hook/manage/useManageFonctions';
+import { useUserStore } from '@/store/useUserStore';
 
 const ListContent: React.FC<ArrayContentProps> = ({ files }) => {
   const {
@@ -15,6 +16,8 @@ const ListContent: React.FC<ArrayContentProps> = ({ files }) => {
     handleMouseLeave,
     handleClickClose,
   } = usePopupStore();
+
+  const { toggleFileChecked } = useUserStore();
 
   const { getActionByType } = useManageFonctions();
 
@@ -30,6 +33,10 @@ const ListContent: React.FC<ArrayContentProps> = ({ files }) => {
       window.removeEventListener('click', handleClickClose);
     };
   }, [isOpen, handleClickClose]);
+
+  const handleCheckbox = (fileId: string) => {
+    toggleFileChecked(fileId);
+  };
 
   return (
     <>
@@ -54,6 +61,8 @@ const ListContent: React.FC<ArrayContentProps> = ({ files }) => {
                     <input
                       type="checkbox"
                       className="border-dark-gray size-5 border-2"
+                      onChange={() => handleCheckbox(file.id)}
+                      checked={file.isChecked || false}
                     />
                   ) : item.name === 'filename' ? (
                     <>
@@ -105,3 +114,16 @@ const ListContent: React.FC<ArrayContentProps> = ({ files }) => {
 };
 
 export default ListContent;
+
+/*
+  const handleCheckbox = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    fileId: string
+  ) => {
+    const checked = e.target.checked;
+    if (checked) {
+      setCheckedState(fileId);
+    } else {
+      unsetCheckedState(fileId);
+    }
+  };*/

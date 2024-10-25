@@ -1,25 +1,40 @@
 'use client';
 
-import React, { useState } from 'react';
-import { iconsMap } from '../../../constantes/iconsMap';
-import { twMerge } from 'tailwind-merge';
 import clsx from 'clsx';
-import usePopupStore from '@/store/usePopup';
-import Header from './Header';
-import ListContent from './content/ListContent';
-import FileContent from './content/FileContent';
+import React, { useState } from 'react';
+import { twMerge } from 'tailwind-merge';
+import { iconsMap } from '../../../constantes/iconsMap';
 import EmptyContent from './content/EmptyContent';
-import { useUserStore } from '@/store/useUserStore';
+import FileContent from './content/FileContent';
+import ListContent from './content/ListContent';
+import Header from './Header';
+import usePopupEffect from '@/hook/ui/usePopupEffect';
+import usePopupStore from '@/store/ui/usePopup';
+import { useFileStore } from '@/store/useFileStore';
 
 const Array = () => {
   //mettre isList dans store + persistant, pareil pour FileContent
   const [isList, setIsList] = useState(true);
 
-  const { files } = useUserStore();
+  const {
+    files,
+    setAllFilesChecked,
+    toggleFileChecked,
+    currentFolder,
+    handleOpenFolder,
+    handleBackFolder,
+  } = useFileStore();
+  const {
+    isOpen,
+    handleClickOpen,
+    handleClickClose,
+    handleMouseEnter,
+    handleMouseLeave,
+  } = usePopupStore();
 
   const toggleIcon = () => setIsList((prev) => !prev);
 
-  const { handleMouseEnter, handleMouseLeave } = usePopupStore();
+  usePopupEffect(isOpen, handleClickClose);
 
   const mouseLabel = isList ? 'Folder' : 'List';
   const mouseTransform = isList
@@ -28,14 +43,34 @@ const Array = () => {
 
   return (
     <section className="relative mx-auto size-full rounded-lg bg-white p-4 lg:p-8">
-      <Header isList={isList} />
+      <Header isList={isList} setAllFilesChecked={setAllFilesChecked} />
       <div className="bg-lightest-gray h-[97%] w-full rounded-lg ">
+        {currentFolder === 'root' ? null : (
+          <div className="flex flex-row gap-2">
+            <span className="cursor-pointer" onClick={() => handleBackFolder()}>
+              &lt;
+            </span>
+            <p>{currentFolder}</p>
+          </div>
+        )}
         {files && files.length > 0 ? (
           <>
             {isList ? (
-              <ListContent files={files} />
+              <ListContent
+                files={files}
+                handleOpenFolder={handleOpenFolder}
+                toggleFileChecked={toggleFileChecked}
+                handleClickOpen={handleClickOpen}
+                handleMouseEnter={handleMouseEnter}
+                handleMouseLeave={handleMouseLeave}
+              />
             ) : (
-              <FileContent files={files} />
+              <FileContent
+                files={files}
+                handleOpenFolder={handleOpenFolder}
+                toggleFileChecked={toggleFileChecked}
+                handleClickOpen={handleClickOpen}
+              />
             )}
           </>
         ) : (

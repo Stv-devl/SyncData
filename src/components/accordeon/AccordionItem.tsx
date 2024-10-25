@@ -1,8 +1,8 @@
 import React from 'react';
-import { iconsMap } from '@/constantes/iconsMap';
 import IconFileWrapper from '../wrapper/IconFileWrapper';
-import { filteredFolders } from '@/utils/filteredFolders';
+import { iconsMap } from '@/constantes/iconsMap';
 import { AccordionItemProps, FileType } from '@/types/type';
+import { filteredFolders } from '@/utils/filteredFolders';
 
 const AccordionItem: React.FC<AccordionItemProps> = ({
   file,

@@ -7,7 +7,14 @@
     "next/core-web-vitals",
     "plugin:tailwindcss/recommended"
   ],
-  "plugins": ["@typescript-eslint", "react", "tailwindcss", "react-hooks"],
+  "plugins": [
+    "@typescript-eslint",
+    "react",
+    "tailwindcss",
+    "react-hooks",
+    "import"
+  ],
+
   "env": {
     "browser": true,
     "es2021": true
@@ -24,7 +31,26 @@
     "react-hooks/exhaustive-deps": "warn",
     "tailwindcss/classnames-order": ["warn"],
     "tailwindcss/enforces-shorthand": "warn",
-    "tailwindcss/no-custom-classname": "off"
+    "tailwindcss/no-custom-classname": "off",
+    "import/order": [
+      "warn",
+      {
+        "groups": [
+          "builtin",
+          "external",
+          "internal",
+          "parent",
+          "sibling",
+          "index",
+          "object"
+        ],
+        "newlines-between": "never",
+        "alphabetize": {
+          "order": "asc",
+          "caseInsensitive": true
+        }
+      }
+    ]
   },
   "overrides": [
     {

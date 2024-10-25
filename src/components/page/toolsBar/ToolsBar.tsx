@@ -1,14 +1,14 @@
-import { selectedToolsBtn, toolsBtn } from '@/constantes/constantes';
 import React, { useCallback, useMemo } from 'react';
 import ToolsBarWrapper from './ToolsBarWrapper';
-import { useUserStore } from '@/store/useUserStore';
-import useManageCheckedItems from '@/hook/manage/useManageCheckedItems';
+import { selectedToolsBtn, toolsBtn } from '@/constantes/constantes';
 import useManageFonctions from '@/hook/manage/useManageFonctions';
+import useCheckedItems from '@/hook/ui/useCheckedItems';
+import { useFileStore } from '@/store/useFileStore';
 
 const ToolsBar = () => {
-  const { files } = useUserStore();
+  const { files } = useFileStore();
 
-  const { fileId, fileName, checkedItems } = useManageCheckedItems(files);
+  const { fileId, fileName, checkedItems } = useCheckedItems(files);
 
   const { getActionByType } = useManageFonctions();
 

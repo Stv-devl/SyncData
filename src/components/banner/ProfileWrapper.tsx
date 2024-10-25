@@ -3,7 +3,7 @@ import Link from 'next/link';
 import React from 'react';
 import { iconsMap } from '../../constantes/iconsMap';
 import { signOut } from 'next-auth/react';
-import usePopupStore from '@/store/usePopup';
+import usePopupStore from '@/store/ui/usePopup';
 import { useMediaQuery } from 'react-responsive';
 
 const ProfileWrapper = () => {

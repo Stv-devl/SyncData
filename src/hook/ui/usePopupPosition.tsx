@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import usePopupStore from '@/store/usePopup';
+import usePopupStore from '@/store/ui/usePopup';
 
-const useManagePosition = (popupRef: React.RefObject<HTMLDivElement>) => {
+const usePopupPosition = (popupRef: React.RefObject<HTMLDivElement>) => {
   const { isOpen, x, y } = usePopupStore();
 
   const [popupPosition, setPopupPosition] = useState({ top: y, left: x });
@@ -32,4 +32,4 @@ const useManagePosition = (popupRef: React.RefObject<HTMLDivElement>) => {
   };
 };
 
-export default useManagePosition;
+export default usePopupPosition;

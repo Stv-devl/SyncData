@@ -1,21 +1,20 @@
 'use client';
 
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import { iconsMap } from '../../../constantes/iconsMap';
-import { arrayIcone } from '../../../constantes/constantes';
 import clsx from 'clsx';
+import React, { useCallback, useMemo } from 'react';
 import { twMerge } from 'tailwind-merge';
-import usePopupStore from '@/store/usePopup';
+import { arrayIcone } from '../../../constantes/constantes';
+import { iconsMap } from '../../../constantes/iconsMap';
+import usePopupStore from '@/store/ui/usePopup';
+import { useFileStore } from '@/store/useFileStore';
 import { HeaderProps } from '@/types/type';
-import { useUserStore } from '@/store/useUserStore';
 
-const Header: React.FC<HeaderProps> = ({ isList }) => {
+const Header: React.FC<HeaderProps> = ({ isList, setAllFilesChecked }) => {
   const { handleMouseEnter, handleMouseLeave } = usePopupStore();
-
-  const { files, setAllFilesChecked } = useUserStore();
+  const { files } = useFileStore();
 
   const isCheckedAll = useMemo(() => {
-    return files?.length > 0 && files.every((file) => file.isChecked);
+    return files && files.length > 0 && files.every((file) => file.isChecked);
   }, [files]);
 
   const handleCheckAll = useCallback(
@@ -39,7 +38,7 @@ const Header: React.FC<HeaderProps> = ({ isList }) => {
           <input
             type="checkbox"
             className="size-5"
-            checked={isCheckedAll}
+            checked={isCheckedAll ?? false}
             onChange={handleCheckAll}
           />
         </div>

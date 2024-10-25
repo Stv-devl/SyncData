@@ -1,9 +1,9 @@
-import Button from '@/components/button/Button';
-import useManageFilter from '@/hook/manage/useManageFilter';
 import React from 'react';
-import { iconsMap } from '@/constantes/iconsMap';
 import Input from '../../form/Input';
-import useModalStore from '@/store/useModale';
+import Button from '@/components/button/Button';
+import { iconsMap } from '@/constantes/iconsMap';
+import useManageFilter from '@/hook/manage/useManageFilter';
+import useModalStore from '@/store/ui/useModale';
 
 const SearchBar = () => {
   const data = {};

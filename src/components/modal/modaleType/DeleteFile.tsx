@@ -1,11 +1,11 @@
 import React from 'react';
 import ButtonModalWrapper from '@/components/button/ButtonModalWrapper';
-import useModalStore from '@/store/useModale';
-import { useUserStore } from '@/store/useUserStore';
+import useModalStore from '@/store/ui/useModale';
+import { useFileStore } from '@/store/useFileStore';
 import { DeleteFileProps } from '@/types/type';
 
 const DeleteFile: React.FC<DeleteFileProps> = ({ fileId, fileName }) => {
-  const { removeFile } = useUserStore();
+  const { removeFile } = useFileStore();
 
   const handleDelete = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();

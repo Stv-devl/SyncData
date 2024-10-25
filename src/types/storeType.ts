@@ -44,21 +44,31 @@ export interface ModalState {
 
 export interface UserState {
   user: UserType | null;
-  files: FileType[] | null;
   profile: UserProfile | null;
   loading: boolean;
   error: string | null;
   setUser: (user: UserType) => void;
+  fetchData: (userId: string) => Promise<void>;
+}
+
+export interface FileState {
+  files: FileType[] | null;
+  currentFolder: string;
+  folderHistory: { folder: string; files: FileType[] }[];
+  loading: boolean;
+  error: string | null;
+  setFiles: (files: FileType[]) => void;
+  handleOpenFolder: (fileId: string) => void;
+  handleBackFolder: () => void;
   toggleFileChecked: (fileId: string) => void;
   setAllFilesChecked: (isChecked: boolean) => void;
   resetCheckedFiles: () => void;
-  fetchData: (userId: string) => Promise<void>;
-  createFiles: (payload: {
+  createFiles: (args: {
     name: string;
     parentId: string;
     type: string;
   }) => Promise<void>;
-  removeFile: (fileId: string) => Promise<void>;
+  removeFile: (fileId: string | string[]) => Promise<void>;
 }
 
 export interface CreateFileResponse {

@@ -1,7 +1,7 @@
 import { FileType } from '@/types/type';
 import { useMemo } from 'react';
 
-const useManageCheckedItems = (files: FileType[] | null) => {
+const useCheckedItems = (files: FileType[] | null) => {
   const checkedItems = useMemo(
     () => files?.filter((item) => item.isChecked),
     [files]
@@ -19,4 +19,4 @@ const useManageCheckedItems = (files: FileType[] | null) => {
   return { fileName, fileId, checkedItems };
 };
 
-export default useManageCheckedItems;
+export default useCheckedItems;

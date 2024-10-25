@@ -1,5 +1,5 @@
 import React from 'react';
-import useModalStore from '@/store/useModale';
+import useModalStore from '@/store/ui/useModale';
 import { modalsMap } from '../../constantes/modalsMap';
 import { iconsMap } from '../../constantes/iconsMap';
 

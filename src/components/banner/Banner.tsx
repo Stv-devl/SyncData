@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react';
 import { usePathname } from 'next/navigation';
-import { iconsMap } from '../../constantes/iconsMap';
-import { navItems } from '../../constantes/constantes';
-import NavWrapper from './NavWrapper';
+import React, { useEffect, useState } from 'react';
 import { useMediaQuery } from 'react-responsive';
+import { navItems } from '../../constantes/constantes';
+import { iconsMap } from '../../constantes/iconsMap';
 import NavMobile from './NavMobile';
+import NavWrapper from './NavWrapper';
 import ProfileWrapper from './ProfileWrapper';
 
 const Banner = () => {

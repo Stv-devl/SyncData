@@ -1,11 +1,11 @@
+import clsx from 'clsx';
+import { usePathname } from 'next/navigation';
 import React from 'react';
-import { iconsMap } from '@/constantes/iconsMap';
 import { navItems } from '../../constantes/constantes';
 import NavWrapper from './NavWrapper';
-import { usePathname } from 'next/navigation';
-import useBurgerStore from '@/store/useBurgerMenu';
 import ProfileWrapper from './ProfileWrapper';
-import clsx from 'clsx';
+import { iconsMap } from '@/constantes/iconsMap';
+import useBurgerStore from '@/store/ui/useBurgerMenu';
 
 const NavMobile = () => {
   const { isOpen, toggleBurger } = useBurgerStore();

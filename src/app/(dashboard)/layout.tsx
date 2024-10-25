@@ -1,11 +1,12 @@
 'use client';
+
+import React, { useEffect } from 'react';
 import Banner from '@/components/banner/Banner';
 import Loading from '@/components/loading/Loading';
 import Modal from '@/components/modal/Modal';
 import Popup from '@/components/popup/Popup';
 import { useUserStore } from '@/store/useUserStore';
 import { useSession } from 'next-auth/react';
-import React, { useEffect } from 'react';
 
 /**
  * MainLayout provides the main structure of the application, including the Banner, content section, and Modal.

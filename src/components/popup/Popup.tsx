@@ -1,8 +1,8 @@
 import React, { useMemo, useRef } from 'react';
 import { twMerge } from 'tailwind-merge';
 import InfoWrapper from './InfoWrapper';
-import useManagePosition from '../../hook/manage/useManagePosition';
-import usePopupStore from '@/store/usePopup';
+import usePopupPosition from '../../hook/ui/usePopupPosition';
+import usePopupStore from '@/store/ui/usePopup';
 import clsx from 'clsx';
 
 const Popup = () => {
@@ -11,7 +11,7 @@ const Popup = () => {
   const { isOpen, content, fileId, x, y, transformStyle, isInfo } =
     usePopupStore();
 
-  const { popupPosition } = useManagePosition(popupRef);
+  const { popupPosition } = usePopupPosition(popupRef);
 
   const popupClass = useMemo(
     () =>

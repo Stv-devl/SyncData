@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import useModalStore from '@/store/useModale';
+import useModalStore from '@/store/ui/useModale';
 
 const useManageFonctions = () => {
   const handleInformation = () => {

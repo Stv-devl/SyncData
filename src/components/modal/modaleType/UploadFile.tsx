@@ -3,15 +3,15 @@ import clsx from 'clsx';
 import AccordionMenu from '@/components/accordeon/AccordionMenu';
 import ButtonModalWrapper from '@/components/button/ButtonModalWrapper';
 import { filteredFolders } from '@/utils/filteredFolders';
-import { ulpoadFileSchema } from '../../../utils/validationShema';
-import useModalStore from '@/store/useModale';
-import { useUserStore } from '@/store/useUserStore';
+import { ulpoadFileSchema } from '../../../helpers/validationShema';
+import useModalStore from '@/store/ui/useModale';
 import * as Yup from 'yup';
 import { getFileType } from '@/utils/getFileType';
-import useManageAccordion from '@/hook/manage/useManageAccordion';
+import useAccordion from '@/hook/ui/useAccordion';
+import { useFileStore } from '@/store/useFileStore';
 
 const UploadFile = () => {
-  const { files, createFiles } = useUserStore();
+  const { files, createFiles } = useFileStore();
 
   const {
     fileName,
@@ -20,7 +20,7 @@ const UploadFile = () => {
     handleChange,
     toggleOpen,
     isOpen,
-  } = useManageAccordion();
+  } = useAccordion();
 
   const [errors, setErrors] = useState({
     name: '',

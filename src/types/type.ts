@@ -109,10 +109,37 @@ export type ToolsBarWrapperProps = {
 //array
 export interface HeaderProps {
   isList: boolean;
+  setAllFilesChecked: (isChecked: boolean) => void;
 }
 
-export interface ArrayContentProps {
+export interface ArrayListContentProps {
   files: FileType[];
+  handleOpenFolder: (fileId: string) => void;
+  toggleFileChecked: (fileId: string) => void;
+  handleClickOpen: (
+    event: React.MouseEvent,
+    label: string,
+    rect: DOMRect,
+    fileId: string
+  ) => void;
+  handleMouseEnter: (
+    event: React.MouseEvent,
+    label: string,
+    transformStyle: string
+  ) => void;
+  handleMouseLeave: () => void;
+}
+
+export interface ArrayFileContentProps {
+  files: FileType[];
+  handleOpenFolder: (fileId: string) => void;
+  toggleFileChecked: (fileId: string) => void;
+  handleClickOpen: (
+    event: React.MouseEvent,
+    label: string,
+    rect: DOMRect,
+    fileId: string
+  ) => void;
 }
 
 export interface AccordionFirstFileType {

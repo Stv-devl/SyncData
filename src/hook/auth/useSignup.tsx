@@ -3,7 +3,7 @@ import { FormDataSignUp, UseSignUpReturn } from '../../types/type';
 import { useRouter } from 'next/navigation';
 import postSignup from '../../service/postSignup';
 import { signIn } from 'next-auth/react';
-import { signupValidationSchema } from '../../utils/validationShema';
+import { signupValidationSchema } from '../../helpers/validationShema';
 import * as Yup from 'yup';
 
 /**

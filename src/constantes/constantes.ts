@@ -49,7 +49,6 @@ export const selectedToolsBtn = [
 ];
 
 export const arrayHeader = [
-  { name: 'checked' },
   { name: 'filename' },
   { name: 'modified' },
   { name: 'acces' },

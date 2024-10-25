@@ -2,15 +2,15 @@ import React, { useState } from 'react';
 import AccordionMenu from '@/components/accordeon/AccordionMenu';
 import ButtonModalWrapper from '@/components/button/ButtonModalWrapper';
 import Input from '@/components/form/Input';
-import { useUserStore } from '@/store/useUserStore';
-import useModalStore from '@/store/useModale';
+import useModalStore from '@/store/ui/useModale';
 import { filteredFolders } from '@/utils/filteredFolders';
-import { createFolderSchema } from '@/utils/validationShema';
+import { createFolderSchema } from '@/helpers/validationShema';
 import * as Yup from 'yup';
-import useManageAccordion from '@/hook/manage/useManageAccordion';
+import useAccordion from '@/hook/ui/useAccordion';
+import { useFileStore } from '@/store/useFileStore';
 
 const CreateFolder = () => {
-  const { files, createFiles } = useUserStore();
+  const { files, createFiles } = useFileStore();
   const {
     fileName,
     checkedFile,
@@ -18,7 +18,7 @@ const CreateFolder = () => {
     handleChange,
     toggleOpen,
     isOpen,
-  } = useManageAccordion();
+  } = useAccordion();
 
   const [errors, setErrors] = useState({
     name: '',

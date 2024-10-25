@@ -1,9 +1,9 @@
+import clsx from 'clsx';
 import React from 'react';
+import { twMerge } from 'tailwind-merge';
 import { arrayPopup } from '@/constantes/constantes';
 import useManageFonctions from '@/hook/manage/useManageFonctions';
 import { InfoWrapperProps } from '@/types/type';
-import { twMerge } from 'tailwind-merge';
-import clsx from 'clsx';
 
 const InfoWrapper: React.FC<InfoWrapperProps> = ({ fileName, fileId }) => {
   const { getActionByType } = useManageFonctions();

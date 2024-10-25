@@ -1,4 +1,4 @@
-import useModalStore from '@/store/useModale';
+import useModalStore from '@/store/ui/useModale';
 import Button from './Button';
 
 const ButtonModalWrapper = ({ actionLabel, handleAction }) => {

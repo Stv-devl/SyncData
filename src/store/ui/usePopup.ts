@@ -57,6 +57,7 @@ const usePopupStore = create<PopupState>((set) => ({
     fileId: string
   ) => {
     event.preventDefault();
+    event.stopPropagation();
     setTimeout(() => {
       const x = 'left' in rect ? rect.left : rect.x;
       const y = 'bottom' in rect ? rect.bottom : rect.y;

@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from 'react';
 
-const useManageAccordion = () => {
+const useAccordion = () => {
   const [fileName, setFileName] = useState<string>('');
   const [checkedFile, setCheckedFile] = useState<string | null>(null);
   const [openItems, setOpenItems] = useState<{ [key: string]: boolean }>({});
@@ -44,4 +44,4 @@ const useManageAccordion = () => {
   };
 };
 
-export default useManageAccordion;
+export default useAccordion;

@@ -4,7 +4,7 @@ import { FormEvent, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { signIn } from 'next-auth/react';
 import { FormDataLogin, UseLoginReturn } from '../../types/type';
-import { loginSchema } from '../../utils/validationShema';
+import { loginSchema } from '../../helpers/validationShema';
 import * as Yup from 'yup';
 
 const useLogin = (): UseLoginReturn => {

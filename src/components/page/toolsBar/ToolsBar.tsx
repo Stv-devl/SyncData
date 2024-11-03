@@ -6,9 +6,9 @@ import useCheckedItems from '@/hook/ui/useCheckedItems';
 import { useFileStore } from '@/store/useFileStore';
 
 const ToolsBar = () => {
-  const { files } = useFileStore();
+  const { displayFiles } = useFileStore();
 
-  const { fileId, fileName, checkedItems } = useCheckedItems(files);
+  const { fileId, fileName, checkedItems } = useCheckedItems(displayFiles);
 
   const { getActionByType } = useManageFonctions();
 

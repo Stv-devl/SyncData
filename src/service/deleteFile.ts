@@ -6,15 +6,21 @@
  * @returns {Promise<void>} A promise that resolves when the deletion is complete.
  */
 
-async function deleteFile(userId: string, fileId: string) {
+async function deleteFile(
+  userId: string,
+  fileId: string | string[],
+  parentId: string
+): Promise<void> {
   try {
     const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/files`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ userId, fileId }),
+      body: JSON.stringify({ userId, fileId, parentId }),
     });
+
+    console.log('parentid in delete', parentId);
 
     if (response.ok) {
       const data = await response.json();

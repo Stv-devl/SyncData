@@ -53,22 +53,25 @@ export interface UserState {
 
 export interface FileState {
   files: FileType[] | null;
-  currentFolder: string;
-  folderHistory: { folder: string; files: FileType[] }[];
+  displayFiles: FileType[] | null;
+
+  parentFolderId: string;
+  folderStack: string[];
   loading: boolean;
   error: string | null;
   setFiles: (files: FileType[]) => void;
-  handleOpenFolder: (fileId: string) => void;
+  checkUserAuthenticated: () => string | null;
+  resetToRoot: () => void;
+  handleOpenFolder: (fileId: string | string[]) => void;
   handleBackFolder: () => void;
-  toggleFileChecked: (fileId: string) => void;
+  toggleFileChecked: (fileId: string | string[]) => void;
   setAllFilesChecked: (isChecked: boolean) => void;
   resetCheckedFiles: () => void;
-  createFiles: (args: {
+  createFiles: (payload: {
     name: string;
     parentId: string;
     type: string;
   }) => Promise<void>;
-  removeFile: (fileId: string | string[]) => Promise<void>;
 }
 
 export interface CreateFileResponse {

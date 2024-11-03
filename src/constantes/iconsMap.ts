@@ -1,40 +1,42 @@
 'use client';
 
-import Iconemail from '../icones/IconEmail';
-import Iconpassword from '../icones/IconPassword';
-import Icongoogle from '../icones/IconGoogle';
-import Iconprofile from '../icones/iconProfile';
-import Iconlogout from '../icones/IconLogout';
-import Iconlogo from '../icones/IconLogo';
-import IconSearch from '../icones/IconSearch';
-import IconBin from '../icones/IconBin';
-import IconLinks from '../icones/IconLinks';
 import IconAddFile from '../icones/IconAddFile';
-import IconDownload from '../icones/IconDownload';
-import IconUpload from '../icones/IconUpload';
-import IconVector from '../icones/IconVector';
 import IconAddTeam from '../icones/IconAddTeam';
+import IconBin from '../icones/IconBin';
+import IconChangeName from '../icones/IconChangeName';
+import IconChevronRight from '../icones/IconChevronRight';
+import IconDownload from '../icones/IconDownload';
+import IconChevronDown from '../icones/iconeChevronDown';
 import IconDelete from '../icones/IconeDelete';
+import IconDwg from '../icones/iconeFiles/IconDwg';
+import IconFiles from '../icones/iconeFiles/IconFiles';
+import IconFilesTeam from '../icones/iconeFiles/IconFilesTeam';
+import IconHomeFile from '../icones/iconeFiles/IconHomeFile';
+import IconImage from '../icones/iconeFiles/IconImage';
+import IconPdf from '../icones/iconeFiles/IconPdf';
+import IconInfo from '../icones/IconeInfo';
+import Iconemail from '../icones/IconEmail';
+import IconEmpty from '../icones/iconEmpty';
+import IconFriends from '../icones/IconFriends';
+import Icongoogle from '../icones/IconGoogle';
+import IconLinks from '../icones/IconLinks';
+import Iconlogo from '../icones/IconLogo';
+import Iconlogout from '../icones/IconLogout';
+import IconMoveFile from '../icones/IconMoveFile';
+import Iconpassword from '../icones/IconPassword';
+import Iconprofile from '../icones/iconProfile';
+import IconSearch from '../icones/IconSearch';
 import IconShare from '../icones/IconShare';
 import IconSort from '../icones/iconSort';
 import IconSortFiles from '../icones/IconSortFiles';
-import IconFiles from '../icones/iconeFiles/IconFiles';
-import IconFriends from '../icones/IconFriends';
-import IconSortList from '@/icones/IconSortList';
-import IconFavorite from '@/icones/IconFavorite';
-import IconInfo from '../icones/IconeInfo';
-import IconFilesTeam from '../icones/iconeFiles/IconFilesTeam';
-import IconDwg from '../icones/iconeFiles/IconDwg';
-import IconPdf from '../icones/iconeFiles/IconPdf';
-import IconImage from '../icones/iconeFiles/IconImage';
-import IconUnknown from '@/icones/iconeFiles/IconUnknown';
-import IconMoveFile from '../icones/IconMoveFile';
-import IconChangeName from '../icones/IconChangeName';
-import IconEmpty from '../icones/iconEmpty';
-import IconChevronDown from '../icones/iconeChevronDown';
-import IconChevronRight from '../icones/IconChevronRight';
+import IconUpload from '../icones/IconUpload';
+import IconVector from '../icones/IconVector';
 import IconCross from '@/icones/IconCross';
-import IconHomeFile from '../icones/iconeFiles/IconHomeFile';
+import IconUnknown from '@/icones/iconeFiles/IconUnknown';
+import IconFavorite from '@/icones/IconFavorite';
+import IconSortDown from '@/icones/IconSortDown';
+import IconSortList from '@/icones/IconSortList';
+import IconSortUp from '@/icones/iconSortUp';
 
 export const iconsMap = {
   Iconemail,
@@ -72,4 +74,6 @@ export const iconsMap = {
   IconChevronRight,
   IconCross,
   IconHomeFile,
+  IconSortUp,
+  IconSortDown,
 };

@@ -1,5 +1,5 @@
-import { FileType } from '@/types/type';
 import { useMemo } from 'react';
+import { FileType } from '@/types/type';
 
 const useCheckedItems = (files: FileType[] | null) => {
   const checkedItems = useMemo(

@@ -1,10 +1,10 @@
 'use client';
 
 import clsx from 'clsx';
-import React, { useCallback, useMemo } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import { twMerge } from 'tailwind-merge';
 import { arrayIcone } from '../../../constantes/constantes';
-import { iconsMap } from '../../../constantes/iconsMap';
+import FilterSort from '@/components/sort/FilterSort';
 import usePopupStore from '@/store/ui/usePopup';
 import { useFileStore } from '@/store/useFileStore';
 import { HeaderProps } from '@/types/type';
@@ -24,6 +24,18 @@ const Header: React.FC<HeaderProps> = ({ isList, setAllFilesChecked }) => {
     },
     [setAllFilesChecked]
   );
+
+  const [selectedType, setSelectedType] = useState('');
+  const [isUp, setIsUp] = useState(false);
+
+  const handleFilterClick = (type) => {
+    if (selectedType === type) {
+      setIsUp((prevIsUp) => !prevIsUp);
+    } else {
+      setSelectedType(type);
+      setIsUp(false);
+    }
+  };
 
   return (
     <ul className="flex items-center px-3 pb-3 lg:px-6">
@@ -52,7 +64,12 @@ const Header: React.FC<HeaderProps> = ({ isList, setAllFilesChecked }) => {
           onMouseLeave={handleMouseLeave}
         >
           <span>Name</span>
-          <iconsMap.IconSort />
+          <FilterSort
+            type="name"
+            selectedType={selectedType}
+            isUp={isUp}
+            onClick={handleFilterClick}
+          />
         </div>
       </li>
       <li className="w-25 hidden cursor-pointer px-2 sm:block lg:w-32">
@@ -64,7 +81,12 @@ const Header: React.FC<HeaderProps> = ({ isList, setAllFilesChecked }) => {
           onMouseLeave={handleMouseLeave}
         >
           <span>Modified</span>
-          <iconsMap.IconSort />
+          <FilterSort
+            type="modified"
+            selectedType={selectedType}
+            isUp={isUp}
+            onClick={handleFilterClick}
+          />
         </div>
       </li>
       {isList && (

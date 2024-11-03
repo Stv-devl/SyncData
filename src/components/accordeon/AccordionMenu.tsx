@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { useMemo } from 'react';
+import { findFolderById } from '../../../lib/utils/findFolderById';
 import AccordionItem from './AccordionItem';
+import { useFileStore } from '@/store/useFileStore';
 import { AccordionFirstFileType, AccordionMenuProps } from '@/types/type';
 
 const AccordionMenu: React.FC<AccordionMenuProps> = ({
@@ -9,6 +11,13 @@ const AccordionMenu: React.FC<AccordionMenuProps> = ({
   toggleOpen,
   isOpen,
 }) => {
+  const { parentFolderId } = useFileStore();
+
+  const selectedFolder = useMemo(() => {
+    const folder = findFolderById(files, parentFolderId);
+    return folder ? folder : null;
+  }, [files, parentFolderId]);
+
   const firstFile: AccordionFirstFileType = {
     id: 'root',
     filename: 'Home',
@@ -19,7 +28,7 @@ const AccordionMenu: React.FC<AccordionMenuProps> = ({
   return (
     <div className="border-regular-gray h-[222px] w-full overflow-y-auto rounded-lg border p-3">
       <AccordionItem
-        file={firstFile}
+        file={selectedFolder ?? firstFile}
         handleCheck={handleCheck}
         checkedFile={checkedFile}
         toggleOpen={toggleOpen}

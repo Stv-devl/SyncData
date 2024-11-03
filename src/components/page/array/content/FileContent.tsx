@@ -20,11 +20,14 @@ const FileContent: React.FC<ArrayFileContentProps> = ({
               if (el) containerRefs.current[index] = el;
             }}
             className="hover:bg-light-blue relative flex size-28 cursor-pointer flex-col items-center justify-center gap-2 rounded-lg bg-white transition-colors duration-500"
-            onContextMenu={(e) => {
-              e.preventDefault();
-              const rect = containerRefs.current[index].getBoundingClientRect();
-              handleClickOpen(e, file.filename, rect, file.id);
-            }}
+            onContextMenu={(e) =>
+              handleClickOpen(
+                e,
+                file.filename,
+                new DOMRect(e.clientX, e.clientY, 0, 0),
+                file.id
+              )
+            }
             onClick={() => handleOpenFolder(file.id)}
           >
             <IconFileWrapper type={file.type} />

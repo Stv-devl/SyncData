@@ -1,8 +1,9 @@
+import { addFileToParent } from 'lib/utils/addFileToParent';
+import { deleteFileRecursive } from 'lib/utils/deleteFileRecursive';
+import { filterById } from 'lib/utils/filterById';
+import { ObjectId } from 'mongodb';
 import { NextResponse } from 'next/server';
 import { clientPromise } from '../../../../lib/mongod';
-import { ObjectId } from 'mongodb';
-import { addFileToParent } from 'lib/utils/addFileToParent';
-import { FileType } from '@/types/type';
 
 /**
  * Handles PUT requests to update the files of a user.
@@ -40,20 +41,18 @@ export async function PUT(request: Request): Promise<NextResponse> {
       return NextResponse.json({ error: 'User not found' }, { status: 404 });
     }
 
-    let updatedFiles;
-    if (parentId) {
-      updatedFiles = addFileToParent(user.files, newFile, parentId);
-      console.log('updatedFiles', updatedFiles);
+    const updatedFiles = parentId
+      ? addFileToParent(user.files, newFile, parentId)
+      : [...user.files, newFile];
 
-      if (!updatedFiles) {
-        return NextResponse.json(
-          { error: 'Parent folder not found' },
-          { status: 400 }
-        );
-      }
-    } else {
-      updatedFiles = [...user.files, newFile];
+    if (!updatedFiles && parentId) {
+      return NextResponse.json(
+        { error: 'Parent folder not found' },
+        { status: 400 }
+      );
     }
+
+    console.log('updatedFiles', updatedFiles);
 
     const updateResult = await usersCollection.updateOne(
       { _id: objectId },
@@ -65,7 +64,10 @@ export async function PUT(request: Request): Promise<NextResponse> {
     }
 
     return NextResponse.json(
-      { message: 'Folder created successfully' },
+      {
+        message: 'Folder created successfully',
+        files: updatedFiles,
+      },
       { status: 200 }
     );
   } catch (error) {
@@ -76,7 +78,7 @@ export async function PUT(request: Request): Promise<NextResponse> {
 
 export async function DELETE(request: Request): Promise<NextResponse> {
   try {
-    const { userId, fileId } = await request.json();
+    const { userId, fileId, parentId } = await request.json();
 
     if (!ObjectId.isValid(userId)) {
       return NextResponse.json({ error: 'Invalid user ID' }, { status: 400 });
@@ -93,9 +95,26 @@ export async function DELETE(request: Request): Promise<NextResponse> {
       return NextResponse.json({ error: 'User not found' }, { status: 404 });
     }
 
-    const updatedLinks = user.files.filter(
-      (file: FileType) => file.id !== fileId
-    );
+    const updatedLinks =
+      parentId === 'root'
+        ? filterById(user.files, fileId)
+        : user.files.map((file) => {
+            if (file.id === parentId) {
+              return {
+                ...file,
+                files: filterById(file.files, fileId),
+              };
+            }
+            return file.files
+              ? {
+                  ...file,
+                  files: deleteFileRecursive(file.files, fileId, parentId),
+                }
+              : file;
+          });
+
+    console.log('updatedLinks', updatedLinks);
+
     const updateResult = await usersCollection.updateOne(
       { _id: objectId },
       { $set: { files: updatedLinks } }
@@ -106,7 +125,7 @@ export async function DELETE(request: Request): Promise<NextResponse> {
     }
 
     return NextResponse.json(
-      { message: 'Link deleted successfully' },
+      { message: 'File deleted successfully' },
       { status: 200 }
     );
   } catch (error) {

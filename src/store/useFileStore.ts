@@ -24,6 +24,10 @@ export const useFileStore = create<FileState>((set, get) => ({
     });
   },
 
+  setDisplayFiles: (newDisplayFiles: FileType[]) => {
+    set({ displayFiles: newDisplayFiles });
+  },
+
   checkUserAuthenticated: () => {
     const { user } = useUserStore.getState();
     if (!user?._id) {

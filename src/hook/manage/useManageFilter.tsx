@@ -1,30 +1,89 @@
 'use client';
 
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useFileStore } from '@/store/useFileStore';
+import { FileType, FilterToolsProps } from '@/types/type';
 
-/**
- * Custom hook for managing and filtering media items based on user input.
- * @param {UseManageFilterProps} props - The properties for managing filterable media.
- * @returns {UseManageFilterReturn} An object containing:
- * - `searchBar`: The current search input value.
- * - `filteredData`: The list of media items filtered based on the search input.
- * - `handleChange`: Function to handle changes to the search input.
- * - `isSearching`: Boolean indicating if a search is currently active.
- */
-const useManageFilter = ({ data }) => {
-  const [searchBar, setSearchBar] = useState<string>('');
+const useManageFilter = (isActive: boolean) => {
+  const { files, displayFiles, setDisplayFiles } = useFileStore();
 
-  const filteredData = useMemo(() => {}, []);
+  const [filterTools, setFilterTools] = useState<FilterToolsProps>({
+    headerType: null,
+    upselected: null,
+    searchbar: '',
+  });
 
-  /**
-   * Handles changes to the search input.
-   * @param {object} updates - An object containing the updated search value.
-   */
-  const handleChange = useCallback((updates: { [key: string]: string }) => {
-    setSearchBar(updates.search);
-  }, []);
+  const previousDisplayFiles = useRef<FileType[] | null>(null);
 
-  return { searchBar, filteredData, handleChange };
+  const allFilesArray = useMemo(() => {
+    const getAllFiles = (files: FileType[]): FileType[] => {
+      const allFiles: FileType[] = [];
+      if (!files) return allFiles;
+      for (const file of files) {
+        allFiles.push(file);
+        if (file.files) {
+          allFiles.push(...getAllFiles(file.files));
+        }
+      }
+      return allFiles;
+    };
+    return getAllFiles(files || []);
+  }, [files]);
+
+  const searchFilter = useMemo(() => {
+    if (!filterTools.searchbar) return displayFiles;
+    const searchTerm = filterTools.searchbar.toLowerCase();
+    return allFilesArray.filter((el) =>
+      Object.values(el).some((value) =>
+        String(value).toLowerCase().includes(searchTerm)
+      )
+    );
+  }, [allFilesArray, filterTools.searchbar]);
+
+  const sortedFiles = useMemo(() => {
+    if (!filterTools.headerType) return searchFilter;
+    const { headerType, upselected } = filterTools;
+    const direction = upselected ? 1 : -1;
+    return [...(displayFiles || [])].sort(
+      (a, b) =>
+        String(a[headerType]).localeCompare(String(b[headerType])) * direction
+    );
+  }, [searchFilter, filterTools.headerType, filterTools.upselected]);
+
+  useEffect(() => {
+    if (isActive && !previousDisplayFiles.current) {
+      previousDisplayFiles.current = displayFiles;
+    }
+  }, [isActive, displayFiles]);
+
+  useEffect(() => {
+    if (isActive) {
+      if (filterTools.searchbar.length === 0) {
+        setDisplayFiles(previousDisplayFiles.current || []);
+      }
+      if (filterTools.searchbar.length > 0 || filterTools.headerType) {
+        setDisplayFiles(sortedFiles || []);
+      }
+    }
+  }, [isActive, sortedFiles, allFilesArray, filterTools, setDisplayFiles]);
+
+  const handleChange = useCallback(
+    (
+      updates: React.ChangeEvent<HTMLInputElement> | Partial<FilterToolsProps>
+    ) => {
+      if ('target' in updates) {
+        const { name, value } = updates.target;
+        setFilterTools((prev) => ({ ...prev, [name]: value }));
+      } else {
+        setFilterTools((prev) => ({ ...prev, ...updates }));
+      }
+    },
+    []
+  );
+  return {
+    filterTools,
+    handleChange,
+  };
 };
 
 export default useManageFilter;

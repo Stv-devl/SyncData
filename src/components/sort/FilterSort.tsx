@@ -1,7 +1,15 @@
+'use client';
+
 import React from 'react';
 import { iconsMap } from '../../constantes/iconsMap';
+import { FilterSortProps } from '@/types/type';
 
-const FilterSort = ({ type, selectedType, isUp, onClick }) => {
+const FilterSort: React.FC<FilterSortProps> = ({
+  type,
+  selectedType,
+  isUp,
+  onClick,
+}) => {
   const handleClick = () => {
     onClick(type);
   };

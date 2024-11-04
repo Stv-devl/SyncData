@@ -5,13 +5,17 @@ import React, { useCallback, useMemo, useState } from 'react';
 import { twMerge } from 'tailwind-merge';
 import { arrayIcone } from '../../../constantes/constantes';
 import FilterSort from '@/components/sort/FilterSort';
+import useManageFilter from '@/hook/manage/useManageFilter';
 import usePopupStore from '@/store/ui/usePopup';
 import { useFileStore } from '@/store/useFileStore';
-import { HeaderProps } from '@/types/type';
+import { FileType, HeaderProps } from '@/types/type';
 
 const Header: React.FC<HeaderProps> = ({ isList, setAllFilesChecked }) => {
   const { handleMouseEnter, handleMouseLeave } = usePopupStore();
   const { files } = useFileStore();
+
+  const [isActive, setIsActive] = useState(false);
+  const { filterTools, handleChange } = useManageFilter(isActive);
 
   const isCheckedAll = useMemo(() => {
     return files && files.length > 0 && files.every((file) => file.isChecked);
@@ -25,18 +29,23 @@ const Header: React.FC<HeaderProps> = ({ isList, setAllFilesChecked }) => {
     [setAllFilesChecked]
   );
 
-  const [selectedType, setSelectedType] = useState('');
-  const [isUp, setIsUp] = useState(false);
-
-  const handleFilterClick = (type) => {
-    if (selectedType === type) {
-      setIsUp((prevIsUp) => !prevIsUp);
-    } else {
-      setSelectedType(type);
-      setIsUp(false);
-    }
-  };
-
+  const handleSortFilter = useCallback(
+    (type: string | null) => {
+      if (!isActive) {
+        setIsActive(true);
+      }
+      if (filterTools.headerType === type) {
+        handleChange({ upselected: !filterTools.upselected });
+      } else {
+        const newHeaderType = (type as keyof FileType) || null;
+        handleChange({
+          upselected: true,
+          headerType: newHeaderType,
+        });
+      }
+    },
+    [filterTools, handleChange, isActive]
+  );
   return (
     <ul className="flex items-center px-3 pb-3 lg:px-6">
       <li className="w-10 flex-none cursor-pointer px-2 lg:w-16">
@@ -65,10 +74,10 @@ const Header: React.FC<HeaderProps> = ({ isList, setAllFilesChecked }) => {
         >
           <span>Name</span>
           <FilterSort
-            type="name"
-            selectedType={selectedType}
-            isUp={isUp}
-            onClick={handleFilterClick}
+            type="filename"
+            selectedType={filterTools.headerType}
+            isUp={filterTools.upselected}
+            onClick={handleSortFilter}
           />
         </div>
       </li>
@@ -83,9 +92,9 @@ const Header: React.FC<HeaderProps> = ({ isList, setAllFilesChecked }) => {
           <span>Modified</span>
           <FilterSort
             type="modified"
-            selectedType={selectedType}
-            isUp={isUp}
-            onClick={handleFilterClick}
+            selectedType={filterTools.headerType}
+            isUp={filterTools.upselected}
+            onClick={handleSortFilter}
           />
         </div>
       </li>

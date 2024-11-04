@@ -60,6 +60,7 @@ export interface FileState {
   loading: boolean;
   error: string | null;
   setFiles: (files: FileType[]) => void;
+  setDisplayFiles: (files: FileType[]) => void;
   checkUserAuthenticated: () => string | null;
   resetToRoot: () => void;
   handleOpenFolder: (fileId: string | string[]) => void;

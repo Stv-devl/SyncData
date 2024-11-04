@@ -190,3 +190,17 @@ export interface DeleteFileProps {
   fileId: string;
   fileName: string | string[];
 }
+
+export interface FilterSortProps {
+  type: string;
+  selectedType: string | null;
+  isUp: boolean | null;
+  onClick: (type: string | null) => void;
+}
+
+//use manage filter hook
+export type FilterToolsProps = {
+  headerType: keyof FileType | null;
+  upselected: boolean | null;
+  searchbar: string;
+};

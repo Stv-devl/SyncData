@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Input from '../../form/Input';
 import Button from '@/components/button/Button';
 import { iconsMap } from '@/constantes/iconsMap';
@@ -6,17 +6,23 @@ import useManageFilter from '@/hook/manage/useManageFilter';
 import useModalStore from '@/store/ui/useModale';
 
 const SearchBar = () => {
-  const data = {};
-  const { searchBar, filteredData, handleChange } = useManageFilter({ data });
+  const [isActive, setIsActive] = useState(false);
+
+  const { filterTools, handleChange } = useManageFilter(isActive);
+
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (!isActive) setIsActive(true);
+    handleChange(event);
+  };
 
   return (
     <section className="mx-auto flex h-[80px] w-full flex-row items-center justify-between rounded-lg bg-white px-2 sm:h-[100px] sm:px-4 md:px-10 ">
       <div className="flex w-3/6 items-center gap-2 text-sm sm:w-[250px] sm:text-base lg:w-[400px]">
         <Input
-          name="search"
+          name="searchbar"
           type="text"
-          value={searchBar}
-          handleChange={handleChange}
+          value={filterTools.searchbar || ''}
+          handleChange={handleInputChange}
           placeholder={`search for a files`}
           autoComplete="off"
           IconComponent={iconsMap.IconSearch}

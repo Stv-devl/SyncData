@@ -50,6 +50,19 @@ export interface UseLoginReturn {
   isLoading: boolean;
 }
 
+//file props
+export interface FileType {
+  id: string;
+  filename: string;
+  type: string;
+  url?: string;
+  modified: string;
+  isChecked?: boolean;
+  isFavorite?: boolean;
+  acces: string;
+  files?: FileType[];
+}
+
 //nav props
 export interface NavWrapperProps {
   type: string;
@@ -82,12 +95,35 @@ export interface ButtonComponent {
   iconColor?: string;
 }
 
-//icone
+//icon
+export interface IconType {
+  icon: React.FC<React.SVGProps<SVGSVGElement>>;
+  type: string;
+}
+
 export interface IconCustomProps extends SVGProps<SVGSVGElement> {
   width?: number;
   height?: number;
   fill?: string;
   className?: string;
+}
+
+export interface IconsListWrapperProps {
+  file: FileType;
+  handleIconClick: (icon: IconType, file: FileType) => void;
+  handleClickOpen: (
+    e: React.MouseEvent,
+    filename: string,
+    rect: DOMRect,
+    fileId: string
+  ) => void;
+  handleMouseEnter: (
+    e: React.MouseEvent,
+    iconType: string,
+    transform: string
+  ) => void;
+  handleMouseLeave: () => void;
+  index: number;
 }
 
 //search
@@ -142,6 +178,7 @@ export interface ArrayFileContentProps {
   ) => void;
 }
 
+//accordion
 export interface AccordionFirstFileType {
   id: string;
   filename: string;
@@ -163,17 +200,6 @@ export interface AccordionItemProps {
   checkedFile: string | null;
   toggleOpen: (fileId: string) => void;
   isOpen: (fileId: string) => boolean;
-}
-
-export interface FileType {
-  id: string;
-  filename: string;
-  type: string;
-  url?: string;
-  modified: string;
-  isChecked?: boolean;
-  acces: string;
-  files?: FileType[];
 }
 
 export interface IconWrapperProps {

@@ -1,6 +1,6 @@
+import bcrypt from 'bcryptjs';
 import { NextResponse } from 'next/server';
 import { clientPromise } from '../../../../../lib/mongod';
-import bcrypt from 'bcryptjs';
 
 const saltRounds = 10;
 const dbName = 'syncData';

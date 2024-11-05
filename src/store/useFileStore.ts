@@ -4,6 +4,7 @@ import { findFolderById } from '../../lib/utils/findFolderById';
 import { generateId } from '@/helpers/generateId';
 import { getCurrentDate } from '@/helpers/getCurrentDate';
 import deleteFile from '@/service/deleteFile';
+import putFavorite from '@/service/putFavorite';
 import putFile from '@/service/putFile';
 import { useUserStore } from '@/store/useUserStore';
 import { FileState } from '@/types/storeType';
@@ -26,6 +27,36 @@ export const useFileStore = create<FileState>((set, get) => ({
 
   setDisplayFiles: (newDisplayFiles: FileType[]) => {
     set({ displayFiles: newDisplayFiles });
+  },
+
+  toggleFavoriteFiles: async (fileId: string) => {
+    const userId = get().checkUserAuthenticated();
+    if (!userId) return;
+
+    try {
+      await putFavorite(userId, fileId);
+    } catch (error) {
+      console.error('Error to add to favorite:', error);
+      set({ error: 'Error to add to favorite' });
+      return;
+    }
+
+    set((state) => {
+      const toggleFavoriteStatus = (file: FileType): FileType => {
+        return {
+          ...file,
+          isFavorite: file.id === fileId ? !file.isFavorite : file.isFavorite,
+          files: file.files?.map(toggleFavoriteStatus),
+        };
+      };
+      const updatedFiles = state.files?.map(toggleFavoriteStatus);
+      const updatedDisplayFiles = state.displayFiles?.map(toggleFavoriteStatus);
+
+      return {
+        files: updatedFiles,
+        displayFiles: updatedDisplayFiles,
+      };
+    });
   },
 
   checkUserAuthenticated: () => {

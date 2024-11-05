@@ -1,7 +1,7 @@
-import React, { useRef, useCallback } from 'react';
-import IconWrapper from '../../../wrapper/IconFileWrapper';
-import { arrayHeader, arrayIcone } from '@/constantes/constantes';
-import { iconsMap } from '@/constantes/iconsMap';
+import React, { useCallback } from 'react';
+import IconsListWrapper from '../../../page/array/content/IconsListWrapper';
+import IconFileWrapper from '@/components/wrapper/IconFileWrapper';
+import { arrayHeader } from '@/constantes/constantes';
 import { headerClass } from '@/helpers/headerClass';
 import useManageFonctions from '@/hook/manage/useManageFonctions';
 import { ArrayListContentProps, FileType } from '@/types/type';
@@ -15,7 +15,6 @@ const ListContent: React.FC<ArrayListContentProps> = ({
   handleMouseLeave,
 }) => {
   const { getActionByType } = useManageFonctions();
-  const containerRefs = useRef<HTMLLIElement[]>([]);
 
   const handleIconClick = useCallback(
     (icon: { type: string }, file: FileType) => {
@@ -56,7 +55,7 @@ const ListContent: React.FC<ArrayListContentProps> = ({
                   <div className="flex items-center gap-1">
                     {item.name === 'filename' ? (
                       <>
-                        <IconWrapper type={file.type} className="size-8" />
+                        <IconFileWrapper type={file.type} className="size-8" />
                         <span>{String(content)}</span>
                       </>
                     ) : (
@@ -67,37 +66,14 @@ const ListContent: React.FC<ArrayListContentProps> = ({
               );
             })}
           </ul>
-          <ul className="flex">
-            {arrayIcone.map((icon, iconIndex) => (
-              <li
-                key={`icon-${iconIndex}`}
-                className="relative hidden w-7 flex-none cursor-pointer px-5 sm:block lg:w-9"
-                onClick={() => handleIconClick(icon, file)}
-              >
-                <icon.icon
-                  className="text-regular-blue hover:text-dark-blue z-20 size-6 transition-colors duration-300"
-                  onMouseEnter={(e) =>
-                    handleMouseEnter(e, icon.type, 'translate(-40%, -110%)')
-                  }
-                  onMouseLeave={handleMouseLeave}
-                />
-              </li>
-            ))}
-            <li
-              className="relative block w-7 flex-none px-5 sm:hidden lg:w-9"
-              ref={(el) => {
-                if (el) containerRefs.current[index] = el;
-              }}
-              onClick={(e) => {
-                e.preventDefault();
-                const rect =
-                  containerRefs.current[index].getBoundingClientRect();
-                handleClickOpen(e, file.filename, rect, file.id);
-              }}
-            >
-              <iconsMap.IconInfo className="text-regular-blue hover:text-dark-blue size-6 transition-colors duration-300" />
-            </li>
-          </ul>
+          <IconsListWrapper
+            file={file}
+            handleIconClick={handleIconClick}
+            handleClickOpen={handleClickOpen}
+            handleMouseEnter={handleMouseEnter}
+            handleMouseLeave={handleMouseLeave}
+            index={index}
+          />
         </div>
       ))}
     </>

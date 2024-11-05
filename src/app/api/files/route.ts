@@ -4,6 +4,7 @@ import { filterById } from 'lib/utils/filterById';
 import { ObjectId } from 'mongodb';
 import { NextResponse } from 'next/server';
 import { clientPromise } from '../../../../lib/mongod';
+import { FileType } from '../../../types/type';
 
 /**
  * Handles PUT requests to update the files of a user.
@@ -98,11 +99,11 @@ export async function DELETE(request: Request): Promise<NextResponse> {
     const updatedLinks =
       parentId === 'root'
         ? filterById(user.files, fileId)
-        : user.files.map((file) => {
+        : user.files.map((file: FileType) => {
             if (file.id === parentId) {
               return {
                 ...file,
-                files: filterById(file.files, fileId),
+                files: filterById(file.files || [], fileId),
               };
             }
             return file.files

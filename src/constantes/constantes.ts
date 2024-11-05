@@ -55,10 +55,10 @@ export const arrayHeader = [
 ];
 
 export const arrayIcone = [
-  { icon: iconsMap.IconFavorite, type: 'favorite', label: 'Add to favorite' },
-  { icon: iconsMap.IconShare, type: 'share', label: 'Copie acces link' },
-  { icon: iconsMap.IconDownload, type: 'download', label: 'Download' },
-  { icon: iconsMap.IconDelete, type: 'delete', label: 'Delete' },
+  { icon: iconsMap.IconFavorite, type: 'favorite' },
+  { icon: iconsMap.IconShare, type: 'share' },
+  { icon: iconsMap.IconDownload, type: 'download' },
+  { icon: iconsMap.IconDelete, type: 'delete' },
 ];
 
 export const arrayPopup = [

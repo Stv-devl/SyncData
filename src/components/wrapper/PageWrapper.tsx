@@ -1,7 +1,7 @@
 import React from 'react';
+import Array from '../page/array/Array';
 import SearchBar from '../page/searchBar/SearchBar';
 import ToolsBar from '../page/toolsBar/ToolsBar';
-import Array from '../page/array/Array';
 
 const PageWrapper = () => {
   return (

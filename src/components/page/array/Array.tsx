@@ -14,7 +14,7 @@ import usePopupStore from '@/store/ui/usePopup';
 import { useFileStore } from '@/store/useFileStore';
 
 const Array = () => {
-  //mettre isList dans store + persistant, pareil pour FileContent??
+  //mettre isList dans store + persistant, pareil dans FileContent
   const [isList, setIsList] = useState(true);
 
   const {
@@ -43,6 +43,8 @@ const Array = () => {
       ? 'root'
       : findFolderById(files ?? [], parentFolderId)?.filename;
   }, [parentFolderId, files]);
+
+  console.log(files);
 
   const toggleIconClasses = useMemo(
     () =>

@@ -1,8 +1,8 @@
 import { ChangeUser, NextAuthOptions } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import GoogleProvider from 'next-auth/providers/google';
+import { config } from './../config';
 import { getUserByEmail, verifyPassword } from './authHelpers';
-import { config } from './config';
 
 export const authOptions: NextAuthOptions = {
   providers: [

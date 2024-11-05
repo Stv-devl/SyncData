@@ -1,5 +1,5 @@
 import bcrypt from 'bcryptjs';
-import { clientPromise } from './mongod';
+import { clientPromise } from './../mongod';
 
 export const getUserByEmail = async (email: string) => {
   try {

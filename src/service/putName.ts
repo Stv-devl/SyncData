@@ -1,5 +1,5 @@
-const putName = async (userId: string, fileId: string, filename: string) => {
-  const url = `${process.env.NEXT_PUBLIC_API_URL}/favorite`;
+const putName = async (userId: string, fileId: string, fileName: string) => {
+  const url = `${process.env.NEXT_PUBLIC_API_URL}/updateName`;
 
   try {
     const response = await fetch(url, {
@@ -7,16 +7,17 @@ const putName = async (userId: string, fileId: string, filename: string) => {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ userId, fileId, filename }),
+      body: JSON.stringify({ userId, fileId, fileName }),
     });
     if (!response.ok) {
-      throw new Error(`Error to change the name. Status: ${response.status}`);
+      throw new Error(`Error updating the name. Status: ${response.status}`);
     }
     const data = await response.json();
-    console.log('Name of the file successfully changed');
+    console.log('Name successfully updated:', data);
+
     return data;
   } catch (error: unknown) {
-    console.error('Error to add to change the name:', error);
+    console.error('Error updating the name:', error);
     throw error;
   }
 };

@@ -37,9 +37,10 @@ export async function PUT(request: Request): Promise<NextResponse> {
       return {
         ...file,
         filename: file.id === fileId ? newFileName : file.filename,
-        files: file.files?.map(udpatedName),
+        files: file.files ? file.files.map(udpatedName) : [],
       };
     };
+
     const updatedFiles = user.files?.map(udpatedName);
 
     if (!updatedFiles && fileId) {

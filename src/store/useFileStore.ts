@@ -6,6 +6,7 @@ import { getCurrentDate } from '@/helpers/getCurrentDate';
 import deleteFile from '@/service/deleteFile';
 import putFavorite from '@/service/putFavorite';
 import putFile from '@/service/putFile';
+import putName from '@/service/putName';
 import { useUserStore } from '@/store/useUserStore';
 import { FileState } from '@/types/storeType';
 import { FileType } from '@/types/type';
@@ -73,6 +74,8 @@ export const useFileStore = create<FileState>((set, get) => ({
     if (!userId) return;
 
     try {
+      await putName(userId, fileId, newName);
+      console.log('Name of the file successfully updated');
       const updateFile = (file: FileType) =>
         file.id === fileId ? { ...file, filename: newName } : file;
 

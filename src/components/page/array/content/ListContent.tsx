@@ -1,5 +1,6 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useState } from 'react';
 import IconsListWrapper from '../../../page/array/content/IconsListWrapper';
+import UpdateInput from '@/components/form/UpdateNameInput';
 import IconFileWrapper from '@/components/wrapper/IconFileWrapper';
 import { arrayHeader } from '@/constantes/constantes';
 import { headerClass } from '@/helpers/headerClass';
@@ -8,13 +9,21 @@ import { ArrayListContentProps, FileType } from '@/types/type';
 
 const ListContent: React.FC<ArrayListContentProps> = ({
   files,
+  updateFileName,
   handleOpenFolder,
   toggleFileChecked,
   handleClickOpen,
   handleMouseEnter,
   handleMouseLeave,
+  toggleEditedFile,
 }) => {
   const { getActionByType } = useManageFonctions();
+
+  const [newFileName, setNewFileName] = useState('');
+
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setNewFileName(event.target.value);
+  };
 
   const handleIconClick = useCallback(
     (icon: { type: string }, file: FileType) => {
@@ -22,6 +31,11 @@ const ListContent: React.FC<ArrayListContentProps> = ({
     },
     [getActionByType]
   );
+
+  const validateName = (fileId: string) => {
+    updateFileName(fileId, newFileName);
+    toggleEditedFile(fileId);
+  };
 
   return (
     <>
@@ -46,17 +60,33 @@ const ListContent: React.FC<ArrayListContentProps> = ({
                 file.id
               )
             }
-            onClick={() => handleOpenFolder(file.id)}
+            onClick={() => !file.isEdited && handleOpenFolder(file.id)}
           >
             {arrayHeader.map((item) => {
               const content = file[item.name as keyof typeof file];
               return (
                 <li key={item.name} className={headerClass(item.name)}>
-                  <div className="flex items-center gap-1">
+                  <div className="relative flex items-center gap-1">
                     {item.name === 'filename' ? (
                       <>
                         <IconFileWrapper type={file.type} className="size-8" />
-                        <span>{String(content)}</span>
+                        {file.isEdited ? (
+                          <>
+                            <UpdateInput
+                              file={file}
+                              name="searchbar"
+                              value={newFileName || ''}
+                              handleChange={handleInputChange}
+                              placeholder={file.filename}
+                              autoComplete="off"
+                              toggleEditedFile={toggleEditedFile}
+                              validateName={validateName}
+                              error={''}
+                            />
+                          </>
+                        ) : (
+                          <span>{String(content)}</span>
+                        )}
                       </>
                     ) : (
                       <span>{String(content)}</span>

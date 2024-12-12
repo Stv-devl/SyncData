@@ -3,8 +3,8 @@ import React from 'react';
 const IconeDelete: React.FC<React.SVGProps<SVGSVGElement>> = (props) => {
   return (
     <svg
-      width={props.width || 20}
-      height={props.height || 20}
+      width={props.width || 22}
+      height={props.height || 22}
       viewBox="0 0 25 25"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"

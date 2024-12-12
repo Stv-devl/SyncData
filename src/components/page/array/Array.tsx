@@ -19,12 +19,14 @@ const Array = () => {
 
   const {
     files,
+    updateFileName,
     displayFiles,
     setAllFilesChecked,
     toggleFileChecked,
     parentFolderId,
     handleOpenFolder,
     handleBackFolder,
+    toggleEditedFile,
   } = useFileStore();
   const {
     isOpen,
@@ -43,8 +45,6 @@ const Array = () => {
       ? 'root'
       : findFolderById(files ?? [], parentFolderId)?.filename;
   }, [parentFolderId, files]);
-
-  console.log(files);
 
   const toggleIconClasses = useMemo(
     () =>
@@ -104,11 +104,13 @@ const Array = () => {
           isList ? (
             <ListContent
               files={displayFiles}
+              updateFileName={updateFileName}
               handleOpenFolder={handleOpenFolder}
               toggleFileChecked={handleCheckboxChange}
               handleClickOpen={handleContextMenu}
               handleMouseEnter={handleMouseEnterCallback}
               handleMouseLeave={handleMouseLeaveCallback}
+              toggleEditedFile={toggleEditedFile}
             />
           ) : (
             <FileContent

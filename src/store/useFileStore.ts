@@ -35,28 +35,55 @@ export const useFileStore = create<FileState>((set, get) => ({
 
     try {
       await putFavorite(userId, fileId);
+
+      const toggleFavorite = (file: FileType) =>
+        file.id === fileId ? { ...file, isFavorite: !file.isFavorite } : file;
+
+      set((state) => ({
+        files: state.files?.map(toggleFavorite),
+        displayFiles: state.displayFiles?.map(toggleFavorite),
+      }));
     } catch (error) {
       console.error('Error to add to favorite:', error);
       set({ error: 'Error to add to favorite' });
-      return;
     }
+  },
 
-    set((state) => {
-      const toggleFavoriteStatus = (file: FileType): FileType => {
-        return {
-          ...file,
-          isFavorite: file.id === fileId ? !file.isFavorite : file.isFavorite,
-          files: file.files?.map(toggleFavoriteStatus),
-        };
-      };
-      const updatedFiles = state.files?.map(toggleFavoriteStatus);
-      const updatedDisplayFiles = state.displayFiles?.map(toggleFavoriteStatus);
+  toggleEditedFile: async (fileId: string) => {
+    try {
+      console.log(fileId);
 
-      return {
-        files: updatedFiles,
-        displayFiles: updatedDisplayFiles,
-      };
-    });
+      const toggleEdited = (file: FileType) =>
+        file.id === fileId
+          ? { ...file, isEdited: !file.isEdited }
+          : { ...file, isEdited: file.isEdited ? false : file.isEdited };
+
+      set((state) => ({
+        files: state.files?.map(toggleEdited),
+        displayFiles: state.displayFiles?.map(toggleEdited),
+      }));
+    } catch (error) {
+      console.error('Error to edit the file:', error);
+      set({ error: 'Error to edit the file' });
+    }
+  },
+
+  updateFileName: async (fileId: string, newName: string) => {
+    const userId = get().checkUserAuthenticated();
+    if (!userId) return;
+
+    try {
+      const updateFile = (file: FileType) =>
+        file.id === fileId ? { ...file, filename: newName } : file;
+
+      set((state) => ({
+        files: state.files?.map(updateFile),
+        displayFiles: state.displayFiles?.map(updateFile),
+      }));
+    } catch (error) {
+      console.error('Error to update the name:', error);
+      set({ error: 'Error to update the name' });
+    }
   },
 
   checkUserAuthenticated: () => {

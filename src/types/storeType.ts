@@ -54,13 +54,15 @@ export interface UserState {
 export interface FileState {
   files: FileType[] | null;
   displayFiles: FileType[] | null;
-
   parentFolderId: string;
   folderStack: string[];
   loading: boolean;
   error: string | null;
   setFiles: (files: FileType[]) => void;
   setDisplayFiles: (files: FileType[]) => void;
+  toggleEditedFile: (fileId: string) => Promise<void>;
+  toggleFavoriteFiles: (fileId: string) => Promise<void>;
+  updateFileName: (fileId: string, newName: string) => Promise<void>;
   checkUserAuthenticated: () => string | null;
   resetToRoot: () => void;
   handleOpenFolder: (fileId: string | string[]) => void;

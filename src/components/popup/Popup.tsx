@@ -1,9 +1,9 @@
+import clsx from 'clsx';
 import React, { useMemo, useRef } from 'react';
 import { twMerge } from 'tailwind-merge';
-import InfoWrapper from './InfoWrapper';
 import usePopupPosition from '../../hook/ui/usePopupPosition';
+import InfoWrapper from './InfoWrapper';
 import usePopupStore from '@/store/ui/usePopup';
-import clsx from 'clsx';
 
 const Popup = () => {
   const popupRef = useRef<HTMLDivElement>(null);

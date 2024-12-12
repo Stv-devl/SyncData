@@ -1,11 +1,14 @@
-import { findFileRecursive } from './findFileRecursive';
 import { FileType } from '@/types/type';
 
 export const filterById = (
   files: FileType[],
   fileId: string | string[]
-): string | null => {
-  const targetId = Array.isArray(fileId) ? fileId[0] : fileId;
-  const folder = findFileRecursive(files, targetId, (folder) => folder);
-  return folder ? folder.id : null;
+): FileType[] => {
+  const targetIds = Array.isArray(fileId) ? fileId : [fileId];
+  return files
+    .filter((file) => !targetIds.includes(file.id))
+    .map((file) => ({
+      ...file,
+      files: file.files ? filterById(file.files, fileId) : file.files,
+    }));
 };

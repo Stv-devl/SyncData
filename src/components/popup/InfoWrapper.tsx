@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import React from 'react';
+import React, { useCallback } from 'react';
 import { twMerge } from 'tailwind-merge';
 import { arrayPopup } from '@/constantes/constantes';
 import useManageFonctions from '@/hook/manage/useManageFonctions';
@@ -7,6 +7,13 @@ import { InfoWrapperProps } from '@/types/type';
 
 const InfoWrapper: React.FC<InfoWrapperProps> = ({ fileName, fileId }) => {
   const { getActionByType } = useManageFonctions();
+
+  const handlePopupClick = useCallback(
+    (type, fileId, fileName) => {
+      getActionByType(type, fileId, fileName);
+    },
+    [getActionByType]
+  );
 
   return (
     <div className="flex flex-col items-center">
@@ -17,7 +24,7 @@ const InfoWrapper: React.FC<InfoWrapperProps> = ({ fileName, fileId }) => {
         <div
           key={item.label}
           className="hover:bg-light-blue flex w-full cursor-pointer items-center gap-2 p-2 transition-colors duration-500 lg:gap-4"
-          onClick={() => getActionByType(item.type, fileId, fileName)}
+          onClick={() => handlePopupClick(item.type, fileId, fileName)}
         >
           <item.icon
             className={twMerge(

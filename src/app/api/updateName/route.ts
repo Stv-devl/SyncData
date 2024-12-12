@@ -19,7 +19,7 @@ export async function PUT(request: Request): Promise<NextResponse> {
   const usersCollection = db.collection(collectionName);
 
   try {
-    const { userId, fileId } = await request.json();
+    const { userId, fileId, fileName } = await request.json();
     const user = await findUserById(userId, usersCollection);
 
     if (!user) {
@@ -31,15 +31,16 @@ export async function PUT(request: Request): Promise<NextResponse> {
     if (!fileId) {
       return NextResponse.json({ error: 'Invalid file Id' }, { status: 400 });
     }
+    const newFileName = fileName;
 
-    const toggleFavoriteStatus = (file: FileType): FileType => {
+    const udpatedName = (file: FileType): FileType => {
       return {
         ...file,
-        isFavorite: file.id === fileId ? !file.isFavorite : file.isFavorite,
-        files: file.files?.map(toggleFavoriteStatus),
+        filename: file.id === fileId ? newFileName : file.filename,
+        files: file.files?.map(udpatedName),
       };
     };
-    const updatedFiles = user.files?.map(toggleFavoriteStatus);
+    const updatedFiles = user.files?.map(udpatedName);
 
     if (!updatedFiles && fileId) {
       return NextResponse.json(
@@ -59,7 +60,7 @@ export async function PUT(request: Request): Promise<NextResponse> {
 
     return NextResponse.json(
       {
-        message: 'Folder created successfully',
+        message: 'Name of folder modified successfully',
         files: updatedFiles,
       },
       { status: 200 }

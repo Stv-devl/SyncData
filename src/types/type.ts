@@ -58,6 +58,7 @@ export interface FileType {
   url?: string;
   modified: string;
   isChecked?: boolean;
+  isEdited?: boolean;
   isFavorite?: boolean;
   acces: string;
   files?: FileType[];
@@ -150,6 +151,7 @@ export interface HeaderProps {
 
 export interface ArrayListContentProps {
   files: FileType[];
+  updateFileName: (fileId: string, newName: string) => void;
   handleOpenFolder: (fileId: string) => void;
   toggleFileChecked: (fileId: string) => void;
   handleClickOpen: (
@@ -164,6 +166,7 @@ export interface ArrayListContentProps {
     transformStyle: string
   ) => void;
   handleMouseLeave: () => void;
+  toggleEditedFile: (fileId: string) => void;
 }
 
 export interface ArrayFileContentProps {
@@ -222,6 +225,18 @@ export interface FilterSortProps {
   selectedType: string | null;
   isUp: boolean | null;
   onClick: (type: string | null) => void;
+}
+
+export interface ChangeNameProps {
+  file: FileType;
+  name: string;
+  handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  value: string;
+  placeholder: string;
+  error: string;
+  autoComplete: string;
+  toggleEditedFile: (fileId: string) => void;
+  validateName: (fileId: string) => void;
 }
 
 //use manage filter hook

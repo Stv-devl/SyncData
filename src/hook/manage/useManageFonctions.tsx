@@ -3,7 +3,7 @@ import useModalStore from '@/store/ui/useModale';
 import { useFileStore } from '@/store/useFileStore';
 
 const useManageFonctions = () => {
-  const { toggleFavoriteFiles } = useFileStore();
+  const { toggleFavoriteFiles, toggleEditedFile } = useFileStore();
 
   const handleInformation = () => {
     console.log('information');
@@ -19,10 +19,6 @@ const useManageFonctions = () => {
 
   const handleMoveFile = () => {
     console.log('move file');
-  };
-
-  const handleChangeName = () => {
-    console.log('change name');
   };
 
   const getActionByType = useCallback(
@@ -47,7 +43,7 @@ const useManageFonctions = () => {
         case 'move':
           return handleMoveFile();
         case 'change':
-          return handleChangeName();
+          return toggleEditedFile(fileId);
         case 'delete':
           return useModalStore
             .getState()
@@ -57,7 +53,7 @@ const useManageFonctions = () => {
           return () => {};
       }
     },
-    []
+    [toggleEditedFile, toggleFavoriteFiles]
   );
 
   return {

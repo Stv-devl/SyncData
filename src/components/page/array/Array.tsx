@@ -115,9 +115,11 @@ const Array = () => {
           ) : (
             <FileContent
               files={displayFiles}
+              updateFileName={updateFileName}
               handleOpenFolder={handleOpenFolder}
               toggleFileChecked={handleCheckboxChange}
               handleClickOpen={handleContextMenu}
+              toggleEditedFile={toggleEditedFile}
             />
           )
         ) : (

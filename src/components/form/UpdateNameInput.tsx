@@ -8,6 +8,7 @@ import { ChangeNameProps } from '@/types/type';
 
 const UpdateNameInput: React.FC<ChangeNameProps> = ({
   file,
+  isFile,
   name,
   handleChange,
   value,
@@ -26,9 +27,29 @@ const UpdateNameInput: React.FC<ChangeNameProps> = ({
     )
   );
 
+  const containerClasses = twMerge(
+    'relative z-20',
+    isFile ? 'w-full' : 'w-3/5 lg:w-2/3'
+  );
+
+  const groupClasses = twMerge(
+    'group flex relative items-center',
+    isFile ? 'justify-end' : ''
+  );
+
+  const iconValidateClasses = twMerge(
+    'text-regular-blue hover:text-dark-blue absolute duration-300 cursor-pointer',
+    isFile ? 'right-1/2 top-[28px]' : 'right-[-25px] top-[3px]'
+  );
+
+  const iconCrossClasses = twMerge(
+    'text-regular-blue hover:text-dark-blue absolute duration-300 cursor-pointer',
+    isFile ? 'right-[35px] top-[29px]' : 'right-[-45px] top-[3.5px]'
+  );
+
   return (
-    <div className="relative w-3/5 lg:w-2/3">
-      <div className="group flex">
+    <div className={containerClasses}>
+      <div className={groupClasses}>
         <input
           className={inputClasses}
           type="text"
@@ -38,14 +59,21 @@ const UpdateNameInput: React.FC<ChangeNameProps> = ({
           onChange={handleChange}
           placeholder={placeholder}
           autoComplete={autoComplete}
+          onClick={(e) => e.stopPropagation()}
         />
         <IconValidate
-          className=" text-regular-blue hover:text-dark-blue absolute right-[-25px] top-[3px] duration-300"
-          onClick={() => validateName(file.id, file.filename)}
+          className={iconValidateClasses}
+          onClick={(e) => {
+            e.stopPropagation();
+            validateName(file.id, file.filename);
+          }}
         />
         <IconCrossCircle
-          className="text-regular-blue hover:text-dark-blue absolute right-[-45px] top-[3.5px] duration-300"
-          onClick={() => toggleEditedFile(file.id)}
+          className={iconCrossClasses}
+          onClick={(e) => {
+            e.stopPropagation();
+            toggleEditedFile(file.id);
+          }}
         />
       </div>
       {error && (

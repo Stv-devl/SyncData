@@ -1,3 +1,4 @@
+import { log } from 'node:util';
 import { create } from 'zustand';
 import { addFileToParent } from '../../lib/utils/addFileToParent';
 import { findFolderById } from '../../lib/utils/findFolderById';
@@ -70,7 +71,6 @@ export const useFileStore = create<FileState>((set, get) => ({
   updateFileName: async (fileId: string, newName: string, fileName: string) => {
     const userId = get().checkUserAuthenticated();
     if (!userId || fileName === newName) return;
-
     try {
       await putName(userId, fileId, newName);
       const updateFile = (file: FileType) =>

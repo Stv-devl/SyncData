@@ -171,6 +171,8 @@ export interface ArrayListContentProps {
 
 export interface ArrayFileContentProps {
   files: FileType[];
+  updateFileName: (fileId: string, newName: string, fileName: string) => void;
+  toggleEditedFile: (fileId: string) => void;
   handleOpenFolder: (fileId: string) => void;
   toggleFileChecked: (fileId: string) => void;
   handleClickOpen: (
@@ -229,6 +231,7 @@ export interface FilterSortProps {
 
 export interface ChangeNameProps {
   file: FileType;
+  isFile: boolean;
   name: string;
   handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   value: string;
@@ -245,3 +248,10 @@ export type FilterToolsProps = {
   upselected: boolean | null;
   searchbar: string;
 };
+
+//use file edition hook
+export interface UseFileEditionProps {
+  files: FileType[];
+  toggleEditedFile: (fileId: string) => void;
+  updateFileName: (fileId: string, newName: string, fileName: string) => void;
+}

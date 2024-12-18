@@ -62,7 +62,11 @@ export interface FileState {
   setDisplayFiles: (files: FileType[]) => void;
   toggleEditedFile: (fileId: string) => Promise<void>;
   toggleFavoriteFiles: (fileId: string) => Promise<void>;
-  updateFileName: (fileId: string, newName: string) => Promise<void>;
+  updateFileName: (
+    fileId: string,
+    newName: string,
+    fileName: string
+  ) => Promise<void>;
   checkUserAuthenticated: () => string | null;
   resetToRoot: () => void;
   handleOpenFolder: (fileId: string | string[]) => void;

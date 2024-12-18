@@ -32,6 +32,7 @@ import IconSortFiles from '../icones/IconSortFiles';
 import IconUpload from '../icones/IconUpload';
 import IconVector from '../icones/IconVector';
 import IconCross from '@/icones/IconCross';
+import IconCrossCircle from '@/icones/IconCrossCircle';
 import IconUnknown from '@/icones/iconeFiles/IconUnknown';
 import IconFavorite from '@/icones/IconFavorite';
 import IconFavorited from '@/icones/iconFavorited';
@@ -80,4 +81,5 @@ export const iconsMap = {
   IconSortDown,
   IconFavorited,
   IconValidate,
+  IconCrossCircle,
 };

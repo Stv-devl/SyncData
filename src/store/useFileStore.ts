@@ -52,8 +52,6 @@ export const useFileStore = create<FileState>((set, get) => ({
 
   toggleEditedFile: async (fileId: string) => {
     try {
-      console.log(fileId);
-
       const toggleEdited = (file: FileType) =>
         file.id === fileId
           ? { ...file, isEdited: !file.isEdited }
@@ -69,13 +67,12 @@ export const useFileStore = create<FileState>((set, get) => ({
     }
   },
 
-  updateFileName: async (fileId: string, newName: string) => {
+  updateFileName: async (fileId: string, newName: string, fileName: string) => {
     const userId = get().checkUserAuthenticated();
-    if (!userId) return;
+    if (!userId || fileName === newName) return;
 
     try {
       await putName(userId, fileId, newName);
-      console.log('Name of the file successfully updated');
       const updateFile = (file: FileType) =>
         file.id === fileId ? { ...file, filename: newName } : file;
 
@@ -83,6 +80,7 @@ export const useFileStore = create<FileState>((set, get) => ({
         files: state.files?.map(updateFile),
         displayFiles: state.displayFiles?.map(updateFile),
       }));
+      console.log('Name of the file successfully updated');
     } catch (error) {
       console.error('Error to update the name:', error);
       set({ error: 'Error to update the name' });

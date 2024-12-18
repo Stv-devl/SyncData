@@ -151,7 +151,7 @@ export interface HeaderProps {
 
 export interface ArrayListContentProps {
   files: FileType[];
-  updateFileName: (fileId: string, newName: string) => void;
+  updateFileName: (fileId: string, newName: string, fileName: string) => void;
   handleOpenFolder: (fileId: string) => void;
   toggleFileChecked: (fileId: string) => void;
   handleClickOpen: (
@@ -236,7 +236,7 @@ export interface ChangeNameProps {
   error: string;
   autoComplete: string;
   toggleEditedFile: (fileId: string) => void;
-  validateName: (fileId: string) => void;
+  validateName: (fileId: string, fileName: string) => void;
 }
 
 //use manage filter hook

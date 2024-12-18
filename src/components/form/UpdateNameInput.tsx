@@ -2,7 +2,7 @@
 import clsx from 'clsx';
 import React from 'react';
 import { twMerge } from 'tailwind-merge';
-import IconDelete from '@/icones/IconDelete';
+import IconCrossCircle from '@/icones/IconCrossCircle';
 import IconValidate from '@/icones/IconValidate';
 import { ChangeNameProps } from '@/types/type';
 
@@ -41,10 +41,10 @@ const UpdateNameInput: React.FC<ChangeNameProps> = ({
         />
         <IconValidate
           className=" text-regular-blue hover:text-dark-blue absolute right-[-25px] top-[3px] duration-300"
-          onClick={() => validateName(file.id)}
+          onClick={() => validateName(file.id, file.filename)}
         />
-        <IconDelete
-          className="text-regular-blue hover:text-dark-blue absolute right-[-45px] top-[3px] duration-300"
+        <IconCrossCircle
+          className="text-regular-blue hover:text-dark-blue absolute right-[-45px] top-[3.5px] duration-300"
           onClick={() => toggleEditedFile(file.id)}
         />
       </div>

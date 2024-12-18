@@ -1,4 +1,5 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
+import useEditedInput from '../../../../hook/ui/useEditedInput';
 import IconsListWrapper from '../../../page/array/content/IconsListWrapper';
 import UpdateInput from '@/components/form/UpdateNameInput';
 import IconFileWrapper from '@/components/wrapper/IconFileWrapper';
@@ -21,9 +22,15 @@ const ListContent: React.FC<ArrayListContentProps> = ({
 
   const [newFileName, setNewFileName] = useState('');
 
-  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setNewFileName(event.target.value);
-  };
+  const editedFile = useMemo(() => files.find((f) => f.isEdited), [files]);
+  const editedFileRef = useEditedInput({ editedFile, toggleEditedFile });
+
+  const handleInputChange = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      setNewFileName(event.target.value);
+    },
+    []
+  );
 
   const handleIconClick = useCallback(
     (icon: { type: string }, file: FileType) => {
@@ -32,16 +39,22 @@ const ListContent: React.FC<ArrayListContentProps> = ({
     [getActionByType]
   );
 
-  const validateName = (fileId: string) => {
-    updateFileName(fileId, newFileName);
-    toggleEditedFile(fileId);
-  };
+  const validateName = useCallback(
+    (fileId: string, fileName: string) => {
+      updateFileName(fileId, newFileName, fileName);
+      toggleEditedFile(fileId);
+    },
+    [newFileName, updateFileName, toggleEditedFile]
+  );
+
+  const fileNameStyle = useMemo(() => 'w-28 truncate sm:w-32 lg:w-52', []);
 
   return (
     <>
       {files.map((file, index) => (
         <div
           key={file.id}
+          ref={file.isEdited ? editedFileRef : null}
           className="ml-[9px] flex items-center px-3 transition-colors duration-500 lg:px-6"
         >
           <input
@@ -71,25 +84,25 @@ const ListContent: React.FC<ArrayListContentProps> = ({
                       <>
                         <IconFileWrapper type={file.type} className="size-8" />
                         {file.isEdited ? (
-                          <>
-                            <UpdateInput
-                              file={file}
-                              name="searchbar"
-                              value={newFileName || ''}
-                              handleChange={handleInputChange}
-                              placeholder={file.filename}
-                              autoComplete="off"
-                              toggleEditedFile={toggleEditedFile}
-                              validateName={validateName}
-                              error={''}
-                            />
-                          </>
+                          <UpdateInput
+                            file={file}
+                            name="searchbar"
+                            value={newFileName || ''}
+                            handleChange={handleInputChange}
+                            placeholder={file.filename}
+                            autoComplete="off"
+                            toggleEditedFile={toggleEditedFile}
+                            validateName={validateName}
+                            error={''}
+                          />
                         ) : (
-                          <span>{String(content)}</span>
+                          <span className={fileNameStyle}>
+                            {String(content)}
+                          </span>
                         )}
                       </>
                     ) : (
-                      <span>{String(content)}</span>
+                      <span className={fileNameStyle}>{String(content)}</span>
                     )}
                   </div>
                 </li>

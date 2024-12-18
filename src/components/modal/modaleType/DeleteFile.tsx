@@ -13,10 +13,10 @@ const DeleteFile: React.FC<DeleteFileProps> = ({ fileId, fileName }) => {
     useModalStore.getState().closeModal();
   };
   return (
-    <div className="h-full ">
+    <div className="size-full">
       <h1 className="text-darkest-blue text-title pb-4 ">Delete a file</h1>
       <p>Do you really want to delete this file?</p>
-      <span className="text-darkest-blue font-semibold capitalize">
+      <span className="text-darkest-blue block truncate font-semibold capitalize">
         {Array.isArray(fileName) ? fileName.join(', ') : fileName}
       </span>
       <ButtonModalWrapper

@@ -42,7 +42,7 @@ const AccordionItem: React.FC<AccordionItemProps> = ({
         <div className="icon-wrapper">
           <IconFileWrapper type={file.type} className="size-5" />
         </div>
-        <p className="py-1">{file.filename}</p>
+        <p className="w-1/2 truncate py-1">{file.filename}</p>
       </div>
 
       {(isOpen(file.id) || initiallyOpen) &&

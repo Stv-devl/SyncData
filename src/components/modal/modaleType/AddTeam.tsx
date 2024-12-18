@@ -1,7 +1,7 @@
 import React from 'react';
-import { iconsMap } from '@/constantes/iconsMap';
-import Input from '@/components/form/Input';
 import ButtonModalWrapper from '@/components/button/ButtonModalWrapper';
+import Input from '@/components/form/Input';
+import { iconsMap } from '@/constantes/iconsMap';
 
 const AddTeam = () => {
   const handleChange = (e) => {

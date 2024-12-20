@@ -53,12 +53,14 @@ export interface UserState {
 
 export interface FileState {
   files: FileType[] | null;
+  isList: boolean;
   displayFiles: FileType[] | null;
   parentFolderId: string;
   folderStack: string[];
   loading: boolean;
   error: string | null;
   setFiles: (files: FileType[]) => void;
+  setIsList: (value: boolean) => void;
   setDisplayFiles: (files: FileType[]) => void;
   toggleEditedFile: (fileId: string) => Promise<void>;
   toggleFavoriteFiles: (fileId: string) => Promise<void>;

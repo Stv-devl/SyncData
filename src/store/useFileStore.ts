@@ -1,5 +1,5 @@
-import { log } from 'node:util';
 import { create } from 'zustand';
+import { persist } from 'zustand/middleware';
 import { addFileToParent } from '../../lib/utils/addFileToParent';
 import { findFolderById } from '../../lib/utils/findFolderById';
 import { generateId } from '@/helpers/generateId';
@@ -12,270 +12,291 @@ import { useUserStore } from '@/store/useUserStore';
 import { FileState } from '@/types/storeType';
 import { FileType } from '@/types/type';
 
-export const useFileStore = create<FileState>((set, get) => ({
-  files: null,
-  displayFiles: null,
-  parentFolderId: 'root',
-  folderStack: [],
-  loading: false,
-  error: null,
-
-  setFiles: (files: FileType[]) => {
-    set({
-      files,
-      displayFiles: files,
-    });
-  },
-
-  setDisplayFiles: (newDisplayFiles: FileType[]) => {
-    set({ displayFiles: newDisplayFiles });
-  },
-
-  toggleFavoriteFiles: async (fileId: string) => {
-    const userId = get().checkUserAuthenticated();
-    if (!userId) return;
-
-    try {
-      await putFavorite(userId, fileId);
-
-      const toggleFavorite = (file: FileType) =>
-        file.id === fileId ? { ...file, isFavorite: !file.isFavorite } : file;
-
-      set((state) => ({
-        files: state.files?.map(toggleFavorite),
-        displayFiles: state.displayFiles?.map(toggleFavorite),
-      }));
-    } catch (error) {
-      console.error('Error to add to favorite:', error);
-      set({ error: 'Error to add to favorite' });
-    }
-  },
-
-  toggleEditedFile: async (fileId: string) => {
-    try {
-      const toggleEdited = (file: FileType) =>
-        file.id === fileId
-          ? { ...file, isEdited: !file.isEdited }
-          : { ...file, isEdited: file.isEdited ? false : file.isEdited };
-
-      set((state) => ({
-        files: state.files?.map(toggleEdited),
-        displayFiles: state.displayFiles?.map(toggleEdited),
-      }));
-    } catch (error) {
-      console.error('Error to edit the file:', error);
-      set({ error: 'Error to edit the file' });
-    }
-  },
-
-  updateFileName: async (fileId: string, newName: string, fileName: string) => {
-    const userId = get().checkUserAuthenticated();
-    if (!userId || fileName === newName) return;
-    try {
-      await putName(userId, fileId, newName);
-      const updateFile = (file: FileType) =>
-        file.id === fileId ? { ...file, filename: newName } : file;
-
-      set((state) => ({
-        files: state.files?.map(updateFile),
-        displayFiles: state.displayFiles?.map(updateFile),
-      }));
-      console.log('Name of the file successfully updated');
-    } catch (error) {
-      console.error('Error to update the name:', error);
-      set({ error: 'Error to update the name' });
-    }
-  },
-
-  checkUserAuthenticated: () => {
-    const { user } = useUserStore.getState();
-    if (!user?._id) {
-      set({ error: 'User not logged in', loading: false });
-      return null;
-    }
-    return user._id;
-  },
-
-  resetToRoot: () => {
-    const { files } = get();
-    set({
+export const useFileStore = create<FileState>()(
+  persist(
+    (set, get) => ({
+      files: null,
+      isList: true,
+      displayFiles: null,
       parentFolderId: 'root',
       folderStack: [],
-      displayFiles: files,
-    });
-  },
+      loading: false,
+      error: null,
 
-  handleOpenFolder: (fileId) => {
-    const { files, folderStack, parentFolderId } = get();
+      setIsList: (value) => set(() => ({ isList: value })),
 
-    if (!files || typeof fileId !== 'string') {
-      return null;
-    }
-    const clickedFolder = findFolderById(files, fileId);
-    if (clickedFolder) {
-      set({
-        parentFolderId: fileId as string,
-        folderStack: [...folderStack, parentFolderId],
-        displayFiles: clickedFolder.files || [],
-      });
-    } else {
-      console.error('Folder not found');
-    }
-  },
-
-  handleBackFolder: () => {
-    const { files, folderStack } = get();
-
-    if (folderStack.length > 0 && files !== null) {
-      const previousFolderId = folderStack.at(-1); //to get last item
-      if (!previousFolderId) return;
-      const parentFolder = findFolderById(files, previousFolderId);
-      if (parentFolder) {
+      setFiles: (files: FileType[]) => {
         set({
-          parentFolderId: previousFolderId,
-          folderStack: folderStack.slice(0, -1),
-          displayFiles: parentFolder.files || [],
+          files,
+          displayFiles: files,
         });
-      } else {
-        get().resetToRoot();
-      }
-    } else {
-      get().resetToRoot();
-    }
-  },
+      },
 
-  toggleFileChecked: (fileId: string | string[]) => {
-    set((state) => {
-      const toggleCheckedStatus = (file: FileType): FileType => {
-        return {
-          ...file,
-          isChecked: file.id === fileId ? !file.isChecked : file.isChecked,
-          files: file.files?.map(toggleCheckedStatus),
-        };
-      };
-      const updatedFiles = state.files?.map(toggleCheckedStatus);
-      const updatedDisplayFiles = state.displayFiles?.map(toggleCheckedStatus);
+      setDisplayFiles: (newDisplayFiles: FileType[]) => {
+        set({ displayFiles: newDisplayFiles });
+      },
 
-      return {
-        files: updatedFiles,
-        displayFiles: updatedDisplayFiles,
-      };
-    });
-  },
+      toggleFavoriteFiles: async (fileId: string) => {
+        const userId = get().checkUserAuthenticated();
+        if (!userId) return;
 
-  setAllFilesChecked: (isChecked: boolean) => {
-    set((state) => {
-      const updateCheckAll = (file: FileType) => ({
-        ...file,
-        isChecked,
-      });
-      const updatedDisplayFiles = state.displayFiles?.map(updateCheckAll);
+        try {
+          await putFavorite(userId, fileId);
 
-      return {
-        files: updatedDisplayFiles,
-        displayFiles: updatedDisplayFiles,
-      };
-    });
-  },
-  resetCheckedFiles: () => {
-    set((state) => {
-      const resetChecked = (file: FileType) => ({
-        ...file,
-        isChecked: false,
-      });
+          const toggleFavorite = (file: FileType) =>
+            file.id === fileId
+              ? { ...file, isFavorite: !file.isFavorite }
+              : file;
 
-      const updatedDisplayFiles = state.displayFiles?.map(resetChecked);
-
-      return {
-        files: updatedDisplayFiles,
-        displayFiles: updatedDisplayFiles,
-      };
-    });
-  },
-
-  createFiles: async ({
-    name,
-    parentId,
-    type,
-  }: {
-    name: string;
-    parentId: string;
-    type: string;
-  }) => {
-    const userId = get().checkUserAuthenticated();
-    if (!userId) return;
-
-    const newFile: FileType = {
-      id: generateId(),
-      filename: name,
-      type,
-      url: '',
-      files: [],
-      acces: 'only you',
-      modified: getCurrentDate(),
-    };
-
-    set({ loading: true });
-
-    try {
-      await putFile(userId, parentId, newFile);
-      console.log('File successfully created');
-      set((state) => {
-        const updatedFiles = state.files
-          ? addFileToParent(state.files, newFile, parentId)
-          : [newFile];
-
-        const updatedDisplayFiles =
-          state.parentFolderId === parentId
-            ? [...(state.displayFiles || []), newFile]
-            : state.displayFiles;
-
-        return {
-          files: updatedFiles,
-          displayFiles: updatedDisplayFiles,
-          loading: false,
-        };
-      });
-    } catch (error) {
-      console.error('Error creating file:', error);
-      set({ error: 'Error creating file', loading: false });
-    }
-  },
-
-  removeFile: async (fileId: string | string[]): Promise<void> => {
-    const { parentFolderId } = get();
-
-    const userId = get().checkUserAuthenticated();
-    if (!userId) return;
-
-    try {
-      await deleteFile(userId, fileId, parentFolderId);
-      console.log('File successfully removed');
-      set((state) => {
-        const shouldRemove = (file: FileType) =>
-          Array.isArray(fileId)
-            ? !fileId.includes(file.id)
-            : file.id !== fileId;
-
-        const filterFilesRecursively = (files: FileType[]): FileType[] => {
-          return files.filter(shouldRemove).map((file) => ({
-            ...file,
-            files: file.files ? filterFilesRecursively(file.files) : undefined,
+          set((state) => ({
+            files: state.files?.map(toggleFavorite),
+            displayFiles: state.displayFiles?.map(toggleFavorite),
           }));
+        } catch (error) {
+          console.error('Error to add to favorite:', error);
+          set({ error: 'Error to add to favorite' });
+        }
+      },
+
+      toggleEditedFile: async (fileId: string) => {
+        try {
+          const toggleEdited = (file: FileType) =>
+            file.id === fileId
+              ? { ...file, isEdited: !file.isEdited }
+              : { ...file, isEdited: file.isEdited ? false : file.isEdited };
+
+          set((state) => ({
+            files: state.files?.map(toggleEdited),
+            displayFiles: state.displayFiles?.map(toggleEdited),
+          }));
+        } catch (error) {
+          console.error('Error to edit the file:', error);
+          set({ error: 'Error to edit the file' });
+        }
+      },
+
+      updateFileName: async (
+        fileId: string,
+        newName: string,
+        fileName: string
+      ) => {
+        const userId = get().checkUserAuthenticated();
+        if (!userId || fileName === newName) return;
+        try {
+          await putName(userId, fileId, newName);
+          const updateFile = (file: FileType) =>
+            file.id === fileId ? { ...file, filename: newName } : file;
+
+          set((state) => ({
+            files: state.files?.map(updateFile),
+            displayFiles: state.displayFiles?.map(updateFile),
+          }));
+          console.log('Name of the file successfully updated');
+        } catch (error) {
+          console.error('Error to update the name:', error);
+          set({ error: 'Error to update the name' });
+        }
+      },
+
+      checkUserAuthenticated: () => {
+        const { user } = useUserStore.getState();
+        if (!user?._id) {
+          set({ error: 'User not logged in', loading: false });
+          return null;
+        }
+        return user._id;
+      },
+
+      resetToRoot: () => {
+        const { files } = get();
+        set({
+          parentFolderId: 'root',
+          folderStack: [],
+          displayFiles: files,
+        });
+      },
+
+      handleOpenFolder: (fileId) => {
+        const { files, folderStack, parentFolderId } = get();
+
+        if (!files || typeof fileId !== 'string') {
+          return null;
+        }
+        const clickedFolder = findFolderById(files, fileId);
+        if (clickedFolder) {
+          set({
+            parentFolderId: fileId as string,
+            folderStack: [...folderStack, parentFolderId],
+            displayFiles: clickedFolder.files || [],
+          });
+        } else {
+          console.error('Folder not found');
+        }
+      },
+
+      handleBackFolder: () => {
+        const { files, folderStack } = get();
+
+        if (folderStack.length > 0 && files !== null) {
+          const previousFolderId = folderStack.at(-1); //to get last item
+          if (!previousFolderId) return;
+          const parentFolder = findFolderById(files, previousFolderId);
+          if (parentFolder) {
+            set({
+              parentFolderId: previousFolderId,
+              folderStack: folderStack.slice(0, -1),
+              displayFiles: parentFolder.files || [],
+            });
+          } else {
+            get().resetToRoot();
+          }
+        } else {
+          get().resetToRoot();
+        }
+      },
+
+      toggleFileChecked: (fileId: string | string[]) => {
+        set((state) => {
+          const toggleCheckedStatus = (file: FileType): FileType => {
+            return {
+              ...file,
+              isChecked: file.id === fileId ? !file.isChecked : file.isChecked,
+              files: file.files?.map(toggleCheckedStatus),
+            };
+          };
+          const updatedFiles = state.files?.map(toggleCheckedStatus);
+          const updatedDisplayFiles =
+            state.displayFiles?.map(toggleCheckedStatus);
+
+          return {
+            files: updatedFiles,
+            displayFiles: updatedDisplayFiles,
+          };
+        });
+      },
+
+      setAllFilesChecked: (isChecked: boolean) => {
+        set((state) => {
+          const updateCheckAll = (file: FileType) => ({
+            ...file,
+            isChecked,
+          });
+          const updatedDisplayFiles = state.displayFiles?.map(updateCheckAll);
+
+          return {
+            files: updatedDisplayFiles,
+            displayFiles: updatedDisplayFiles,
+          };
+        });
+      },
+      resetCheckedFiles: () => {
+        set((state) => {
+          const resetChecked = (file: FileType) => ({
+            ...file,
+            isChecked: false,
+          });
+
+          const updatedDisplayFiles = state.displayFiles?.map(resetChecked);
+
+          return {
+            files: updatedDisplayFiles,
+            displayFiles: updatedDisplayFiles,
+          };
+        });
+      },
+
+      createFiles: async ({
+        name,
+        parentId,
+        type,
+      }: {
+        name: string;
+        parentId: string;
+        type: string;
+      }) => {
+        const userId = get().checkUserAuthenticated();
+        if (!userId) return;
+
+        const newFile: FileType = {
+          id: generateId(),
+          filename: name,
+          type,
+          url: '',
+          files: [],
+          acces: 'only you',
+          modified: getCurrentDate(),
         };
 
-        const updatedFiles = state.files
-          ? filterFilesRecursively(state.files)
-          : [];
-        const updatedDisplayFiles = state.displayFiles?.filter(shouldRemove);
+        set({ loading: true });
 
-        return {
-          files: updatedFiles,
-          displayFiles: updatedDisplayFiles,
-        };
-      });
-    } catch {
-      set({ error: 'Error removing file' });
+        try {
+          await putFile(userId, parentId, newFile);
+          console.log('File successfully created');
+          set((state) => {
+            const updatedFiles = state.files
+              ? addFileToParent(state.files, newFile, parentId)
+              : [newFile];
+
+            const updatedDisplayFiles =
+              state.parentFolderId === parentId
+                ? [...(state.displayFiles || []), newFile]
+                : state.displayFiles;
+
+            return {
+              files: updatedFiles,
+              displayFiles: updatedDisplayFiles,
+              loading: false,
+            };
+          });
+        } catch (error) {
+          console.error('Error creating file:', error);
+          set({ error: 'Error creating file', loading: false });
+        }
+      },
+
+      removeFile: async (fileId: string | string[]): Promise<void> => {
+        const { parentFolderId } = get();
+
+        const userId = get().checkUserAuthenticated();
+        if (!userId) return;
+
+        try {
+          await deleteFile(userId, fileId, parentFolderId);
+          console.log('File successfully removed');
+          set((state) => {
+            const shouldRemove = (file: FileType) =>
+              Array.isArray(fileId)
+                ? !fileId.includes(file.id)
+                : file.id !== fileId;
+
+            const filterFilesRecursively = (files: FileType[]): FileType[] => {
+              return files.filter(shouldRemove).map((file) => ({
+                ...file,
+                files: file.files
+                  ? filterFilesRecursively(file.files)
+                  : undefined,
+              }));
+            };
+
+            const updatedFiles = state.files
+              ? filterFilesRecursively(state.files)
+              : [];
+            const updatedDisplayFiles =
+              state.displayFiles?.filter(shouldRemove);
+
+            return {
+              files: updatedFiles,
+              displayFiles: updatedDisplayFiles,
+            };
+          });
+        } catch {
+          set({ error: 'Error removing file' });
+        }
+      },
+    }),
+    {
+      name: 'file-store',
+      partialize: (state) => ({ isList: state.isList }),
     }
-  },
-}));
+  )
+);

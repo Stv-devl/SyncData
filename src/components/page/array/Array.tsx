@@ -1,7 +1,7 @@
 'use client';
 
 import clsx from 'clsx';
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import { twMerge } from 'tailwind-merge';
 import { findFolderById } from '../../../../lib/utils/findFolderById';
 import { iconsMap } from '../../../constantes/iconsMap';
@@ -14,11 +14,10 @@ import usePopupStore from '@/store/ui/usePopup';
 import { useFileStore } from '@/store/useFileStore';
 
 const Array = () => {
-  //mettre isList dans store + persistant, pareil dans FileContent
-  const [isList, setIsList] = useState(true);
-
   const {
     files,
+    isList,
+    setIsList,
     updateFileName,
     displayFiles,
     setAllFilesChecked,
@@ -36,8 +35,9 @@ const Array = () => {
     handleMouseLeave,
   } = usePopupStore();
 
-  const toggleIcon = useCallback(() => setIsList((prev) => !prev), []);
-
+  const toggleIcon = useCallback(() => {
+    setIsList(!isList);
+  }, [isList, setIsList]);
   usePopupEffect(isOpen, handleClickClose);
 
   const currentFolderName = useMemo(() => {
@@ -91,13 +91,14 @@ const Array = () => {
   return (
     <section className="relative mx-auto size-full rounded-lg bg-white p-4 lg:p-8">
       <Header isList={isList} setAllFilesChecked={setAllFilesChecked} />
-      <div className="bg-lightest-gray h-[97%] w-full rounded-lg">
+      <ul className="bg-lightest-gray h-[97%] w-full rounded-lg">
         {currentFolderName !== 'root' && (
-          <div className="flex flex-row gap-2">
-            <span className="cursor-pointer" onClick={handleBackFolder}>
-              &lt;
-            </span>
-            <p>{currentFolderName}</p>
+          <div className="flex flex-row content-center p-2">
+            <iconsMap.IconChevronLeft
+              className="cursor-pointer"
+              onClick={handleBackFolder}
+            />
+            <p className="w-[150px] truncate capitalize">{currentFolderName}</p>
           </div>
         )}
         {displayFiles && displayFiles.length > 0 ? (
@@ -125,7 +126,7 @@ const Array = () => {
         ) : (
           <EmptyContent />
         )}
-      </div>
+      </ul>
 
       <div
         onClick={toggleIcon}

@@ -25,19 +25,19 @@ const ListContent: React.FC<ArrayListContentProps> = ({
     validateName,
   } = useFileEdition({ files, toggleEditedFile, updateFileName });
 
-  const fileNameStyle = useMemo(() => 'w-28 truncate sm:w-32 lg:w-52', []);
+  const fileNameStyle = useMemo(() => 'w-28 truncate sm:w-24 lg:w-52', []);
 
   return (
     <>
       {files.map((file, index) => (
-        <div
+        <li
           key={file.id}
           ref={file.isEdited ? editedFileRef : null}
-          className="ml-[9px] flex items-center px-3 transition-colors duration-500 lg:px-6"
+          className="mx-1 flex items-center px-3 transition-colors duration-500 sm:mr-0 lg:ml-[9px] lg:px-6"
         >
           <input
             type="checkbox"
-            className="border-dark-gray mr-8 size-5 shrink-0 cursor-pointer border-2"
+            className="border-dark-gray mr-2 size-5 shrink-0 cursor-pointer border-2 lg:mr-8"
             onChange={() => toggleFileChecked(file.id)}
             checked={file.isChecked || false}
           />
@@ -97,7 +97,7 @@ const ListContent: React.FC<ArrayListContentProps> = ({
             handleMouseLeave={handleMouseLeave}
             index={index}
           />
-        </div>
+        </li>
       ))}
     </>
   );

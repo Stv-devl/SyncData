@@ -26,7 +26,7 @@ const IconsListWrapper: React.FC<IconsListWrapperProps> = ({
           return (
             <li
               key={`icon-${iconIndex}`}
-              className="relative hidden w-7 flex-none cursor-pointer px-5 sm:block lg:w-9"
+              className="relative hidden w-7 flex-none cursor-pointer px-[16px] sm:block lg:w-9 lg:px-5"
               onClick={() => handleIconClick(icon, file)}
             >
               <IconComponent
@@ -50,7 +50,7 @@ const IconsListWrapper: React.FC<IconsListWrapperProps> = ({
             handleClickOpen(e, file.filename, rect, file.id);
           }}
         >
-          <iconsMap.IconInfo className="text-regular-blue hover:text-dark-blue size-6 transition-colors duration-300" />
+          <iconsMap.IconInfo className="text-regular-blue hover:text-dark-blue size-6 cursor-pointer transition-colors duration-300" />
         </li>
       </ul>
     </>

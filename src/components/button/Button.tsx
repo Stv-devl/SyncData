@@ -1,8 +1,8 @@
 'use client';
-import { ButtonComponent } from '../../../src/types/type';
-import React from 'react';
 import clsx from 'clsx';
+import React from 'react';
 import { twMerge } from 'tailwind-merge';
+import { ButtonComponent } from '../../../src/types/type';
 
 /**
  * Button component renders a button with a label and an optional onClick handler.

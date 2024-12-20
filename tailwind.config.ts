@@ -33,8 +33,8 @@ const config: Config = {
         'custom-gray': '0px 0px 32px 0px rgba(0, 0, 0, 0.10)',
       },
       gridTemplateColumns: {
-        'auto-fill-minmax': 'repeat(auto-fill, minmax(112px, max-content))',
-      },
+        'auto-fill-minmax': 'repeat(auto-fill, minmax(112px, 1fr))',
+      }!,
 
       transitionProperty: {
         fill: 'fill',

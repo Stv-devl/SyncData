@@ -25,6 +25,9 @@ const Input: React.FC<CustomsInputProps> = ({
 }: CustomsInputProps) => {
   const errorId = `error-${name}`;
   const haveIcon = Boolean(IconComponent);
+
+  console.log(name);
+
   const isSearch = name === 'search';
 
   const inputClasses = twMerge(
@@ -45,6 +48,8 @@ const Input: React.FC<CustomsInputProps> = ({
     'text-xs'
   );
 
+  console.log(isSearch);
+
   return (
     <>
       <label htmlFor={name} className={labelClasses}>
@@ -53,7 +58,7 @@ const Input: React.FC<CustomsInputProps> = ({
       <div
         className={twMerge(
           clsx(isSearch ? 'h-[35px] sm:h-[40px]' : 'h-[46px]'),
-          'relative  w-full'
+          'relative w-full'
         )}
       >
         {haveIcon && IconComponent && (

@@ -47,7 +47,7 @@ const Header: React.FC<HeaderProps> = ({ isList, setAllFilesChecked }) => {
     [filterTools, handleChange, isActive]
   );
   return (
-    <ul className="flex items-center px-3 pb-3 lg:px-6">
+    <ul className="flex items-center px-[7px] pb-3 lg:px-6">
       <li className="w-10 flex-none cursor-pointer px-2 lg:w-16">
         <div
           className="flex items-center"
@@ -64,7 +64,7 @@ const Header: React.FC<HeaderProps> = ({ isList, setAllFilesChecked }) => {
           />
         </div>
       </li>
-      <li className={twMerge(clsx(isList && 'grow', 'cursor-pointer px-2'))}>
+      <li className={twMerge(clsx(isList && 'grow', ' cursor-pointer px-2'))}>
         <div
           className="flex items-center gap-3"
           onMouseEnter={(e) =>
@@ -81,7 +81,7 @@ const Header: React.FC<HeaderProps> = ({ isList, setAllFilesChecked }) => {
           />
         </div>
       </li>
-      <li className="w-25 hidden cursor-pointer px-2 sm:block lg:w-32">
+      <li className="hidden w-28 cursor-pointer px-0  sm:block lg:w-32 lg:px-2">
         <div
           className="flex items-center gap-3"
           onMouseEnter={(e) =>
@@ -99,7 +99,7 @@ const Header: React.FC<HeaderProps> = ({ isList, setAllFilesChecked }) => {
         </div>
       </li>
       {isList && (
-        <li className="w-25 hidden px-2 sm:block lg:w-32">
+        <li className="w-25 hidden px-[10px] sm:block lg:w-32 lg:px-2">
           <span>Access</span>
         </li>
       )}

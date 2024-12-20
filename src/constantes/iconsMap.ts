@@ -5,6 +5,7 @@ import IconAddTeam from '../icones/IconAddTeam';
 import IconBin from '../icones/IconBin';
 import IconChangeName from '../icones/IconChangeName';
 import IconChevronDown from '../icones/iconChevronDown';
+import IconChevronLeft from '../icones/IconChevronLeft';
 import IconChevronRight from '../icones/IconChevronRight';
 import IconDelete from '../icones/IconDelete';
 import IconDownload from '../icones/IconDownload';
@@ -75,6 +76,7 @@ export const iconsMap = {
   IconEmpty,
   IconChevronDown,
   IconChevronRight,
+  IconChevronLeft,
   IconCross,
   IconHomeFile,
   IconSortUp,

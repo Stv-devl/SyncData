@@ -22,15 +22,13 @@ const FileContent: React.FC<ArrayFileContentProps> = ({
     validateName,
   } = useFileEdition({ files, toggleEditedFile, updateFileName });
 
-  const fileNameStyle = useMemo(() => 'truncate', []);
-
   return (
     <ul className="grid-cols-auto-fill-minmax grid gap-4 p-6">
       {files.map((file) => (
-        <div key={file.filename} className="relative">
+        <div key={file.filename} className="relative size-28">
           <div
             ref={file.isEdited ? editedFileRef : null}
-            className="hover:bg-light-blue z-2 fixed flex size-28 cursor-pointer flex-col items-center justify-center gap-2 rounded-lg bg-white transition-colors duration-500"
+            className="hover:bg-light-blue z-2  flex size-full cursor-pointer flex-col items-center justify-center gap-2 rounded-lg bg-white transition-colors duration-500"
             onContextMenu={(e) =>
               handleClickOpen(
                 e,
@@ -56,20 +54,21 @@ const FileContent: React.FC<ArrayFileContentProps> = ({
                 error=""
               />
             ) : (
-              <span className={fileNameStyle}>{file.filename}</span>
+              <span className="w-[90%] truncate text-center">
+                {file.filename}
+              </span>
             )}
 
             {file.isFavorite && (
               <IconFavorited
-                className="text-regular-blue hover:text-dark-blue absolute left-2 top-2 z-20 w-[23px] transition-colors duration-300"
+                className="text-regular-blue hover:text-dark-blue z-2 absolute left-2 top-2 w-[23px] transition-colors duration-300"
                 onClick={(e) => {
                   e.stopPropagation();
                   handleIconClick(arrayIcone[0], file);
                 }}
               />
             )}
-
-            <div className="absolute right-2 top-2 z-20">
+            <div className="z-2 absolute right-2 top-2">
               <input
                 type="checkbox"
                 className="border-dark-gray size-4 border-2"

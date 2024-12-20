@@ -3,16 +3,19 @@ import React, { useCallback } from 'react';
 import { twMerge } from 'tailwind-merge';
 import { arrayPopup } from '@/constantes/constantes';
 import useManageFonctions from '@/hook/manage/useManageFonctions';
+import usePopupStore from '@/store/ui/usePopup';
 import { InfoWrapperProps } from '@/types/type';
 
 const InfoWrapper: React.FC<InfoWrapperProps> = ({ fileName, fileId }) => {
   const { getActionByType } = useManageFonctions();
+  const { closePopup } = usePopupStore();
 
   const handlePopupClick = useCallback(
     (type, fileId, fileName) => {
       getActionByType(type, fileId, fileName);
+      closePopup();
     },
-    [getActionByType]
+    [getActionByType, closePopup]
   );
 
   return (

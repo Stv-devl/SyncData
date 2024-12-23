@@ -1,7 +1,7 @@
 import { CreateFileResponse } from '@/types/storeType';
 import { FileType } from '@/types/type';
 
-const putFile = async (
+const putAddFile = async (
   userId: string,
   parentId: string,
   newFile: FileType
@@ -28,4 +28,4 @@ const putFile = async (
   }
 };
 
-export default putFile;
+export default putAddFile;

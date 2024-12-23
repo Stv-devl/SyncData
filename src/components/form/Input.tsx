@@ -1,4 +1,5 @@
 'use client';
+
 import clsx from 'clsx';
 import React from 'react';
 import { twMerge } from 'tailwind-merge';
@@ -26,9 +27,7 @@ const Input: React.FC<CustomsInputProps> = ({
   const errorId = `error-${name}`;
   const haveIcon = Boolean(IconComponent);
 
-  console.log(name);
-
-  const isSearch = name === 'search';
+  const isSearch = name === 'searchbar';
 
   const inputClasses = twMerge(
     'size-full border bg-white placeholder:text-dark-gray rounded-lg focus:outline-none focus:border-focus-border focus:shadow-custom-blue',
@@ -47,8 +46,6 @@ const Input: React.FC<CustomsInputProps> = ({
     ),
     'text-xs'
   );
-
-  console.log(isSearch);
 
   return (
     <>

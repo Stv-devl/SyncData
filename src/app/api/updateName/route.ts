@@ -1,6 +1,8 @@
 import { findUserById } from 'lib/utils/findUserById';
+import { updateParentDates } from 'lib/utils/updateParentDates';
 import { NextResponse } from 'next/server';
 import { clientPromise } from '../../../../lib/mongod';
+import { getCurrentDate } from '@/helpers/getCurrentDate';
 import { FileType } from '@/types/type';
 
 /**
@@ -32,16 +34,22 @@ export async function PUT(request: Request): Promise<NextResponse> {
       return NextResponse.json({ error: 'Invalid file Id' }, { status: 400 });
     }
     const newFileName = fileName;
+    const newDate = getCurrentDate();
 
     const udpatedName = (file: FileType): FileType => {
       return {
         ...file,
         filename: file.id === fileId ? newFileName : file.filename,
+        modified: file.id === fileId ? newDate : file.modified,
         files: file.files ? file.files.map(udpatedName) : [],
       };
     };
 
-    const updatedFiles = user.files?.map(udpatedName);
+    let updatedFiles = user.files?.map(udpatedName);
+
+    updatedFiles = updatedFiles
+      ? updateParentDates(updatedFiles, fileId, newDate)
+      : null;
 
     if (!updatedFiles && fileId) {
       return NextResponse.json(

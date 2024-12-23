@@ -2,8 +2,10 @@ import { addFileToParent } from 'lib/utils/addFileToParent';
 import { deleteFileRecursive } from 'lib/utils/deleteFileRecursive';
 import { filterById } from 'lib/utils/filterById';
 import { findUserById } from 'lib/utils/findUserById';
+import { updateParentDates } from 'lib/utils/updateParentDates';
 import { NextResponse } from 'next/server';
 import { clientPromise } from '../../../../lib/mongod';
+import { getCurrentDate } from '@/helpers/getCurrentDate';
 
 /**
  * Handles PUT requests to update the files of a user.
@@ -37,13 +39,22 @@ export async function PUT(request: Request): Promise<NextResponse> {
       );
     }
 
+    const newDate = getCurrentDate();
+    const fileId = newFile.id;
+
     const updatedFiles = parentId
       ? addFileToParent(user.files, newFile, parentId)
       : [...user.files, newFile];
 
+    const updatedFilesWithParentDates = updateParentDates(
+      updatedFiles,
+      fileId,
+      newDate
+    );
+
     const updateResult = await usersCollection.updateOne(
       { _id: user._id },
-      { $set: { files: updatedFiles } }
+      { $set: { files: updatedFilesWithParentDates } }
     );
 
     return updateResult.modifiedCount === 0

@@ -1,4 +1,4 @@
-const putFavorite = async (userId: string, fileId: string) => {
+const putToggleFavorite = async (userId: string, fileId: string) => {
   const url = `${process.env.NEXT_PUBLIC_API_URL}/favorite`;
 
   try {
@@ -21,4 +21,4 @@ const putFavorite = async (userId: string, fileId: string) => {
   }
 };
 
-export default putFavorite;
+export default putToggleFavorite;

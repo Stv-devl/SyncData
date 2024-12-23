@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
+import * as Yup from 'yup';
 import AccordionMenu from '@/components/accordeon/AccordionMenu';
 import ButtonModalWrapper from '@/components/button/ButtonModalWrapper';
 import Input from '@/components/form/Input';
-import useModalStore from '@/store/ui/useModale';
-import { filteredFolders } from '@/utils/filteredFolders';
 import { createFolderSchema } from '@/helpers/validationShema';
-import * as Yup from 'yup';
 import useAccordion from '@/hook/ui/useAccordion';
+import useModalStore from '@/store/ui/useModale';
 import { useFileStore } from '@/store/useFileStore';
+import { filteredFolders } from '@/utils/filteredFolders';
 
 const CreateFolder = () => {
   const { files, createFiles } = useFileStore();

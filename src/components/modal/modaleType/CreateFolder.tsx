@@ -35,6 +35,7 @@ const CreateFolder = () => {
       );
       const parentId: string = checkedFile ? checkedFile : '';
       const newFolder = { name: fileName, parentId, type: 'folder' };
+
       await createFiles(newFolder);
       useModalStore.getState().closeModal();
     } catch (error) {

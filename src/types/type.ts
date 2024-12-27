@@ -242,6 +242,13 @@ export interface ChangeNameProps {
   validateName: (fileId: string, fileName: string) => void;
 }
 
+//dropzone props
+export interface DropZoneWrapperProps {
+  isDragIcon: boolean | null;
+  dropFolderId: string;
+  dropStyle: string;
+}
+
 //use manage filter hook
 export type FilterToolsProps = {
   headerType: keyof FileType | null;

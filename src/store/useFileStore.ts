@@ -5,7 +5,7 @@ import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { addFileToParent } from '../../lib/utils/addFileToParent';
 import { findFolderById } from '../../lib/utils/findFolderById';
-import { generateId } from '@/helpers/generateId';
+import { createNewFile } from '@/helpers/createNewFile';
 import { getCurrentDate } from '@/helpers/getCurrentDate';
 import deleteFile from '@/service/deleteFile';
 import putAddFile from '@/service/putAddFile';
@@ -226,27 +226,15 @@ export const useFileStore = create<FileState>()(
         });
       },
 
-      createFiles: async ({
-        name,
-        parentId,
-        type,
-      }: {
-        name: string;
-        parentId: string;
-        type: string;
-      }) => {
+      createFiles: async ({ name, parentId, type }) => {
         const userId = get().checkUserAuthenticated();
         if (!userId) return;
 
-        const newFile: FileType = {
-          id: generateId(),
-          filename: name,
-          type,
-          url: '',
-          files: [],
-          acces: 'only you',
-          modified: getCurrentDate(),
-        };
+        console.log(name, parentId, type);
+
+        const newFile: FileType = createNewFile(name, type);
+
+        console.log(newFile);
 
         set({ loading: true });
 

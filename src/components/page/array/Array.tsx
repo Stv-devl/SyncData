@@ -1,15 +1,14 @@
 'use client';
 
-import { log } from 'node:console';
 import clsx from 'clsx';
 import React, { useCallback, useMemo } from 'react';
 import { twMerge } from 'tailwind-merge';
 import { findFolderById } from '../../../../lib/utils/findFolderById';
 import { iconsMap } from '../../../constantes/iconsMap';
-import EmptyContent from './content/EmptyContent';
 import FileContent from './content/FileContent';
 import ListContent from './content/ListContent';
 import Header from './Header';
+import DropZoneWrapper from '@/components/dropZone/DropZoneWrapper';
 import usePopupEffect from '@/hook/ui/usePopupEffect';
 import usePopupStore from '@/store/ui/usePopup';
 import { useFileStore } from '@/store/useFileStore';
@@ -92,43 +91,51 @@ const Array = () => {
   return (
     <section className="relative mx-auto size-full rounded-lg bg-white p-4 lg:p-8">
       <Header isList={isList} setAllFilesChecked={setAllFilesChecked} />
-      <ul className="bg-lightest-gray h-[97%] w-full rounded-lg">
-        {currentFolderName !== 'root' && (
-          <div className="flex flex-row content-center p-2">
-            <iconsMap.IconChevronLeft
-              className="cursor-pointer"
-              onClick={handleBackFolder}
-            />
-            <p className="w-[150px] truncate capitalize">{currentFolderName}</p>
-          </div>
-        )}
-        {displayFiles && displayFiles.length > 0 ? (
-          isList ? (
-            <ListContent
-              files={displayFiles}
-              updateFileName={updateFileName}
-              handleOpenFolder={handleOpenFolder}
-              toggleFileChecked={handleCheckboxChange}
-              handleClickOpen={handleContextMenu}
-              handleMouseEnter={handleMouseEnterCallback}
-              handleMouseLeave={handleMouseLeaveCallback}
-              toggleEditedFile={toggleEditedFile}
-            />
-          ) : (
-            <FileContent
-              files={displayFiles}
-              updateFileName={updateFileName}
-              handleOpenFolder={handleOpenFolder}
-              toggleFileChecked={handleCheckboxChange}
-              handleClickOpen={handleContextMenu}
-              toggleEditedFile={toggleEditedFile}
-            />
-          )
-        ) : (
-          <EmptyContent />
-        )}
-      </ul>
-
+      <div className="bg-lightest-gray flex h-[97%] w-full flex-col rounded-lg">
+        <ul>
+          {currentFolderName !== 'root' && (
+            <div className="flex flex-row content-center p-2">
+              <iconsMap.IconChevronLeft
+                className="cursor-pointer"
+                onClick={handleBackFolder}
+              />
+              <p className="w-[150px] truncate capitalize">
+                {currentFolderName}
+              </p>
+            </div>
+          )}
+          {displayFiles && displayFiles.length > 0 ? (
+            isList ? (
+              <ListContent
+                files={displayFiles}
+                updateFileName={updateFileName}
+                handleOpenFolder={handleOpenFolder}
+                toggleFileChecked={handleCheckboxChange}
+                handleClickOpen={handleContextMenu}
+                handleMouseEnter={handleMouseEnterCallback}
+                handleMouseLeave={handleMouseLeaveCallback}
+                toggleEditedFile={toggleEditedFile}
+              />
+            ) : (
+              <FileContent
+                files={displayFiles}
+                updateFileName={updateFileName}
+                handleOpenFolder={handleOpenFolder}
+                toggleFileChecked={handleCheckboxChange}
+                handleClickOpen={handleContextMenu}
+                toggleEditedFile={toggleEditedFile}
+              />
+            )
+          ) : null}
+        </ul>
+        <div className="relative flex-1">
+          <DropZoneWrapper
+            isDragIcon={true}
+            dropFolderId={parentFolderId}
+            dropStyle="absolute inset-0"
+          />
+        </div>
+      </div>
       <div
         onClick={toggleIcon}
         className={toggleIconClasses}

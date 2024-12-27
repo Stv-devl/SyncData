@@ -1,5 +1,6 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import IconFileWrapper from '../../../wrapper/IconFileWrapper';
+import DropZoneWrapper from '@/components/dropZone/DropZoneWrapper';
 import UpdateInput from '@/components/form/UpdateNameInput';
 import { arrayIcone } from '@/constantes/constantes';
 import useFileEdition from '@/hook/ui/useFileEdition';
@@ -25,10 +26,10 @@ const FileContent: React.FC<ArrayFileContentProps> = ({
   return (
     <ul className="grid-cols-auto-fill-minmax grid gap-4 p-6">
       {files.map((file) => (
-        <div key={file.filename} className="relative size-28">
+        <li key={file.id} className="relative size-28">
           <div
             ref={file.isEdited ? editedFileRef : null}
-            className="hover:bg-light-blue z-2  flex size-full cursor-pointer flex-col items-center justify-center gap-2 rounded-lg bg-white transition-colors duration-500"
+            className="hover:bg-light-blue z-2 flex size-full cursor-pointer flex-col items-center justify-center gap-2 rounded-lg bg-white transition-colors duration-500"
             onContextMenu={(e) =>
               handleClickOpen(
                 e,
@@ -77,8 +78,15 @@ const FileContent: React.FC<ArrayFileContentProps> = ({
                 checked={file.isChecked || false}
               />
             </div>
+            {file.type === 'folder' && (
+              <DropZoneWrapper
+                isDragIcon={false}
+                dropFolderId={file.id}
+                dropStyle="absolute inset-0"
+              />
+            )}
           </div>
-        </div>
+        </li>
       ))}
     </ul>
   );

@@ -1,14 +1,14 @@
-import React, { useCallback, useState } from 'react';
 import clsx from 'clsx';
+import React, { useCallback, useState } from 'react';
+import * as Yup from 'yup';
+import { ulpoadFileSchema } from '../../../helpers/validationShema';
 import AccordionMenu from '@/components/accordeon/AccordionMenu';
 import ButtonModalWrapper from '@/components/button/ButtonModalWrapper';
-import { filteredFolders } from '@/utils/filteredFolders';
-import { ulpoadFileSchema } from '../../../helpers/validationShema';
-import useModalStore from '@/store/ui/useModale';
-import * as Yup from 'yup';
-import { getFileType } from '@/utils/getFileType';
 import useAccordion from '@/hook/ui/useAccordion';
+import useModalStore from '@/store/ui/useModale';
 import { useFileStore } from '@/store/useFileStore';
+import { filteredFolders } from '@/utils/filteredFolders';
+import { getFileType } from '@/utils/getFileType';
 
 const UploadFile = () => {
   const { files, createFiles } = useFileStore();
@@ -49,7 +49,7 @@ const UploadFile = () => {
       );
       const parentId: string = checkedFile ? checkedFile : '';
       const newFolder = {
-        name: fileName,
+        filename: fileName,
         parentId,
         type: getFileType(fileName),
       };

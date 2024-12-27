@@ -1,5 +1,6 @@
 import React, { useMemo } from 'react';
 import IconsListWrapper from '../../../page/array/content/IconsListWrapper';
+import DropZoneWrapper from '@/components/dropZone/DropZoneWrapper';
 import UpdateInput from '@/components/form/UpdateNameInput';
 import IconFileWrapper from '@/components/wrapper/IconFileWrapper';
 import { arrayHeader } from '@/constantes/constantes';
@@ -32,8 +33,12 @@ const ListContent: React.FC<ArrayListContentProps> = ({
       {files.map((file, index) => (
         <li
           key={file.id}
-          ref={file.isEdited ? editedFileRef : null}
-          className="mx-1 flex items-center px-3 transition-colors duration-500 sm:mr-0 lg:ml-[9px] lg:px-6"
+          ref={
+            file.isEdited
+              ? (editedFileRef as React.MutableRefObject<HTMLLIElement | null>)
+              : null
+          }
+          className="relative mx-1 flex items-center px-3 transition-colors duration-500 sm:mr-0 lg:ml-[9px] lg:px-6"
         >
           <input
             type="checkbox"
@@ -41,6 +46,13 @@ const ListContent: React.FC<ArrayListContentProps> = ({
             onChange={() => toggleFileChecked(file.id)}
             checked={file.isChecked || false}
           />
+          {file.type === 'folder' && (
+            <DropZoneWrapper
+              isDragIcon={false}
+              dropFolderId={file.id}
+              dropStyle="absolute inset-0"
+            />
+          )}
           <ul
             className="hover:bg-light-blue flex h-16 w-full cursor-pointer items-center"
             onContextMenu={(e) =>
@@ -58,7 +70,7 @@ const ListContent: React.FC<ArrayListContentProps> = ({
 
               return (
                 <li key={item.name} className={headerClass(item.name)}>
-                  <div className="relative flex items-center gap-1">
+                  <div className="relative flex items-center gap-1 ">
                     {item.name === 'filename' ? (
                       <>
                         <IconFileWrapper type={file.type} className="size-8" />
@@ -89,6 +101,7 @@ const ListContent: React.FC<ArrayListContentProps> = ({
               );
             })}
           </ul>
+
           <IconsListWrapper
             file={file}
             handleIconClick={handleIconClick}

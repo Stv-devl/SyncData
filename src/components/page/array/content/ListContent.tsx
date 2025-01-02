@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
+import DropZoneWrapper from '../../../dropZone/DropZoneWrapper';
 import IconsListWrapper from '../../../page/array/content/IconsListWrapper';
-import DropZoneWrapper from '@/components/dropZone/DropZoneWrapper';
 import UpdateInput from '@/components/form/UpdateNameInput';
 import IconFileWrapper from '@/components/wrapper/IconFileWrapper';
 import { arrayHeader } from '@/constantes/constantes';
@@ -38,23 +38,16 @@ const ListContent: React.FC<ArrayListContentProps> = ({
               ? (editedFileRef as React.MutableRefObject<HTMLLIElement | null>)
               : null
           }
-          className="relative mx-1 flex items-center px-3 transition-colors duration-500 sm:mr-0 lg:ml-[9px] lg:px-6"
+          className=" mx-1 flex items-center px-3 transition-colors duration-500 sm:mr-0 lg:ml-[9px] lg:px-6"
         >
           <input
             type="checkbox"
-            className="border-dark-gray mr-2 size-5 shrink-0 cursor-pointer border-2 lg:mr-8"
+            className="border-dark-gray z-9 mr-2 size-5 shrink-0 cursor-pointer border-2 lg:mr-8"
             onChange={() => toggleFileChecked(file.id)}
             checked={file.isChecked || false}
           />
-          {file.type === 'folder' && (
-            <DropZoneWrapper
-              isDragIcon={false}
-              dropFolderId={file.id}
-              dropStyle="absolute inset-0"
-            />
-          )}
           <ul
-            className="hover:bg-light-blue flex h-16 w-full cursor-pointer items-center"
+            className="hover:bg-light-blue relative flex h-16 w-full cursor-pointer items-center"
             onContextMenu={(e) =>
               handleClickOpen(
                 e,
@@ -67,7 +60,6 @@ const ListContent: React.FC<ArrayListContentProps> = ({
           >
             {arrayHeader.map((item) => {
               const content = file[item.name as keyof typeof file];
-
               return (
                 <li key={item.name} className={headerClass(item.name)}>
                   <div className="relative flex items-center gap-1 ">
@@ -100,8 +92,14 @@ const ListContent: React.FC<ArrayListContentProps> = ({
                 </li>
               );
             })}
+            {file.type === 'folder' && (
+              <DropZoneWrapper
+                isDragIcon={false}
+                dropFolderId={file.id}
+                dropStyle="absolute inset-0"
+              />
+            )}
           </ul>
-
           <IconsListWrapper
             file={file}
             handleIconClick={handleIconClick}

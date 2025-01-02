@@ -92,7 +92,7 @@ const Array = () => {
     <section className="relative mx-auto size-full rounded-lg bg-white p-4 lg:p-8">
       <Header isList={isList} setAllFilesChecked={setAllFilesChecked} />
       <div className="bg-lightest-gray flex h-[97%] w-full flex-col rounded-lg">
-        <ul>
+        <>
           {currentFolderName !== 'root' && (
             <div className="flex flex-row content-center p-2">
               <iconsMap.IconChevronLeft
@@ -127,7 +127,7 @@ const Array = () => {
               />
             )
           ) : null}
-        </ul>
+        </>
         <div className="relative flex-1">
           <DropZoneWrapper
             isDragIcon={true}

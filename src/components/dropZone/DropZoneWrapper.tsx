@@ -37,7 +37,12 @@ const DropZoneWrapper: React.FC<DropZoneWrapperProps> = ({
   return (
     <div
       {...getRootProps()}
-      className={twMerge(clsx(dropStyle, { 'bg-light-blue': isDragActive }))}
+      className={twMerge(
+        clsx(dropStyle, {
+          'bg-light-blue opacity-70 transition ease-in-out duration-300':
+            isDragActive,
+        })
+      )}
     >
       <input {...getInputProps()} className="hidden" />
       {isDragIcon && <EmptyContent />}

@@ -5,7 +5,8 @@ import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { addFileToParent } from '../../lib/utils/addFileToParent';
 import { findFolderById } from '../../lib/utils/findFolderById';
-import { createNewFile } from '@/helpers/createNewFile';
+import { flattenedFiles } from '../helpers/filterDatas/flattendedFiles';
+import { getDisplayFiles } from '@/helpers/filterDatas/getDisplayFiles';
 import { getCurrentDate } from '@/helpers/getCurrentDate';
 import deleteFile from '@/service/deleteFile';
 import putAddFile from '@/service/putAddFile';
@@ -19,10 +20,15 @@ export const useFileStore = create<FileState>()(
   persist(
     (set, get) => ({
       files: null,
+      flattenedFiles: null,
       isList: true,
+      currentPage: 1,
+      entriesPerPage: 1,
+      filterTools: { searchbar: '', headerType: null, upselected: null },
       displayFiles: null,
       parentFolderId: 'root',
       folderStack: [],
+      isUploaded: false,
       loading: false,
       error: null,
 
@@ -32,11 +38,39 @@ export const useFileStore = create<FileState>()(
         set({
           files,
           displayFiles: files,
+          flattenedFiles: flattenedFiles(files),
         });
       },
 
-      setDisplayFiles: (newDisplayFiles: FileType[]) => {
-        set({ displayFiles: newDisplayFiles });
+      setCurrentPage: (page: number) => set({ currentPage: page }),
+
+      setEntriesPerPage: (entries: number) => set({ entriesPerPage: entries }),
+
+      setFilterTools: (updates) => {
+        set((state) => ({
+          filterTools: { ...state.filterTools, ...updates },
+        }));
+        get().setDisplayFiles();
+      },
+
+      setDisplayFiles: () => {
+        const {
+          files,
+          flattenedFiles,
+          filterTools,
+          currentPage,
+          entriesPerPage,
+        } = get();
+
+        set({
+          displayFiles: getDisplayFiles(
+            files,
+            flattenedFiles,
+            filterTools,
+            currentPage,
+            entriesPerPage
+          ),
+        });
       },
 
       toggleFavoriteFiles: async (fileId: string) => {
@@ -160,8 +194,10 @@ export const useFileStore = create<FileState>()(
 
         if (folderStack.length > 0 && files !== null) {
           const previousFolderId = folderStack.at(-1); //to get last item
+
           if (!previousFolderId) return;
           const parentFolder = findFolderById(files, previousFolderId);
+
           if (parentFolder) {
             set({
               parentFolderId: previousFolderId,
@@ -196,56 +232,57 @@ export const useFileStore = create<FileState>()(
         });
       },
 
-      setAllFilesChecked: (isChecked: boolean) => {
+      setAllFilesChecked: (isChecked) => {
         set((state) => {
-          const updateCheckAll = (file: FileType) => ({
+          const updatedDisplayFiles = state.displayFiles?.map((file) => ({
             ...file,
             isChecked,
-          });
-          const updatedDisplayFiles = state.displayFiles?.map(updateCheckAll);
+          }));
 
           return {
-            files: updatedDisplayFiles,
             displayFiles: updatedDisplayFiles,
           };
         });
       },
+
       resetCheckedFiles: () => {
         set((state) => {
-          const resetChecked = (file: FileType) => ({
+          const updatedDisplayFiles = state.displayFiles?.map((file) => ({
             ...file,
             isChecked: false,
-          });
-
-          const updatedDisplayFiles = state.displayFiles?.map(resetChecked);
+          }));
 
           return {
-            files: updatedDisplayFiles,
             displayFiles: updatedDisplayFiles,
           };
         });
       },
 
-      createFiles: async ({ name, parentId, type }) => {
+      createFiles: async (newFile, parentId) => {
         const userId = get().checkUserAuthenticated();
         if (!userId) return;
 
-        console.log(name, parentId, type);
-
-        const newFile: FileType = createNewFile(name, type);
-
-        console.log(newFile);
-
-        set({ loading: true });
+        set({ loading: true, isUploaded: false });
 
         try {
-          await putAddFile(userId, parentId, newFile);
-          console.log('File successfully created');
+          const response = await putAddFile(userId, parentId, newFile);
+
+          if (!response || !response.file) {
+            throw new Error('Invalid file response from server');
+          }
+
+          const uploadedFile = response.file;
+
+          const updatedFile = {
+            ...newFile,
+            url: uploadedFile.url || newFile.url,
+            publicId: uploadedFile.publicId || null,
+          };
 
           set((state) => {
             const addFileToParentFolder = state.files
-              ? addFileToParent(state.files, newFile, parentId)
-              : [newFile];
+              ? addFileToParent(state.files, updatedFile, parentId)
+              : [updatedFile];
 
             const updatedFilesWithParentDates = updateParentDates(
               addFileToParentFolder,
@@ -255,32 +292,60 @@ export const useFileStore = create<FileState>()(
 
             const updatedDisplayFiles =
               state.parentFolderId === parentId
-                ? [...(state.displayFiles || []), newFile]
+                ? [...(state.displayFiles || []), updatedFile]
                 : state.displayFiles;
 
             return {
               files: updatedFilesWithParentDates,
               displayFiles: updatedDisplayFiles,
+              flattenedFiles: flattenedFiles(updatedFilesWithParentDates),
               loading: false,
+              isUploaded: true,
             };
           });
         } catch (error) {
           console.error('Error creating file:', error);
-          set({ error: 'Error creating file', loading: false });
+          set({
+            error: 'Error creating file',
+            loading: false,
+            isUploaded: false,
+          });
         }
       },
 
-      removeFile: async (fileId: string | string[]): Promise<void> => {
-        const { parentFolderId } = get();
+      removeFile: async (fileId): Promise<void> => {
+        const { parentFolderId, flattenedFiles } = get();
         const userId = get().checkUserAuthenticated();
+
         if (!userId) return;
 
         try {
-          await deleteFile(userId, fileId, parentFolderId);
-          console.log('File successfully removed');
+          const filesToRemove = flattenedFiles?.filter((file) =>
+            Array.isArray(fileId)
+              ? fileId.includes(file.id)
+              : file.id === fileId
+          );
+          if (!filesToRemove || filesToRemove.length === 0) {
+            console.error(`No files found for the provided IDs: ${fileId}`);
+            return;
+          }
 
+          const idsToDelete = filesToRemove.map((file) => file.id);
+          const publicIdsToDelete = filesToRemove.map(
+            (file) => file.publicId || ''
+          );
+
+          await deleteFile(
+            userId,
+            idsToDelete,
+            parentFolderId,
+            publicIdsToDelete
+          );
+          console.log(
+            `Files with IDs ${idsToDelete.join(', ')} successfully removed.`
+          );
           set((state) => {
-            const removeFileFromFolder =
+            const updatedFiles =
               parentFolderId === 'root'
                 ? filterById(state.files || [], fileId)
                 : deleteFileRecursive(
@@ -290,7 +355,7 @@ export const useFileStore = create<FileState>()(
                   );
 
             const updatedFilesWithParentDates = updateParentDates(
-              removeFileFromFolder,
+              updatedFiles,
               parentFolderId,
               getCurrentDate(),
               true
@@ -301,12 +366,14 @@ export const useFileStore = create<FileState>()(
                 ? !fileId.includes(file.id)
                 : file.id !== fileId
             );
+
             return {
               files: updatedFilesWithParentDates,
               displayFiles: updatedDisplayFiles,
             };
           });
-        } catch {
+        } catch (error) {
+          console.error('Error removing files:', error);
           set({ error: 'Error removing file' });
         }
       },

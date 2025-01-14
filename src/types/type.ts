@@ -62,6 +62,8 @@ export interface FileType {
   isFavorite?: boolean;
   acces: string;
   files?: FileType[];
+  file?: File | null;
+  publicId?: string | null;
 }
 
 //nav props
@@ -167,6 +169,7 @@ export interface ArrayListContentProps {
   ) => void;
   handleMouseLeave: () => void;
   toggleEditedFile: (fileId: string) => void;
+  containerRef: React.RefObject<HTMLUListElement>;
 }
 
 export interface ArrayFileContentProps {
@@ -181,6 +184,7 @@ export interface ArrayFileContentProps {
     rect: DOMRect,
     fileId: string
   ) => void;
+  containerRef: React.RefObject<HTMLUListElement>;
 }
 
 //accordion
@@ -249,16 +253,15 @@ export interface DropZoneWrapperProps {
   dropStyle: string;
 }
 
-//use manage filter hook
-export type FilterToolsProps = {
-  headerType: keyof FileType | null;
-  upselected: boolean | null;
-  searchbar: string;
-};
-
 //use file edition hook
 export interface UseFileEditionProps {
   files: FileType[];
   toggleEditedFile: (fileId: string) => void;
   updateFileName: (fileId: string, newName: string, fileName: string) => void;
+}
+
+//use pagination hook
+export interface UsePaginationProps {
+  pageNumber: number;
+  currentPage: number;
 }

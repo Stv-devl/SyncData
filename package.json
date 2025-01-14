@@ -12,6 +12,7 @@
     "@svgr/webpack": "^8.1.0",
     "@types/bcryptjs": "^2.4.6",
     "bcryptjs": "^2.4.3",
+    "cloudinary": "^2.5.1",
     "clsx": "^2.1.1",
     "dotenv": "^16.4.5",
     "eslint-plugin-tailwindcss": "^3.17.4",

@@ -1,25 +1,27 @@
 'use client';
 
 import clsx from 'clsx';
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import { twMerge } from 'tailwind-merge';
 import { arrayIcone } from '../../../constantes/constantes';
 import FilterSort from '@/components/sort/FilterSort';
-import useManageFilter from '@/hook/manage/useManageFilter';
 import usePopupStore from '@/store/ui/usePopup';
 import { useFileStore } from '@/store/useFileStore';
 import { FileType, HeaderProps } from '@/types/type';
 
 const Header: React.FC<HeaderProps> = ({ isList, setAllFilesChecked }) => {
   const { handleMouseEnter, handleMouseLeave } = usePopupStore();
-  const { files } = useFileStore();
+  const { displayFiles, filterTools, setFilterTools } = useFileStore();
 
-  const [isActive, setIsActive] = useState(false);
-  const { filterTools, handleChange } = useManageFilter(isActive);
+  const { headerType, upselected } = filterTools;
 
   const isCheckedAll = useMemo(() => {
-    return files && files.length > 0 && files.every((file) => file.isChecked);
-  }, [files]);
+    return (
+      displayFiles &&
+      displayFiles.length > 0 &&
+      displayFiles.every((file) => file.isChecked)
+    );
+  }, [displayFiles]);
 
   const handleCheckAll = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -31,21 +33,18 @@ const Header: React.FC<HeaderProps> = ({ isList, setAllFilesChecked }) => {
 
   const handleSortFilter = useCallback(
     (type: string | null) => {
-      if (!isActive) {
-        setIsActive(true);
-      }
-      if (filterTools.headerType === type) {
-        handleChange({ upselected: !filterTools.upselected });
+      if (headerType === type) {
+        setFilterTools({ upselected: !upselected });
       } else {
-        const newHeaderType = (type as keyof FileType) || null;
-        handleChange({
+        setFilterTools({
+          headerType: type as keyof FileType,
           upselected: true,
-          headerType: newHeaderType,
         });
       }
     },
-    [filterTools, handleChange, isActive]
+    [headerType, upselected, setFilterTools]
   );
+
   return (
     <ul className="flex items-center px-[7px] pb-3 lg:px-6">
       <li className="w-10 flex-none cursor-pointer px-2 lg:w-16">
@@ -75,8 +74,8 @@ const Header: React.FC<HeaderProps> = ({ isList, setAllFilesChecked }) => {
           <span>Name</span>
           <FilterSort
             type="filename"
-            selectedType={filterTools.headerType}
-            isUp={filterTools.upselected}
+            selectedType={headerType ?? null}
+            isUp={upselected ?? null}
             onClick={handleSortFilter}
           />
         </div>
@@ -92,8 +91,8 @@ const Header: React.FC<HeaderProps> = ({ isList, setAllFilesChecked }) => {
           <span>Modified</span>
           <FilterSort
             type="modified"
-            selectedType={filterTools.headerType}
-            isUp={filterTools.upselected}
+            selectedType={headerType ?? null}
+            isUp={upselected ?? null}
             onClick={handleSortFilter}
           />
         </div>

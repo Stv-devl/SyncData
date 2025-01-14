@@ -8,8 +8,9 @@
 
 async function deleteFile(
   userId: string,
-  fileId: string | string[],
-  parentId: string
+  fileId: string[],
+  parentId: string,
+  publicId: string[]
 ): Promise<void> {
   try {
     const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/files`, {
@@ -17,7 +18,7 @@ async function deleteFile(
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ userId, fileId, parentId }),
+      body: JSON.stringify({ userId, fileId, parentId, publicId }),
     });
 
     console.log('parentid in delete', parentId);

@@ -17,6 +17,7 @@ const ListContent: React.FC<ArrayListContentProps> = ({
   handleMouseEnter,
   handleMouseLeave,
   toggleEditedFile,
+  containerRef,
 }) => {
   const {
     newFileName,
@@ -29,7 +30,7 @@ const ListContent: React.FC<ArrayListContentProps> = ({
   const fileNameStyle = useMemo(() => 'w-28 truncate sm:w-24 lg:w-52', []);
 
   return (
-    <>
+    <ul ref={containerRef}>
       {files.map((file, index) => (
         <li
           key={file.id}
@@ -110,7 +111,7 @@ const ListContent: React.FC<ArrayListContentProps> = ({
           />
         </li>
       ))}
-    </>
+    </ul>
   );
 };
 

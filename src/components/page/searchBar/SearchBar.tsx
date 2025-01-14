@@ -1,18 +1,17 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Input from '../../form/Input';
 import Button from '@/components/button/Button';
 import { iconsMap } from '@/constantes/iconsMap';
-import useManageFilter from '@/hook/manage/useManageFilter';
 import useModalStore from '@/store/ui/useModale';
+import { useFileStore } from '@/store/useFileStore';
 
 const SearchBar = () => {
-  const [isActive, setIsActive] = useState(false);
-
-  const { filterTools, handleChange } = useManageFilter(isActive);
+  const { filterTools, setFilterTools } = useFileStore();
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (!isActive) setIsActive(true);
-    handleChange(event);
+    if (event) {
+      setFilterTools({ searchbar: event.target.value });
+    }
   };
 
   return (

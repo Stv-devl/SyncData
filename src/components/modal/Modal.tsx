@@ -1,7 +1,7 @@
 import React from 'react';
-import useModalStore from '@/store/ui/useModale';
-import { modalsMap } from '../../constantes/modalsMap';
 import { iconsMap } from '../../constantes/iconsMap';
+import { modalsMap } from '../../constantes/modalsMap';
+import useModalStore from '@/store/ui/useModale';
 
 const Modal = () => {
   const { isOpen, type, fileId, fileName } = useModalStore();

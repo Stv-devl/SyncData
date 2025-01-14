@@ -2,30 +2,36 @@ import clsx from 'clsx';
 import React, { useCallback } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { twMerge } from 'tailwind-merge';
-import EmptyContent from './EmptyContent';
+import { createNewFile } from '@/helpers/createNewFile';
+import useModalStore from '@/store/ui/useModale';
 import { useFileStore } from '@/store/useFileStore';
 import { DropZoneWrapperProps } from '@/types/type';
-import { getFileType } from '@/utils/getFileType';
 
 const DropZoneWrapper: React.FC<DropZoneWrapperProps> = ({
-  isDragIcon,
   dropFolderId,
   dropStyle,
 }) => {
   const createFiles = useFileStore((state) => state.createFiles);
+  const { openModal, closeModal } = useModalStore();
 
   const onDrop = useCallback(
     (acceptedFiles: File[]) => {
       acceptedFiles.forEach((file) => {
-        const newFolder = {
-          name: file.name,
-          parentId: dropFolderId,
-          type: getFileType(file.name),
-        };
-        createFiles(newFolder);
+        const fileUrl = URL.createObjectURL(file);
+
+        const newFile = createNewFile(file.name, fileUrl, file as File);
+
+        createFiles(newFile, dropFolderId);
+        closeModal();
+        openModal('UploadLoader', newFile.id, newFile.filename);
+
+        setTimeout(() => {
+          URL.revokeObjectURL(fileUrl);
+        }, 10000);
       });
     },
-    [createFiles, dropFolderId]
+
+    [createFiles, dropFolderId, openModal, closeModal]
   );
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
@@ -45,7 +51,6 @@ const DropZoneWrapper: React.FC<DropZoneWrapperProps> = ({
       )}
     >
       <input {...getInputProps()} className="hidden" />
-      {isDragIcon && <EmptyContent />}
     </div>
   );
 };

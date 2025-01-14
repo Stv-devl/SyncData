@@ -15,6 +15,7 @@ const FileContent: React.FC<ArrayFileContentProps> = ({
   toggleFileChecked,
   handleClickOpen,
   toggleEditedFile,
+  containerRef,
 }) => {
   const {
     newFileName,
@@ -36,7 +37,10 @@ const FileContent: React.FC<ArrayFileContentProps> = ({
   return (
     <div {...getRootProps()} className="relative">
       <input {...getInputProps()} />
-      <ul className="grid-cols-auto-fill-minmax grid gap-4 p-6">
+      <ul
+        ref={containerRef}
+        className="grid-cols-auto-fill-minmax grid justify-items-center gap-4 p-6 "
+      >
         {files.map((file) => (
           <li
             key={file.id}

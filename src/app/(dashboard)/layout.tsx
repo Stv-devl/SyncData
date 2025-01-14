@@ -1,7 +1,7 @@
 'use client';
 
 import { useSession } from 'next-auth/react';
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import Banner from '@/components/banner/Banner';
 import Loading from '@/components/loading/Loading';
 import Modal from '@/components/modal/Modal';
@@ -22,12 +22,13 @@ const MainLayout: React.FC<{ children: React.ReactNode }> = ({
 }): JSX.Element => {
   const { data: session } = useSession();
   const { loading, error, fetchData } = useUserStore();
+  const userId = useMemo(() => session?.user?.id, [session]);
 
   useEffect(() => {
-    if (session?.user?.id) {
-      fetchData(session.user.id);
+    if (userId) {
+      fetchData(userId);
     }
-  }, [session, fetchData]);
+  }, [userId, fetchData]);
 
   if (loading) {
     return <Loading />;
@@ -38,9 +39,9 @@ const MainLayout: React.FC<{ children: React.ReactNode }> = ({
   }
 
   return (
-    <div className="flex h-screen flex-col lg:flex-row">
+    <div className="flex h-full flex-col lg:flex-row">
       <Banner />
-      <main className="relative flex size-full flex-col gap-10 overflow-y-auto pl-0 lg:pl-5">
+      <main className="relative flex size-full flex-col gap-5 pl-0 lg:pl-5">
         {children}
       </main>
       <Popup />

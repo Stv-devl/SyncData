@@ -51,17 +51,32 @@ export interface UserState {
   fetchData: (userId: string) => Promise<void>;
 }
 
+//filtertool
+export type FilterToolsProps = {
+  headerType: keyof FileType | null;
+  upselected: boolean | null;
+  searchbar: string;
+};
+
 export interface FileState {
   files: FileType[] | null;
+  flattenedFiles: FileType[] | null;
   isList: boolean;
+  isUploaded: boolean;
+  currentPage: number;
+  entriesPerPage: number;
   displayFiles: FileType[] | null;
+  filterTools: FilterToolsProps;
   parentFolderId: string;
   folderStack: string[];
   loading: boolean;
   error: string | null;
   setFiles: (files: FileType[]) => void;
   setIsList: (value: boolean) => void;
-  setDisplayFiles: (files: FileType[]) => void;
+  setCurrentPage: (value: number) => void;
+  setEntriesPerPage: (value: number) => void;
+  setDisplayFiles: () => void;
+  setFilterTools: (updates: FilterToolsProps) => void;
   toggleEditedFile: (fileId: string) => Promise<void>;
   toggleFavoriteFiles: (fileId: string) => Promise<void>;
   updateFileName: (
@@ -76,11 +91,8 @@ export interface FileState {
   toggleFileChecked: (fileId: string | string[]) => void;
   setAllFilesChecked: (isChecked: boolean) => void;
   resetCheckedFiles: () => void;
-  createFiles: (payload: {
-    name: string;
-    parentId: string;
-    type: string;
-  }) => Promise<void>;
+  createFiles: (newFile: FileType, parentId: string) => Promise<void>;
+  removeFile: (fileId: string | string[]) => Promise<void>;
 }
 
 export interface CreateFileResponse {

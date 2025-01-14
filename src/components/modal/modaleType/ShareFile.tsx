@@ -1,7 +1,7 @@
+import React from 'react';
 import ButtonModalWrapper from '@/components/button/ButtonModalWrapper';
 import Input from '@/components/form/Input';
 import { iconsMap } from '@/constantes/iconsMap';
-import React from 'react';
 
 const ShareFile = () => {
   const handleShare = (e) => {

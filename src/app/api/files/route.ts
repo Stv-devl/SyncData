@@ -1,3 +1,4 @@
+import { v2 as cloudinary } from 'cloudinary';
 import { addFileToParent } from 'lib/utils/addFileToParent';
 import { deleteFileRecursive } from 'lib/utils/deleteFileRecursive';
 import { filterById } from 'lib/utils/filterById';
@@ -6,6 +7,7 @@ import { updateParentDates } from 'lib/utils/updateParentDates';
 import { NextResponse } from 'next/server';
 import { clientPromise } from '../../../../lib/mongod';
 import { getCurrentDate } from '@/helpers/getCurrentDate';
+import { FileType } from '@/types/type';
 
 /**
  * Handles PUT requests to update the files of a user.
@@ -17,34 +19,97 @@ import { getCurrentDate } from '@/helpers/getCurrentDate';
 const dbName = 'syncData';
 const collectionName = 'users';
 
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
+
+export const config = {
+  api: {
+    bodyParser: false,
+  },
+};
+
+async function uploadFileToCloudinary(file: File) {
+  try {
+    const buffer = await file.arrayBuffer();
+    const base64String = Buffer.from(buffer).toString('base64');
+    const dataUrl = `data:${file.type};base64,${base64String}`;
+
+    const result = await cloudinary.uploader.upload(dataUrl, {
+      folder: 'user_profil',
+      public_id: `${Date.now()}`,
+    });
+    console.log('Uploaded to Cloudinary:', result);
+    return result;
+  } catch (error) {
+    console.error('Error uploading file to Cloudinary:', error);
+    throw new Error('Failed to upload file to Cloudinary');
+  }
+}
 export async function PUT(request: Request): Promise<NextResponse> {
   const client = await clientPromise;
-  const db = client.db(dbName);
-  const usersCollection = db.collection(collectionName);
+  const db = client.db('syncData');
+  const usersCollection = db.collection('users');
 
   try {
-    const { userId, parentId, newFile } = await request.json();
-    const user = await findUserById(userId, usersCollection);
+    let userId: string | null = null;
+    let parentId: string | null = null;
+    let newFile: FileType | null = null;
+    let file: File | null = null;
 
-    if (!user) {
+    const contentType = request.headers.get('Content-Type') || '';
+
+    if (contentType.includes('multipart/form-data')) {
+      const formData = await request.formData();
+      userId = formData.get('userId')?.toString() || null;
+      parentId = formData.get('parentId')?.toString() || null;
+      const newFileData = formData.get('newFile')?.toString();
+      newFile = newFileData ? JSON.parse(newFileData) : null;
+      file = formData.get('file') as File | null;
+    } else if (contentType.includes('application/json')) {
+      const body = await request.json();
+      userId = body.userId || null;
+      parentId = body.parentId || null;
+      newFile = body.newFile || null;
+    } else {
       return NextResponse.json(
-        { error: 'User not found or invalid ID' },
-        { status: 404 }
-      );
-    }
-    if (!newFile) {
-      return NextResponse.json(
-        { error: 'Invalid folder name' },
+        { error: 'Unsupported Content-Type' },
         { status: 400 }
       );
     }
 
+    if (!userId || !newFile) {
+      return NextResponse.json(
+        { error: 'Missing required fields (userId, newFile)' },
+        { status: 400 }
+      );
+    }
+
+    const user = await findUserById(userId, usersCollection);
+    if (!user) {
+      return NextResponse.json({ error: 'User not found' }, { status: 404 });
+    }
+
+    let newFileWithUrl = { ...newFile };
+
+    if (newFile.type !== 'folder' && file && file instanceof File) {
+      const uploadedFile = await uploadFileToCloudinary(file);
+      newFileWithUrl = {
+        ...newFile,
+        url: uploadedFile.secure_url,
+        publicId: uploadedFile.public_id,
+      };
+    }
+
     const newDate = getCurrentDate();
     const fileId = newFile.id;
+    const publicId = newFileWithUrl.publicId ?? undefined;
 
     const updatedFiles = parentId
-      ? addFileToParent(user.files, newFile, parentId)
-      : [...user.files, newFile];
+      ? addFileToParent(user.files, newFileWithUrl, parentId, publicId)
+      : [...user.files, newFileWithUrl];
 
     const updatedFilesWithParentDates = updateParentDates(
       updatedFiles,
@@ -57,12 +122,17 @@ export async function PUT(request: Request): Promise<NextResponse> {
       { $set: { files: updatedFilesWithParentDates } }
     );
 
-    return updateResult.modifiedCount === 0
-      ? NextResponse.json({ error: 'No changes made' }, { status: 304 })
-      : NextResponse.json(
-          { message: 'Folder created successfully' },
-          { status: 200 }
-        );
+    if (updateResult.modifiedCount === 0) {
+      return NextResponse.json({ error: 'No changes made' }, { status: 304 });
+    }
+
+    return NextResponse.json(
+      {
+        message: 'Folder or file created successfully',
+        file: newFileWithUrl,
+      },
+      { status: 200 }
+    );
   } catch (error) {
     console.error('Error processing PUT request:', error);
     return NextResponse.json({ error: 'Server error' }, { status: 500 });
@@ -75,7 +145,7 @@ export async function DELETE(request: Request): Promise<NextResponse> {
   const usersCollection = db.collection(collectionName);
 
   try {
-    const { userId, fileId, parentId } = await request.json();
+    const { userId, fileId, parentId, publicId } = await request.json();
     const user = await findUserById(userId, usersCollection);
 
     if (!user) {
@@ -83,6 +153,21 @@ export async function DELETE(request: Request): Promise<NextResponse> {
         { error: 'User not found or invalid ID' },
         { status: 404 }
       );
+    }
+
+    if (Array.isArray(publicId) && publicId.length > 0) {
+      try {
+        const cloudinaryResults = await Promise.all(
+          publicId.map((id) => cloudinary.uploader.destroy(id))
+        );
+        console.log('Cloudinary file deletion results:', cloudinaryResults);
+      } catch (error) {
+        console.error('Error deleting files from Cloudinary:', error);
+        return NextResponse.json(
+          { error: 'Failed to delete files from Cloudinary' },
+          { status: 500 }
+        );
+      }
     }
 
     const updatedFiles =

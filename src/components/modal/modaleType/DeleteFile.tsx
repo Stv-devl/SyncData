@@ -4,7 +4,11 @@ import useModalStore from '@/store/ui/useModale';
 import { useFileStore } from '@/store/useFileStore';
 import { DeleteFileProps } from '@/types/type';
 
-const DeleteFile: React.FC<DeleteFileProps> = ({ fileId, fileName }) => {
+const DeleteFile: React.FC<DeleteFileProps> = ({
+  fileId,
+
+  fileName,
+}) => {
   const { removeFile } = useFileStore();
 
   const handleDelete = (e: React.MouseEvent<HTMLButtonElement>) => {

@@ -1,5 +1,5 @@
-import { ModalState } from '@/types/storeType';
 import { create } from 'zustand';
+import { ModalState } from '@/types/storeType';
 
 /**
  * Zustand store for managing modal state.

@@ -3,8 +3,8 @@ import React from 'react';
 const IconEmpty: React.FC<React.SVGProps<SVGSVGElement>> = (props) => {
   return (
     <svg
-      width={props.width || 104}
-      height={props.height || 111}
+      width={props.width || 90}
+      height={props.height || 97}
       viewBox="0 0 104 111"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"

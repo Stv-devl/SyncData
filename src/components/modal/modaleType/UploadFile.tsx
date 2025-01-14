@@ -4,11 +4,11 @@ import * as Yup from 'yup';
 import { ulpoadFileSchema } from '../../../helpers/validationShema';
 import AccordionMenu from '@/components/accordeon/AccordionMenu';
 import ButtonModalWrapper from '@/components/button/ButtonModalWrapper';
+import { createNewFile } from '@/helpers/createNewFile';
 import useAccordion from '@/hook/ui/useAccordion';
 import useModalStore from '@/store/ui/useModale';
 import { useFileStore } from '@/store/useFileStore';
 import { filteredFolders } from '@/utils/filteredFolders';
-import { getFileType } from '@/utils/getFileType';
 
 const UploadFile = () => {
   const { files, createFiles } = useFileStore();
@@ -22,7 +22,10 @@ const UploadFile = () => {
     isOpen,
   } = useAccordion();
 
-  const [errors, setErrors] = useState({
+  const { openModal, closeModal } = useModalStore();
+
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [errors, setErrors] = useState<{ name: string; checkbox: string }>({
     name: '',
     checkbox: '',
   });
@@ -34,8 +37,8 @@ const UploadFile = () => {
         handleChange('No file chosen.');
         return;
       }
-      const fileName = file.name;
-      handleChange(fileName);
+      setSelectedFile(file);
+      handleChange(file.name);
     },
     [handleChange]
   );
@@ -47,14 +50,23 @@ const UploadFile = () => {
         { name: fileName, checkbox: checkedFile },
         { abortEarly: false }
       );
+
+      if (!selectedFile) {
+        throw new Error('No file selected.');
+      }
+
+      const fileUrl = selectedFile ? URL.createObjectURL(selectedFile) : '';
       const parentId: string = checkedFile ? checkedFile : '';
-      const newFolder = {
-        filename: fileName,
-        parentId,
-        type: getFileType(fileName),
-      };
-      await createFiles(newFolder);
-      useModalStore.getState().closeModal();
+
+      const newFile = createNewFile(fileName, fileUrl, selectedFile as File);
+
+      createFiles(newFile, parentId);
+      closeModal();
+      openModal('UploadLoader', newFile.id, newFile.filename);
+
+      setTimeout(() => {
+        URL.revokeObjectURL(fileUrl);
+      }, 10000);
     } catch (error) {
       if (error instanceof Yup.ValidationError) {
         const fieldErrors = error.inner.reduce<{ [key: string]: string }>(
@@ -103,12 +115,7 @@ const UploadFile = () => {
           />
           <span className="text-error-red text-sm">{errors.checkbox}</span>
         </div>
-        <ButtonModalWrapper
-          actionLabel="Upload"
-          handleAction={(e: React.FormEvent<HTMLFormElement>) =>
-            handleSubmit(e)
-          }
-        />
+        <ButtonModalWrapper actionLabel="Upload" handleAction={handleSubmit} />
       </form>
     </div>
   );

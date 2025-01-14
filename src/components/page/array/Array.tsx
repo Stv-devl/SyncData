@@ -1,7 +1,7 @@
 'use client';
 
 import clsx from 'clsx';
-import React, { useCallback, useMemo } from 'react';
+import React, { useCallback, useEffect, useMemo } from 'react';
 import { twMerge } from 'tailwind-merge';
 import { findFolderById } from '../../../../lib/utils/findFolderById';
 import { iconsMap } from '../../../constantes/iconsMap';
@@ -9,7 +9,10 @@ import FileContent from './content/FileContent';
 import ListContent from './content/ListContent';
 import Header from './Header';
 import DropZoneWrapper from '@/components/dropZone/DropZoneWrapper';
+import EmptyContent from '@/components/dropZone/EmptyContent';
+import Pagination from '@/components/pagination/Pagination';
 import usePopupEffect from '@/hook/ui/usePopupEffect';
+import useResponsiveFileCount from '@/hook/ui/useResponsiveFileCount';
 import usePopupStore from '@/store/ui/usePopup';
 import { useFileStore } from '@/store/useFileStore';
 
@@ -18,6 +21,8 @@ const Array = () => {
     files,
     isList,
     setIsList,
+    setDisplayFiles,
+    setEntriesPerPage,
     updateFileName,
     displayFiles,
     setAllFilesChecked,
@@ -34,6 +39,14 @@ const Array = () => {
     handleMouseEnter,
     handleMouseLeave,
   } = usePopupStore();
+  const { containerRef, fileCount } = useResponsiveFileCount(isList);
+
+  useEffect(() => {
+    if (fileCount === 0) return;
+
+    setEntriesPerPage(fileCount);
+    setDisplayFiles();
+  }, [fileCount, setEntriesPerPage, setDisplayFiles]);
 
   const toggleIcon = useCallback(() => {
     setIsList(!isList);
@@ -88,10 +101,12 @@ const Array = () => {
     ? 'translate(-20%, -110%)'
     : 'translate(0%, -100%)';
 
+  console.log(files);
+
   return (
     <section className="relative mx-auto size-full rounded-lg bg-white p-4 lg:p-8">
       <Header isList={isList} setAllFilesChecked={setAllFilesChecked} />
-      <div className="bg-lightest-gray flex h-[97%] w-full flex-col rounded-lg">
+      <div className="bg-lightest-gray flex h-[97%] w-full flex-col overflow-y-auto rounded-lg transition-all duration-300">
         <>
           {currentFolderName !== 'root' && (
             <div className="flex flex-row content-center p-2">
@@ -107,7 +122,7 @@ const Array = () => {
           {displayFiles && displayFiles.length > 0 ? (
             isList ? (
               <ListContent
-                files={displayFiles}
+                files={displayFiles.slice(0, fileCount)}
                 updateFileName={updateFileName}
                 handleOpenFolder={handleOpenFolder}
                 toggleFileChecked={handleCheckboxChange}
@@ -115,26 +130,30 @@ const Array = () => {
                 handleMouseEnter={handleMouseEnterCallback}
                 handleMouseLeave={handleMouseLeaveCallback}
                 toggleEditedFile={toggleEditedFile}
+                containerRef={containerRef}
               />
             ) : (
               <FileContent
-                files={displayFiles}
+                files={displayFiles.slice(0, fileCount)}
                 updateFileName={updateFileName}
                 handleOpenFolder={handleOpenFolder}
                 toggleFileChecked={handleCheckboxChange}
                 handleClickOpen={handleContextMenu}
                 toggleEditedFile={toggleEditedFile}
+                containerRef={containerRef}
               />
             )
           ) : null}
         </>
-        <div className="relative flex-1">
+        <div className="relative hidden sm:block lg:flex-1">
           <DropZoneWrapper
             isDragIcon={true}
             dropFolderId={parentFolderId}
             dropStyle="absolute inset-0"
           />
+          <EmptyContent />
         </div>
+        <Pagination />
       </div>
       <div
         onClick={toggleIcon}

@@ -61,7 +61,6 @@ const FileContent: React.FC<ArrayFileContentProps> = ({
             {file.type === 'folder' && isDragActive && (
               <DropZoneWrapper
                 isDragIcon={false}
-                dropFolderId={file.id}
                 dropStyle="absolute inset-0 z-10"
               />
             )}

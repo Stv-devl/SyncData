@@ -18,7 +18,7 @@ const UploadLoader: React.FC<{ fileName?: string; fileId?: string }> = ({
     if (!fileName || !fileId) {
       setError('No file to upload');
       setUploadState('error');
-      setTimeout(closeModal, 1500);
+      setTimeout(closeModal, 1000);
       return;
     }
     setUploadState('uploading');
@@ -32,7 +32,7 @@ const UploadLoader: React.FC<{ fileName?: string; fileId?: string }> = ({
   useEffect(() => {
     if (isUploaded && uploadState === 'uploading') {
       setUploadState('uploaded');
-      setTimeout(closeModal, 1500);
+      setTimeout(closeModal, 1000);
     }
   }, [isUploaded, closeModal, uploadState]);
 

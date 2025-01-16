@@ -249,7 +249,6 @@ export interface ChangeNameProps {
 //dropzone props
 export interface DropZoneWrapperProps {
   isDragIcon: boolean | null;
-  dropFolderId: string;
   dropStyle: string;
 }
 

@@ -3,6 +3,8 @@ import * as Yup from 'yup';
 import AccordionMenu from '@/components/accordeon/AccordionMenu';
 import ButtonModalWrapper from '@/components/button/ButtonModalWrapper';
 import Input from '@/components/form/Input';
+import { generateId } from '@/helpers/generateId';
+import { getCurrentDate } from '@/helpers/getCurrentDate';
 import { createFolderSchema } from '@/helpers/validationShema';
 import useAccordion from '@/hook/ui/useAccordion';
 import useModalStore from '@/store/ui/useModale';
@@ -33,8 +35,17 @@ const CreateFolder = () => {
         { name: fileName, checkbox: checkedFile },
         { abortEarly: false }
       );
-      const parentId: string = checkedFile ? checkedFile : '';
-      const newFolder = { name: fileName, parentId, type: 'folder' };
+
+      const newFolder = {
+        id: generateId(),
+        filename: fileName,
+        type: 'folder',
+        url: '',
+        file: null,
+        files: [],
+        acces: 'only you',
+        modified: getCurrentDate(),
+      };
 
       await createFiles(newFolder);
       useModalStore.getState().closeModal();

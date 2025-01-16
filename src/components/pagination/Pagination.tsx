@@ -1,4 +1,5 @@
 import clsx from 'clsx';
+import { findFileRecursive } from 'lib/utils/findFileRecursive';
 import React, { useCallback, useMemo } from 'react';
 import usePagination from '../../hook/ui/usePagination';
 import { useFileStore } from '@/store/useFileStore';
@@ -15,8 +16,9 @@ const Pagination = () => {
   } = useFileStore();
 
   const fileToPaginate = useMemo(() => {
-    if (parentFolderId === 'root') return files;
-    return files?.find((file) => file.id === parentFolderId)?.files;
+    if (parentFolderId === 'root' || !files) return files;
+    const findFolder = findFileRecursive(files, parentFolderId);
+    return findFolder ? findFolder.files : null;
   }, [files, parentFolderId]);
 
   const pageNumber = useMemo(() => {
@@ -26,6 +28,8 @@ const Pagination = () => {
       : 1;
   }, [fileToPaginate, entriesPerPage, filterTools]);
 
+  /*console.log('page number', pageNumber);*/
+
   const { pagination } = usePagination({
     pageNumber: pageNumber || 1,
     currentPage,
@@ -34,9 +38,11 @@ const Pagination = () => {
   const handleChangePage = useCallback(
     (newPage: number) => {
       setCurrentPage(newPage);
-      setDisplayFiles();
+      if (fileToPaginate) {
+        setDisplayFiles(fileToPaginate);
+      }
     },
-    [setCurrentPage, setDisplayFiles]
+    [setCurrentPage, setDisplayFiles, fileToPaginate]
   );
 
   const getButtonClasses = (isActive: boolean) =>
@@ -48,7 +54,7 @@ const Pagination = () => {
     );
 
   return (
-    <div className="z-10 my-7 flex justify-center gap-2">
+    <div className="z-8 my-7 flex justify-center gap-2">
       {pageNumber && pageNumber > 3 ? (
         <button
           className={getButtonClasses(false)}

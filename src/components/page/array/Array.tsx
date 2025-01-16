@@ -21,10 +21,10 @@ const Array = () => {
     files,
     isList,
     setIsList,
-    setDisplayFiles,
     setEntriesPerPage,
     updateFileName,
     displayFiles,
+    setDisplayFiles,
     setAllFilesChecked,
     toggleFileChecked,
     parentFolderId,
@@ -43,9 +43,8 @@ const Array = () => {
 
   useEffect(() => {
     if (fileCount === 0) return;
-
     setEntriesPerPage(fileCount);
-    setDisplayFiles();
+    setDisplayFiles(displayFiles);
   }, [fileCount, setEntriesPerPage, setDisplayFiles]);
 
   const toggleIcon = useCallback(() => {
@@ -101,8 +100,6 @@ const Array = () => {
     ? 'translate(-20%, -110%)'
     : 'translate(0%, -100%)';
 
-  console.log(files);
-
   return (
     <section className="relative mx-auto size-full rounded-lg bg-white p-4 lg:p-8">
       <Header isList={isList} setAllFilesChecked={setAllFilesChecked} />
@@ -122,7 +119,7 @@ const Array = () => {
           {displayFiles && displayFiles.length > 0 ? (
             isList ? (
               <ListContent
-                files={displayFiles.slice(0, fileCount)}
+                files={displayFiles}
                 updateFileName={updateFileName}
                 handleOpenFolder={handleOpenFolder}
                 toggleFileChecked={handleCheckboxChange}
@@ -134,7 +131,7 @@ const Array = () => {
               />
             ) : (
               <FileContent
-                files={displayFiles.slice(0, fileCount)}
+                files={displayFiles}
                 updateFileName={updateFileName}
                 handleOpenFolder={handleOpenFolder}
                 toggleFileChecked={handleCheckboxChange}
@@ -146,11 +143,7 @@ const Array = () => {
           ) : null}
         </>
         <div className="relative hidden sm:block lg:flex-1">
-          <DropZoneWrapper
-            isDragIcon={true}
-            dropFolderId={parentFolderId}
-            dropStyle="absolute inset-0"
-          />
+          <DropZoneWrapper isDragIcon={true} dropStyle="absolute inset-0" />
           <EmptyContent />
         </div>
         <Pagination />

@@ -1,3 +1,4 @@
+import { files } from '../../../syncdata copy/src/constantes/files';
 import { FileType, UserProfile, UserType } from './type';
 
 export interface BurgerState {
@@ -66,6 +67,7 @@ export interface FileState {
   currentPage: number;
   entriesPerPage: number;
   displayFiles: FileType[] | null;
+  savedDisplayFiles: FileType[] | null;
   filterTools: FilterToolsProps;
   parentFolderId: string;
   folderStack: string[];
@@ -75,7 +77,7 @@ export interface FileState {
   setIsList: (value: boolean) => void;
   setCurrentPage: (value: number) => void;
   setEntriesPerPage: (value: number) => void;
-  setDisplayFiles: () => void;
+  setDisplayFiles: (files: FileType[] | null) => void;
   setFilterTools: (updates: FilterToolsProps) => void;
   toggleEditedFile: (fileId: string) => Promise<void>;
   toggleFavoriteFiles: (fileId: string) => Promise<void>;
@@ -91,7 +93,7 @@ export interface FileState {
   toggleFileChecked: (fileId: string | string[]) => void;
   setAllFilesChecked: (isChecked: boolean) => void;
   resetCheckedFiles: () => void;
-  createFiles: (newFile: FileType, parentId: string) => Promise<void>;
+  createFiles: (newFile: FileType) => Promise<void>;
   removeFile: (fileId: string | string[]) => Promise<void>;
 }
 

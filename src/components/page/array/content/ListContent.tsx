@@ -96,7 +96,6 @@ const ListContent: React.FC<ArrayListContentProps> = ({
             {file.type === 'folder' && (
               <DropZoneWrapper
                 isDragIcon={false}
-                dropFolderId={file.id}
                 dropStyle="absolute inset-0"
               />
             )}

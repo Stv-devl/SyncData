@@ -40,6 +40,7 @@ async function uploadFileToCloudinary(file: File) {
     const result = await cloudinary.uploader.upload(dataUrl, {
       folder: 'user_profil',
       public_id: `${Date.now()}`,
+      resource_type: 'raw',
     });
     console.log('Uploaded to Cloudinary:', result);
     return result;
@@ -48,6 +49,7 @@ async function uploadFileToCloudinary(file: File) {
     throw new Error('Failed to upload file to Cloudinary');
   }
 }
+
 export async function PUT(request: Request): Promise<NextResponse> {
   const client = await clientPromise;
   const db = client.db('syncData');
@@ -91,6 +93,8 @@ export async function PUT(request: Request): Promise<NextResponse> {
     if (!user) {
       return NextResponse.json({ error: 'User not found' }, { status: 404 });
     }
+
+    console.log(newFile);
 
     let newFileWithUrl = { ...newFile };
 

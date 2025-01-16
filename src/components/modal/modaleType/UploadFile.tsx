@@ -4,11 +4,13 @@ import * as Yup from 'yup';
 import { ulpoadFileSchema } from '../../../helpers/validationShema';
 import AccordionMenu from '@/components/accordeon/AccordionMenu';
 import ButtonModalWrapper from '@/components/button/ButtonModalWrapper';
-import { createNewFile } from '@/helpers/createNewFile';
+import { generateId } from '@/helpers/generateId';
+import { getCurrentDate } from '@/helpers/getCurrentDate';
 import useAccordion from '@/hook/ui/useAccordion';
 import useModalStore from '@/store/ui/useModale';
 import { useFileStore } from '@/store/useFileStore';
 import { filteredFolders } from '@/utils/filteredFolders';
+import { getFileType } from '@/utils/getFileType';
 
 const UploadFile = () => {
   const { files, createFiles } = useFileStore();
@@ -56,11 +58,19 @@ const UploadFile = () => {
       }
 
       const fileUrl = selectedFile ? URL.createObjectURL(selectedFile) : '';
-      const parentId: string = checkedFile ? checkedFile : '';
 
-      const newFile = createNewFile(fileName, fileUrl, selectedFile as File);
+      const newFile = {
+        id: generateId(),
+        filename: fileName,
+        type: getFileType(fileName),
+        url: fileUrl,
+        file: selectedFile as File,
+        files: [],
+        acces: 'only you',
+        modified: getCurrentDate(),
+      };
 
-      createFiles(newFile, parentId);
+      createFiles(newFile);
       closeModal();
       openModal('UploadLoader', newFile.id, newFile.filename);
 

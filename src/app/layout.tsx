@@ -1,8 +1,8 @@
 'use client';
 
+import { SessionProvider } from 'next-auth/react';
 import React from 'react';
 import '../../src/globals.css';
-import { SessionProvider } from 'next-auth/react';
 
 /**
  * RootLayout component serves as the main layout wrapper for the application.

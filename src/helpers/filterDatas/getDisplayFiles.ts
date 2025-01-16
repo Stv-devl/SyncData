@@ -11,10 +11,12 @@ export const getDisplayFiles = (
   entriesPerPage: number
 ): FileType[] => {
   if (!files) return [];
+
   const filteredFiles = sortAndSearchFilters(
     files,
     flattenedFiles,
     filterTools
   );
+
   return paginateFiles(filteredFiles, currentPage, entriesPerPage);
 };

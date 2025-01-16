@@ -7,5 +7,6 @@ export const paginateFiles = (
 ): FileType[] => {
   const startIndex = (currentPage - 1) * entriesPerPage;
   const endIndex = currentPage * entriesPerPage;
+
   return files.slice(startIndex, endIndex);
 };

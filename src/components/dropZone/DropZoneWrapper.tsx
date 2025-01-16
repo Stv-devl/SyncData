@@ -2,15 +2,14 @@ import clsx from 'clsx';
 import React, { useCallback } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { twMerge } from 'tailwind-merge';
-import { createNewFile } from '@/helpers/createNewFile';
+import { generateId } from '@/helpers/generateId';
+import { getCurrentDate } from '@/helpers/getCurrentDate';
 import useModalStore from '@/store/ui/useModale';
 import { useFileStore } from '@/store/useFileStore';
 import { DropZoneWrapperProps } from '@/types/type';
+import { getFileType } from '@/utils/getFileType';
 
-const DropZoneWrapper: React.FC<DropZoneWrapperProps> = ({
-  dropFolderId,
-  dropStyle,
-}) => {
+const DropZoneWrapper: React.FC<DropZoneWrapperProps> = ({ dropStyle }) => {
   const createFiles = useFileStore((state) => state.createFiles);
   const { openModal, closeModal } = useModalStore();
 
@@ -19,9 +18,20 @@ const DropZoneWrapper: React.FC<DropZoneWrapperProps> = ({
       acceptedFiles.forEach((file) => {
         const fileUrl = URL.createObjectURL(file);
 
-        const newFile = createNewFile(file.name, fileUrl, file as File);
+        const newFile = {
+          id: generateId(),
+          filename: file.name,
+          type: getFileType(file.name),
+          url: fileUrl,
+          file: file as File,
+          files: [],
+          acces: 'only you',
+          modified: getCurrentDate(),
+        };
 
-        createFiles(newFile, dropFolderId);
+        console.log(newFile);
+
+        createFiles(newFile);
         closeModal();
         openModal('UploadLoader', newFile.id, newFile.filename);
 
@@ -31,7 +41,7 @@ const DropZoneWrapper: React.FC<DropZoneWrapperProps> = ({
       });
     },
 
-    [createFiles, dropFolderId, openModal, closeModal]
+    [createFiles, openModal, closeModal]
   );
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({

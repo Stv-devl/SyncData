@@ -1,7 +1,7 @@
 'use client';
 
 import { useSession } from 'next-auth/react';
-import React, { useEffect, useMemo } from 'react';
+import React, { useEffect, useMemo, useRef } from 'react';
 import Banner from '@/components/banner/Banner';
 import Loading from '@/components/loading/Loading';
 import Modal from '@/components/modal/Modal';
@@ -23,9 +23,12 @@ const MainLayout: React.FC<{ children: React.ReactNode }> = ({
   const { data: session } = useSession();
   const { loading, error, fetchData } = useUserStore();
   const userId = useMemo(() => session?.user?.id, [session]);
+  const hasFetched = useRef(false);
 
   useEffect(() => {
-    if (userId) {
+    if (userId && !hasFetched.current) {
+      hasFetched.current = true;
+      console.log('Fetching data for userId:', userId);
       fetchData(userId);
     }
   }, [userId, fetchData]);

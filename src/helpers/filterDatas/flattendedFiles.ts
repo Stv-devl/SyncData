@@ -1,16 +1,13 @@
 import { FileType } from '@/types/type';
 
-export const flattenedFiles = (files: FileType[] | null) => {
-  const flattenNestedFiles = (files: FileType[]): FileType[] => {
-    const allFiles: FileType[] = [];
-    if (!files) return allFiles;
-    for (const file of files) {
-      allFiles.push(file);
-      if (file.files) {
-        allFiles.push(...flattenNestedFiles(file.files));
-      }
+export const flattenedFiles = (files: FileType[] | null): FileType[] => {
+  if (!files) return [];
+
+  return files.reduce<FileType[]>((acc, file) => {
+    acc.push(file);
+    if (file.files?.length) {
+      acc.push(...flattenedFiles(file.files));
     }
-    return allFiles;
-  };
-  return flattenNestedFiles(files || []);
+    return acc;
+  }, []);
 };

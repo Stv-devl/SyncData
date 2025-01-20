@@ -1,5 +1,5 @@
+import { findFileRecursive } from 'lib/utils/findFileRecursive';
 import React, { useMemo } from 'react';
-import { findFolderById } from '../../../lib/utils/findFolderById';
 import AccordionItem from './AccordionItem';
 import { useFileStore } from '@/store/useFileStore';
 import { AccordionFirstFileType, AccordionMenuProps } from '@/types/type';
@@ -14,7 +14,7 @@ const AccordionMenu: React.FC<AccordionMenuProps> = ({
   const { parentFolderId } = useFileStore();
 
   const selectedFolder = useMemo(() => {
-    const folder = findFolderById(files, parentFolderId);
+    const folder = findFileRecursive(files, parentFolderId);
     return folder ? folder : null;
   }, [files, parentFolderId]);
 

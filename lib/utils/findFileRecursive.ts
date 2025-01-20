@@ -1,16 +1,37 @@
 import { FileType } from '@/types/type';
 
-export const findFileRecursive = (
+export function findFileRecursive(
+  files: FileType[],
+  idOrIds: string | string[],
+  action?: (file: FileType) => FileType
+): FileType | FileType[] | null {
+  if (Array.isArray(idOrIds)) {
+    const foundFiles: FileType[] = [];
+    for (const id of idOrIds) {
+      const found = findFile(files, id, action);
+      if (found) {
+        foundFiles.push(found);
+      }
+    }
+    return foundFiles.length > 0 ? foundFiles : null;
+  } else {
+    return findFile(files, idOrIds, action);
+  }
+}
+
+function findFile(
   files: FileType[],
   id: string,
   action?: (file: FileType) => FileType
-): FileType | null => {
+): FileType | null {
   for (const file of files) {
-    if (file.id === id) return action ? action(file) : file;
-    if (file.files) {
-      const found = findFileRecursive(file.files, id, action);
+    if (file.id === id) {
+      return action ? action(file) : file;
+    }
+    if (file.files && file.files.length > 0) {
+      const found = findFile(file.files, id, action);
       if (found) return found;
     }
   }
   return null;
-};
+}

@@ -1,3 +1,4 @@
+import { callFilesRecursive } from './callFilesRecursive';
 import { FileType } from '@/types/type';
 
 export const addFileToParent = (
@@ -6,26 +7,21 @@ export const addFileToParent = (
   parentId: string,
   publicId?: string
 ): FileType[] => {
+  if (parentId === 'root') {
+    const newFileWithPublicId = publicId ? { ...newFile, publicId } : newFile;
+    return [...files, newFileWithPublicId];
+  }
   const newFileWithPublicId = publicId ? { ...newFile, publicId } : newFile;
 
-  if (parentId === 'root') {
-    return [...files, newFile];
-  }
-  return files.map((file) => {
+  const callback = (file: FileType): FileType => {
     if (file.id === parentId) {
       return {
         ...file,
-        files: [...(file.files || []), newFileWithPublicId],
+        files: [...(file.files ?? []), newFileWithPublicId],
       };
     }
-
-    if (file.files) {
-      return {
-        ...file,
-        files: addFileToParent(file.files, newFileWithPublicId, parentId),
-      };
-    }
-
     return file;
-  });
+  };
+
+  return callFilesRecursive(files, callback);
 };

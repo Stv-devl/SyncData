@@ -1,7 +1,12 @@
 import React from 'react';
+import UnderConstruction from '@/components/underConstruction/UnderConstruction';
 
 const Pricing = () => {
-  return <div></div>;
+  return (
+    <>
+      <UnderConstruction />
+    </>
+  );
 };
 
 export default Pricing;

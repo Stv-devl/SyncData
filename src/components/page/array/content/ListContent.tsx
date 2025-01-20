@@ -1,10 +1,10 @@
+import clsx from 'clsx';
 import React, { useMemo } from 'react';
 import DropZoneWrapper from '../../../dropZone/DropZoneWrapper';
 import IconsListWrapper from '../../../page/array/content/IconsListWrapper';
 import UpdateInput from '@/components/form/UpdateNameInput';
 import IconFileWrapper from '@/components/wrapper/IconFileWrapper';
 import { arrayHeader } from '@/constantes/constantes';
-import { headerClass } from '@/helpers/headerClass';
 import useFileEdition from '@/hook/ui/useFileEdition';
 import { ArrayListContentProps } from '@/types/type';
 
@@ -28,6 +28,17 @@ const ListContent: React.FC<ArrayListContentProps> = ({
   } = useFileEdition({ files, toggleEditedFile, updateFileName });
 
   const fileNameStyle = useMemo(() => 'w-28 truncate sm:w-24 lg:w-52', []);
+
+  const headerClass = (name: string) =>
+    clsx(
+      name === 'checked' && 'w-10 flex-none lg:w-16',
+      name === 'filename' && 'grow',
+      name !== 'checked' &&
+        name !== 'filename' &&
+        'w-[105px] flex-none lg:w-32',
+      (name === 'modified' || name === 'acces') && 'hidden sm:block',
+      'px-2'
+    );
 
   return (
     <ul ref={containerRef}>

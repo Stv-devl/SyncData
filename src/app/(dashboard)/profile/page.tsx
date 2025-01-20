@@ -1,9 +1,14 @@
 'use client';
 
 import React from 'react';
+import UnderConstruction from '@/components/underConstruction/UnderConstruction';
 
 const Profile: React.FC = (): JSX.Element => {
-  return <div></div>;
+  return (
+    <>
+      <UnderConstruction />
+    </>
+  );
 };
 
 export default Profile;

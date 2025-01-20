@@ -1,9 +1,9 @@
 'use client';
 
 import clsx from 'clsx';
+import { findFileRecursive } from 'lib/utils/findFileRecursive';
 import React, { useCallback, useEffect, useMemo } from 'react';
 import { twMerge } from 'tailwind-merge';
-import { findFolderById } from '../../../../lib/utils/findFolderById';
 import { iconsMap } from '../../../constantes/iconsMap';
 import FileContent from './content/FileContent';
 import ListContent from './content/ListContent';
@@ -55,7 +55,7 @@ const Array = () => {
   const currentFolderName = useMemo(() => {
     return parentFolderId === 'root'
       ? 'root'
-      : findFolderById(files ?? [], parentFolderId)?.filename;
+      : findFileRecursive(files ?? [], parentFolderId)?.filename;
   }, [parentFolderId, files]);
 
   const toggleIconClasses = useMemo(

@@ -4,6 +4,6 @@
  * @param {number} startPage - The starting page number.
  * @returns {Array<number>} An array of page numbers.
  */
-export const getArray = (length, startPage) => {
+export const getArray = (length: number, startPage: number) => {
   return Array.from({ length }, (_, i) => startPage + i);
 };

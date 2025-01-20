@@ -1,6 +1,6 @@
 import { v2 as cloudinary } from 'cloudinary';
 import { addFileToParent } from 'lib/utils/addFileToParent';
-import { deleteFileRecursive } from 'lib/utils/deleteFileRecursive';
+import { deleteFileToParent } from 'lib/utils/deleteFileToParent';
 import { filterById } from 'lib/utils/filterById';
 import { findUserById } from 'lib/utils/findUserById';
 import { updateParentDates } from 'lib/utils/updateParentDates';
@@ -8,6 +8,7 @@ import { NextResponse } from 'next/server';
 import { clientPromise } from '../../../../lib/mongod';
 import { getCurrentDate } from '@/helpers/getCurrentDate';
 import { FileType } from '@/types/type';
+import { getFileType } from '@/utils/getFileType';
 
 /**
  * Handles PUT requests to update the files of a user.
@@ -37,13 +38,37 @@ async function uploadFileToCloudinary(file: File) {
     const base64String = Buffer.from(buffer).toString('base64');
     const dataUrl = `data:${file.type};base64,${base64String}`;
 
+    const extension = getFileType(file.name);
+
+    const resourceType = file.type.startsWith('image/')
+      ? 'image'
+      : file.type.startsWith('video/')
+      ? 'video'
+      : 'raw';
+
+    const publicId = `${Date.now()}_${file.name.replace(
+      /[^a-zA-Z0-9_-]/g,
+      ''
+    )}`;
+
     const result = await cloudinary.uploader.upload(dataUrl, {
       folder: 'user_profil',
-      public_id: `${Date.now()}`,
-      resource_type: 'raw',
+      public_id: `${publicId}.${extension}`,
+      resource_type: resourceType,
     });
-    console.log('Uploaded to Cloudinary:', result);
-    return result;
+
+    const downloadUrl = cloudinary.url(result.public_id, {
+      resource_type: result.resource_type,
+      type: 'upload',
+      flags: 'attachment',
+      attachment: file.name,
+    });
+
+    console.log('Generated Cloudinary Download URL:', downloadUrl);
+    return {
+      ...result,
+      downloadUrl,
+    };
   } catch (error) {
     console.error('Error uploading file to Cloudinary:', error);
     throw new Error('Failed to upload file to Cloudinary');
@@ -94,15 +119,13 @@ export async function PUT(request: Request): Promise<NextResponse> {
       return NextResponse.json({ error: 'User not found' }, { status: 404 });
     }
 
-    console.log(newFile);
-
     let newFileWithUrl = { ...newFile };
 
     if (newFile.type !== 'folder' && file && file instanceof File) {
       const uploadedFile = await uploadFileToCloudinary(file);
       newFileWithUrl = {
         ...newFile,
-        url: uploadedFile.secure_url,
+        url: uploadedFile.downloadUrl,
         publicId: uploadedFile.public_id,
       };
     }
@@ -177,7 +200,7 @@ export async function DELETE(request: Request): Promise<NextResponse> {
     const updatedFiles =
       parentId === 'root'
         ? filterById(user.files, fileId)
-        : deleteFileRecursive(user.files, fileId, parentId);
+        : deleteFileToParent(user.files, fileId, parentId);
 
     const updateResult = await usersCollection.updateOne(
       { _id: user._id },

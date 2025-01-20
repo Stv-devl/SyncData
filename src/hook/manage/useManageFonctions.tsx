@@ -1,16 +1,13 @@
 import React, { useCallback } from 'react';
+import useManageDownload from './useManageDownload';
 import useModalStore from '@/store/ui/useModale';
 import { useFileStore } from '@/store/useFileStore';
 
 const useManageFonctions = () => {
   const { toggleFavoriteFiles, toggleEditedFile } = useFileStore();
-
+  const { handleDownload } = useManageDownload();
   const handleInformation = () => {
     console.log('information');
-  };
-
-  const handleDownload = () => {
-    console.log('download');
   };
 
   const handleShare = () => {
@@ -39,7 +36,7 @@ const useManageFonctions = () => {
         case 'share':
           return handleShare();
         case 'download':
-          return handleDownload();
+          return handleDownload(fileId);
         case 'move':
           return handleMoveFile();
         case 'change':

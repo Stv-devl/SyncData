@@ -28,6 +28,7 @@ function useFileEdition({
     []
   );
 
+  //pourquoi icon Click passe par hook édition a bouger?
   const handleIconClick = useCallback(
     (icon: IconType, file: FileType) => {
       getActionByType(icon.type, file.id, file.filename);

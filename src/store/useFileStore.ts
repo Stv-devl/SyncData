@@ -1,14 +1,13 @@
-import { deleteFileRecursive } from 'lib/utils/deleteFileRecursive';
+import { deleteFileToParent } from 'lib/utils/deleteFileToParent';
 import { filterById } from 'lib/utils/filterById';
 import { findFileRecursive } from 'lib/utils/findFileRecursive';
 import { updateParentDates } from 'lib/utils/updateParentDates';
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { addFileToParent } from '../../lib/utils/addFileToParent';
-import { findFolderById } from '../../lib/utils/findFolderById';
 import { flattenedFiles } from '../helpers/filterDatas/flattendedFiles';
+import { deleteFilesById } from '@/helpers/deleteFilesById';
 import { getDisplayFiles } from '@/helpers/filterDatas/getDisplayFiles';
-import { filterDeleteFilesById } from '@/helpers/filterDeleteFilesById';
 import { getCurrentDate } from '@/helpers/getCurrentDate';
 import { getParentFiles } from '@/helpers/getParentFiles';
 import deleteFile from '@/service/deleteFile';
@@ -109,8 +108,6 @@ export const useFileStore = create<FileState>()(
         const { flattenedFiles, filterTools, currentPage, entriesPerPage } =
           get();
 
-        console.log('files dans setDisplay', files);
-
         const newDisplayFiles = getDisplayFiles(
           files,
           flattenedFiles,
@@ -205,7 +202,7 @@ export const useFileStore = create<FileState>()(
         if (!files || typeof fileId !== 'string') {
           return null;
         }
-        const clickedFolder = findFolderById(files, fileId);
+        const clickedFolder = findFileRecursive(files, fileId);
 
         if (clickedFolder && clickedFolder.type === 'folder') {
           set({
@@ -391,11 +388,7 @@ export const useFileStore = create<FileState>()(
             const updatedFiles =
               parentFolderId === 'root'
                 ? filterById(state.files || [], fileId)
-                : deleteFileRecursive(
-                    state.files || [],
-                    fileId,
-                    parentFolderId
-                  );
+                : deleteFileToParent(state.files || [], fileId, parentFolderId);
 
             const updatedFilesWithParentDates = updateParentDates(
               updatedFiles,
@@ -410,20 +403,15 @@ export const useFileStore = create<FileState>()(
           });
           const parentFiles = getParentFiles(files, parentFolderId);
 
-          const updatedDisplayFiles = filterDeleteFilesById(
-            parentFiles,
-            fileId
-          );
+          const updatedDisplayFiles = deleteFilesById(parentFiles, fileId);
 
           if (!displayFiles) return;
-          const screenDisplayFiles = filterDeleteFilesById(
-            displayFiles,
-            fileId
-          );
+          const screenFiles = deleteFilesById(displayFiles, fileId);
+
           const changeCurrentPage =
             currentPage === 1
               ? 1
-              : screenDisplayFiles && screenDisplayFiles.length > 0
+              : screenFiles && screenFiles.length > 0
               ? currentPage
               : currentPage - 1;
 

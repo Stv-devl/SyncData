@@ -14,11 +14,7 @@ const ToolsBar = () => {
 
   const handleButtonClick = useCallback(
     (type: string) => {
-      if (type === 'download') {
-        console.log('download');
-      } else {
-        getActionByType(type, fileId, fileName);
-      }
+      getActionByType(type, fileId, fileName);
     },
     [fileId, fileName, getActionByType]
   );

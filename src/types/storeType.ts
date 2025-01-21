@@ -1,4 +1,3 @@
-import { files } from '../../../syncdata copy/src/constantes/files';
 import { FileType, UserProfile, UserType } from './type';
 
 export interface BurgerState {
@@ -78,6 +77,7 @@ export interface FileState {
   setCurrentPage: (value: number) => void;
   setEntriesPerPage: (value: number) => void;
   setDisplayFiles: (files: FileType[] | null) => void;
+  resetFilterTools: () => void;
   setFilterTools: (updates: FilterToolsProps) => void;
   toggleEditedFile: (fileId: string) => Promise<void>;
   toggleFavoriteFiles: (fileId: string) => Promise<void>;

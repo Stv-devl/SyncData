@@ -20,8 +20,7 @@ async function deleteFile(
       },
       body: JSON.stringify({ userId, fileId, parentId, publicId }),
     });
-
-    console.log('parentid in delete', parentId);
+    console.log(' publicId in delete', publicId);
 
     if (response.ok) {
       const data = await response.json();

@@ -40,7 +40,6 @@ const Array = () => {
     handleMouseLeave,
   } = usePopupStore();
   const { containerRef, fileCount } = useResponsiveFileCount(isList);
-
   useEffect(() => {
     if (fileCount === 0) return;
     setEntriesPerPage(fileCount);

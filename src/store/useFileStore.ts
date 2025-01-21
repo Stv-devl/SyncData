@@ -66,6 +66,11 @@ export const useFileStore = create<FileState>()(
         get().setDisplayFiles(files || []);
       },
 
+      resetFilterTools: () =>
+        set({
+          filterTools: { searchbar: '', headerType: null, upselected: null },
+        }),
+
       setFilterTools: (updates) => {
         const {
           files,
@@ -197,7 +202,7 @@ export const useFileStore = create<FileState>()(
       },
 
       handleOpenFolder: (fileId) => {
-        const { files, folderStack, parentFolderId } = get();
+        const { files, folderStack, parentFolderId, resetFilterTools } = get();
 
         if (!files || typeof fileId !== 'string') {
           return null;
@@ -209,12 +214,13 @@ export const useFileStore = create<FileState>()(
             parentFolderId: fileId as string,
             folderStack: [...folderStack, parentFolderId],
           });
+          resetFilterTools();
           get().setDisplayFiles(clickedFolder.files || []);
         } else return;
       },
 
       handleBackFolder: () => {
-        const { files, folderStack, currentPage } = get();
+        const { files, folderStack, currentPage, resetFilterTools } = get();
 
         if (!files || folderStack.length === 0) return;
 
@@ -222,6 +228,7 @@ export const useFileStore = create<FileState>()(
 
         if (previousFolderId) {
           const parentFiles = getParentFiles(files, previousFolderId);
+          resetFilterTools();
           set({
             parentFolderId: previousFolderId,
             folderStack: folderStack.slice(0, -1),

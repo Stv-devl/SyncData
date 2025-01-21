@@ -4,7 +4,7 @@ import { findFileRecursive } from 'lib/utils/findFileRecursive';
 import React from 'react';
 import { useFileStore } from '@/store/useFileStore';
 const useManageDownload = () => {
-  const { files } = useFileStore();
+  const files = useFileStore((state) => state.files);
 
   const handleFilesDownload = async (
     fileUrls: { url: string; filename: string }[]
@@ -40,6 +40,7 @@ const useManageDownload = () => {
       console.warn('No files available in the store.');
       return [];
     }
+
     const ids = Array.isArray(fileIds) ? fileIds : [fileIds];
     return ids.flatMap((id) => {
       const file = findFileRecursive(files, id);

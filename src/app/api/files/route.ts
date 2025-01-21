@@ -8,7 +8,6 @@ import { NextResponse } from 'next/server';
 import { clientPromise } from '../../../../lib/mongod';
 import { getCurrentDate } from '@/helpers/getCurrentDate';
 import { FileType } from '@/types/type';
-import { getFileType } from '@/utils/getFileType';
 
 /**
  * Handles PUT requests to update the files of a user.
@@ -38,23 +37,19 @@ async function uploadFileToCloudinary(file: File) {
     const base64String = Buffer.from(buffer).toString('base64');
     const dataUrl = `data:${file.type};base64,${base64String}`;
 
-    const extension = getFileType(file.name);
-
-    const resourceType = file.type.startsWith('image/')
-      ? 'image'
-      : file.type.startsWith('video/')
-      ? 'video'
-      : 'raw';
+    const type = file.name.includes('.') ? file.name.split('.').pop() : null;
 
     const publicId = `${Date.now()}_${file.name.replace(
       /[^a-zA-Z0-9_-]/g,
       ''
     )}`;
 
+    if (!type) return;
+
     const result = await cloudinary.uploader.upload(dataUrl, {
       folder: 'user_profil',
-      public_id: `${publicId}.${extension}`,
-      resource_type: resourceType,
+      public_id: `${publicId}.${type}`,
+      resource_type: 'raw',
     });
 
     const downloadUrl = cloudinary.url(result.public_id, {
@@ -125,8 +120,8 @@ export async function PUT(request: Request): Promise<NextResponse> {
       const uploadedFile = await uploadFileToCloudinary(file);
       newFileWithUrl = {
         ...newFile,
-        url: uploadedFile.downloadUrl,
-        publicId: uploadedFile.public_id,
+        url: uploadedFile && uploadedFile.downloadUrl,
+        publicId: uploadedFile && uploadedFile.public_id,
       };
     }
 
@@ -185,8 +180,13 @@ export async function DELETE(request: Request): Promise<NextResponse> {
     if (Array.isArray(publicId) && publicId.length > 0) {
       try {
         const cloudinaryResults = await Promise.all(
-          publicId.map((id) => cloudinary.uploader.destroy(id))
+          publicId.map(async (id) => {
+            return await cloudinary.uploader.destroy(id, {
+              resource_type: 'raw',
+            });
+          })
         );
+
         console.log('Cloudinary file deletion results:', cloudinaryResults);
       } catch (error) {
         console.error('Error deleting files from Cloudinary:', error);

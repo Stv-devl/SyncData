@@ -50,7 +50,13 @@ const useManageFonctions = () => {
           return () => {};
       }
     },
-    [toggleEditedFile, toggleFavoriteFiles]
+    [
+      handleDownload,
+      handleInformation,
+      handleMoveFile,
+      toggleEditedFile,
+      toggleFavoriteFiles,
+    ]
   );
 
   return {

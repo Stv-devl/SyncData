@@ -11,7 +11,8 @@ const InfoWrapper: React.FC<InfoWrapperProps> = ({ fileName, fileId }) => {
   const { closePopup } = usePopupStore();
 
   const handlePopupClick = useCallback(
-    (type, fileId, fileName) => {
+    (type: string, fileId: string | null, fileName: string | null) => {
+      if (!fileId || !fileName) return;
       getActionByType(type, fileId, fileName);
       closePopup();
     },

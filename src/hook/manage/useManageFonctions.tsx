@@ -6,57 +6,41 @@ import { useFileStore } from '@/store/useFileStore';
 const useManageFonctions = () => {
   const { toggleFavoriteFiles, toggleEditedFile } = useFileStore();
   const { handleDownload } = useManageDownload();
-  const handleInformation = () => {
-    console.log('information');
-  };
-
-  const handleShare = () => {
-    console.log('share');
-  };
-
-  const handleMoveFile = () => {
-    console.log('move file');
-  };
 
   const getActionByType = useCallback(
-    (type: string, fileId: string | string[], fileName: string | string[]) => {
+    (type: string, fileId: string | string[], fileName: string[]) => {
       switch (type) {
         case 'upload':
           return useModalStore
             .getState()
-            .openModal('UploadFile', fileId, fileName);
+            .openModal('UploadFile', fileId as string[], fileName);
         case 'create':
           return useModalStore
             .getState()
-            .openModal('CreateFolder', fileId, fileName);
+            .openModal('CreateFolder', fileId as string[], fileName);
         case 'information':
-          return handleInformation();
+          return console.log('information');
+
         case 'favorite':
-          return toggleFavoriteFiles(fileId);
+          return toggleFavoriteFiles(fileId as string);
         case 'share':
-          return handleShare();
+          return console.log('share');
         case 'download':
           return handleDownload(fileId);
         case 'move':
-          return handleMoveFile();
+          return console.log('move');
         case 'change':
-          return toggleEditedFile(fileId);
+          return toggleEditedFile(fileId as string);
         case 'delete':
           return useModalStore
             .getState()
-            .openModal('DeleteFile', fileId, fileName);
+            .openModal('DeleteFile', fileId as string[], fileName);
 
         default:
           return () => {};
       }
     },
-    [
-      handleDownload,
-      handleInformation,
-      handleMoveFile,
-      toggleEditedFile,
-      toggleFavoriteFiles,
-    ]
+    [handleDownload, toggleEditedFile, toggleFavoriteFiles]
   );
 
   return {

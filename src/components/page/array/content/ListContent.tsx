@@ -10,6 +10,7 @@ import { ArrayListContentProps } from '@/types/type';
 
 const ListContent: React.FC<ArrayListContentProps> = ({
   files,
+  parentFolderId,
   updateFileName,
   handleOpenFolder,
   toggleFileChecked,
@@ -107,6 +108,7 @@ const ListContent: React.FC<ArrayListContentProps> = ({
             {file.type === 'folder' && (
               <DropZoneWrapper
                 isDragIcon={false}
+                dropFolderId={parentFolderId}
                 dropStyle="absolute inset-0"
               />
             )}

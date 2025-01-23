@@ -34,12 +34,12 @@ export interface ModalState {
   type: string | null;
   fileId?: string | string[] | null;
   fileName?: string | string[] | null;
-  closeModal: () => void;
   openModal: (
     type: string,
-    fileId: string | string[],
-    fileName: string | string[]
+    fileId?: string | string[],
+    fileName?: string | string[]
   ) => void;
+  closeModal: () => void;
 }
 
 export interface UserState {
@@ -93,7 +93,11 @@ export interface FileState {
   toggleFileChecked: (fileId: string | string[]) => void;
   setAllFilesChecked: (isChecked: boolean) => void;
   resetCheckedFiles: () => void;
-  createFiles: (newFile: FileType) => Promise<void>;
+  createFiles: (
+    newFile: FileType,
+    parentId: string,
+    isAccordeon: boolean
+  ) => Promise<void>;
   removeFile: (fileId: string | string[]) => Promise<void>;
 }
 

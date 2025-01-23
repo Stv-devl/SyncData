@@ -9,7 +9,10 @@ import { useFileStore } from '@/store/useFileStore';
 import { DropZoneWrapperProps } from '@/types/type';
 import { getFileType } from '@/utils/getFileType';
 
-const DropZoneWrapper: React.FC<DropZoneWrapperProps> = ({ dropStyle }) => {
+const DropZoneWrapper: React.FC<DropZoneWrapperProps> = ({
+  dropStyle,
+  dropFolderId,
+}) => {
   const createFiles = useFileStore((state) => state.createFiles);
   const { openModal, closeModal } = useModalStore();
 
@@ -29,9 +32,7 @@ const DropZoneWrapper: React.FC<DropZoneWrapperProps> = ({ dropStyle }) => {
           modified: getCurrentDate(),
         };
 
-        console.log(newFile);
-
-        createFiles(newFile);
+        createFiles(newFile, dropFolderId, false);
         closeModal();
         openModal('UploadLoader', newFile.id, newFile.filename);
 
@@ -41,7 +42,7 @@ const DropZoneWrapper: React.FC<DropZoneWrapperProps> = ({ dropStyle }) => {
       });
     },
 
-    [createFiles, openModal, closeModal]
+    [createFiles, openModal, dropFolderId, closeModal]
   );
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({

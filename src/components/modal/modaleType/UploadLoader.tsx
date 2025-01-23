@@ -1,11 +1,9 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import useModalStore from '../../../store/ui/useModale';
 import { useFileStore } from '@/store/useFileStore';
+import { ModaleFileProps } from '@/types/type';
 
-const UploadLoader: React.FC<{ fileName?: string; fileId?: string }> = ({
-  fileName,
-  fileId,
-}) => {
+const UploadLoader: React.FC<ModaleFileProps> = ({ fileName, fileId }) => {
   const isUploaded = useFileStore((state) => state.isUploaded);
   const closeModal = useModalStore((state) => state.closeModal);
 

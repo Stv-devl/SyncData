@@ -1,12 +1,12 @@
 'use client';
 
-import React from 'react';
-import useLogin from '../../hook/auth/useLogin';
-import Input from '../../components/form/Input';
 import Link from 'next/link';
+import React from 'react';
 import Button from '../../components/button/Button';
-import Loading from '@/components/loading/Loading';
+import Input from '../../components/form/Input';
 import { iconsMap } from '../../constantes/iconsMap';
+import useLogin from '../../hook/auth/useLogin';
+import Loading from '@/components/loading/Loading';
 
 const Login = (): JSX.Element => {
   const {

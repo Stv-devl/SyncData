@@ -2,16 +2,14 @@ import React from 'react';
 import ButtonModalWrapper from '@/components/button/ButtonModalWrapper';
 import useModalStore from '@/store/ui/useModale';
 import { useFileStore } from '@/store/useFileStore';
-import { DeleteFileProps } from '@/types/type';
+import { ModaleFileProps } from '@/types/type';
 
-const DeleteFile: React.FC<DeleteFileProps> = ({
-  fileId,
-
-  fileName,
-}) => {
+const DeleteFile: React.FC<ModaleFileProps> = ({ fileId, fileName }) => {
   const { removeFile } = useFileStore();
 
-  const handleDelete = (e: React.MouseEvent<HTMLButtonElement>) => {
+  if (!fileId) return null;
+
+  const handleDelete = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     removeFile(fileId);
     useModalStore.getState().closeModal();
@@ -25,8 +23,8 @@ const DeleteFile: React.FC<DeleteFileProps> = ({
       </span>
       <ButtonModalWrapper
         actionLabel="Delete"
-        handleAction={(e: React.MouseEvent<HTMLButtonElement>) =>
-          handleDelete(e)
+        handleAction={(e) =>
+          handleDelete(e as React.FormEvent<HTMLFormElement>)
         }
       />
     </div>

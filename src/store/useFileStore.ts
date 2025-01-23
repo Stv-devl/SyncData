@@ -83,10 +83,7 @@ export const useFileStore = create<FileState>()(
 
         if (!files) return;
 
-        const getDisplayFiles =
-          parentFolderId === 'root'
-            ? files
-            : findFileRecursive(files, parentFolderId)?.files;
+        const getDisplayFiles = getParentFiles(files, parentFolderId);
 
         if (!savedDisplayFiles && !filterTools.searchbar) {
           set({ savedDisplayFiles: displayFiles });
@@ -131,6 +128,8 @@ export const useFileStore = create<FileState>()(
       },
 
       toggleFavoriteFiles: async (fileId) => {
+        console.log('fileId toogle', fileId);
+
         const userId = get().checkUserAuthenticated();
         if (!userId) return;
 
@@ -209,7 +208,11 @@ export const useFileStore = create<FileState>()(
         }
         const clickedFolder = findFileRecursive(files, fileId);
 
-        if (clickedFolder && clickedFolder.type === 'folder') {
+        if (
+          clickedFolder &&
+          !Array.isArray(clickedFolder) &&
+          clickedFolder.type === 'folder'
+        ) {
           set({
             parentFolderId: fileId as string,
             folderStack: [...folderStack, parentFolderId],
@@ -286,7 +289,7 @@ export const useFileStore = create<FileState>()(
         });
       },
 
-      createFiles: async (newFile) => {
+      createFiles: async (newFile, parentId, isAccordeon) => {
         const userId = get().checkUserAuthenticated();
         const { files, parentFolderId } = get();
 
@@ -295,7 +298,7 @@ export const useFileStore = create<FileState>()(
         set({ loading: true, isUploaded: false });
 
         try {
-          const response = await putAddFile(userId, parentFolderId, newFile);
+          const response = await putAddFile(userId, parentId, newFile);
 
           if (!response?.file) {
             throw new Error('Invalid file response from server');
@@ -309,11 +312,7 @@ export const useFileStore = create<FileState>()(
             publicId: file.publicId || null,
           };
 
-          const updatedFiles = addFileToParent(
-            files,
-            updatedFile,
-            parentFolderId
-          );
+          const updatedFiles = addFileToParent(files, updatedFile, parentId);
 
           const filesWithUpdatedDates = updateParentDates(
             updatedFiles,
@@ -321,18 +320,17 @@ export const useFileStore = create<FileState>()(
             getCurrentDate()
           );
 
-          const parentFiles = getParentFiles(
+          const getParentsFiles = getParentFiles(
             filesWithUpdatedDates,
-            parentFolderId
+            parentFolderId === 'root' ? 'root' : parentId
           );
 
-          const updatedDisplayFiles =
-            parentFolderId === parentFolderId
-              ? [
-                  ...parentFiles.filter(({ id }) => id !== updatedFile.id),
-                  updatedFile,
-                ]
-              : parentFiles;
+          const updatedDisplayFiles = isAccordeon
+            ? getParentsFiles
+            : [
+                ...getParentsFiles.filter(({ id }) => id !== updatedFile.id),
+                updatedFile,
+              ];
 
           set({
             files: filesWithUpdatedDates,

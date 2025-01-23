@@ -40,6 +40,7 @@ const Array = () => {
     handleMouseLeave,
   } = usePopupStore();
   const { containerRef, fileCount } = useResponsiveFileCount(isList);
+
   useEffect(() => {
     if (fileCount === 0) return;
     setEntriesPerPage(fileCount);
@@ -49,12 +50,24 @@ const Array = () => {
   const toggleIcon = useCallback(() => {
     setIsList(!isList);
   }, [isList, setIsList]);
-  usePopupEffect(isOpen, handleClickClose);
+
+  usePopupEffect(isOpen, () => handleClickClose);
+
+  const isArray = (input: unknown): input is unknown[] =>
+    Object.prototype.toString.call(input) === '[object Array]';
 
   const currentFolderName = useMemo(() => {
-    return parentFolderId === 'root'
-      ? 'root'
-      : findFileRecursive(files ?? [], parentFolderId)?.filename;
+    if (parentFolderId === 'root') {
+      return 'root';
+    }
+
+    const folder = findFileRecursive(files ?? [], parentFolderId);
+
+    if (folder && !isArray(folder)) {
+      return folder.filename;
+    }
+
+    return 'unknown';
   }, [parentFolderId, files]);
 
   const toggleIconClasses = useMemo(
@@ -119,6 +132,7 @@ const Array = () => {
             isList ? (
               <ListContent
                 files={displayFiles}
+                parentFolderId={parentFolderId}
                 updateFileName={updateFileName}
                 handleOpenFolder={handleOpenFolder}
                 toggleFileChecked={handleCheckboxChange}
@@ -131,6 +145,7 @@ const Array = () => {
             ) : (
               <FileContent
                 files={displayFiles}
+                parentFolderId={parentFolderId}
                 updateFileName={updateFileName}
                 handleOpenFolder={handleOpenFolder}
                 toggleFileChecked={handleCheckboxChange}
@@ -142,7 +157,11 @@ const Array = () => {
           ) : null}
         </>
         <div className="relative hidden sm:block lg:flex-1">
-          <DropZoneWrapper isDragIcon={true} dropStyle="absolute inset-0" />
+          <DropZoneWrapper
+            isDragIcon={true}
+            dropFolderId={parentFolderId}
+            dropStyle="absolute inset-0"
+          />
           <EmptyContent />
         </div>
         <Pagination />

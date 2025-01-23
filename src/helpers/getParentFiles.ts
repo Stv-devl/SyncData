@@ -2,7 +2,12 @@ import { findFileRecursive } from 'lib/utils/findFileRecursive';
 import { FileType } from '@/types/type';
 
 export const getParentFiles = (files: FileType[], parentId: string) => {
-  const parentFolderFiles = findFileRecursive(files, parentId)?.files || [];
+  const parentFolder = findFileRecursive(files, parentId);
+
+  const parentFolderFiles =
+    parentFolder && !Array.isArray(parentFolder)
+      ? parentFolder.files || []
+      : [];
 
   return parentId === 'root' ? files : parentFolderFiles;
 };

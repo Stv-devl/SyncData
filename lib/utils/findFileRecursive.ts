@@ -30,6 +30,7 @@ function findFile(
     }
     if (file.files && file.files.length > 0) {
       const found = findFile(file.files, id, action);
+
       if (found) return found;
     }
   }

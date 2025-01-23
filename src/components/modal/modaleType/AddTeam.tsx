@@ -1,17 +1,19 @@
-import React from 'react';
+import React, { ChangeEvent, FormEvent } from 'react';
 import ButtonModalWrapper from '@/components/button/ButtonModalWrapper';
 import Input from '@/components/form/Input';
 import { iconsMap } from '@/constantes/iconsMap';
+import { ModaleFileProps } from '@/types/type';
 
-const AddTeam = () => {
-  const handleChange = (e) => {
+const AddTeam: React.FC<ModaleFileProps> = () => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
     console.log(e.target.value);
   };
 
-  const handleAdd = (e) => {
+  const handleAdd = (e: FormEvent<HTMLButtonElement>): void => {
     e.preventDefault();
     console.log('add');
   };
+
   return (
     <div className="h-full ">
       <h1 className="text-title text-darkest-blue mb-8 text-center">
@@ -52,7 +54,7 @@ const AddTeam = () => {
       </div>
       <ButtonModalWrapper
         actionLabel="Share"
-        handleAction={(e) => handleAdd(e)}
+        handleAction={(e) => handleAdd(e as React.FormEvent<HTMLButtonElement>)}
       />
     </div>
   );

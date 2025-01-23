@@ -17,12 +17,13 @@ const useModalStore = create<ModalState>((set) => ({
   type: null,
   fileId: null,
   fileName: null,
-  openModal: (
-    type: string,
-    fileId: string | string[],
-    fileName: string | string[]
-  ) => {
-    set({ isOpen: true, type, fileId, fileName });
+  openModal: (type, fileId, fileName) => {
+    set({
+      isOpen: true,
+      type,
+      fileId,
+      fileName,
+    });
   },
   closeModal: () =>
     set({ isOpen: false, type: null, fileId: null, fileName: null }),

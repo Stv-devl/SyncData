@@ -34,9 +34,13 @@ const Header: React.FC<HeaderProps> = ({ isList, setAllFilesChecked }) => {
   const handleSortFilter = useCallback(
     (type: string | null) => {
       if (headerType === type) {
-        setFilterTools({ upselected: !upselected });
+        setFilterTools({
+          ...filterTools,
+          upselected: !upselected,
+        });
       } else {
         setFilterTools({
+          ...filterTools,
           headerType: type as keyof FileType,
           upselected: true,
         });

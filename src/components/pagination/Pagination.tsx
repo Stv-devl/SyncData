@@ -18,7 +18,9 @@ const Pagination = () => {
   const fileToPaginate = useMemo(() => {
     if (parentFolderId === 'root' || !files) return files;
     const findFolder = findFileRecursive(files, parentFolderId);
-    return findFolder ? findFolder.files : null;
+    return findFolder && !Array.isArray(findFolder)
+      ? findFolder.files || []
+      : null;
   }, [files, parentFolderId]);
 
   const pageNumber = useMemo(() => {
@@ -27,8 +29,6 @@ const Pagination = () => {
       ? Math.ceil(fileToPaginate.length / entriesPerPage)
       : 1;
   }, [fileToPaginate, entriesPerPage, filterTools]);
-
-  /*console.log('page number', pageNumber);*/
 
   const { pagination } = usePagination({
     pageNumber: pageNumber || 1,

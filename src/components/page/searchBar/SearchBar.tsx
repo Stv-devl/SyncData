@@ -10,7 +10,7 @@ const SearchBar = () => {
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event) {
-      setFilterTools({ searchbar: event.target.value });
+      setFilterTools({ ...filterTools, searchbar: event.target.value });
     }
   };
 
@@ -36,7 +36,7 @@ const SearchBar = () => {
             </>
           }
           color={'empty'}
-          onClick={() => useModalStore.getState().openModal('AddTeam')}
+          onClick={() => useModalStore.getState().openModal('AddTeam', [], [])}
           disabled={false}
           IconComponent={iconsMap.IconAddTeam}
         />

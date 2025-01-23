@@ -1,10 +1,10 @@
-import { FormEvent, useCallback, useState } from 'react';
-import { FormDataSignUp, UseSignUpReturn } from '../../types/type';
 import { useRouter } from 'next/navigation';
-import postSignup from '../../service/postSignup';
 import { signIn } from 'next-auth/react';
-import { signupValidationSchema } from '../../helpers/validationShema';
+import { FormEvent, useCallback, useState } from 'react';
 import * as Yup from 'yup';
+import { signupValidationSchema } from '../../helpers/validationShema';
+import postSignup from '../../service/postSignup';
+import { FormDataSignUp, UseSignUpReturn } from '../../types/type';
 
 /**
  * Custom hook for handling user sign-up functionality.

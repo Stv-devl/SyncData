@@ -6,7 +6,7 @@ import useModalStore from '@/store/ui/useModale';
 const Modal = () => {
   const { isOpen, type, fileId, fileName } = useModalStore();
 
-  if (!isOpen) return null;
+  if (!isOpen || !fileId || !fileName) return null;
 
   const ModalContent = modalsMap[type as keyof typeof modalsMap];
 

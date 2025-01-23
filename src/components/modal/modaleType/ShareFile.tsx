@@ -2,15 +2,16 @@ import React from 'react';
 import ButtonModalWrapper from '@/components/button/ButtonModalWrapper';
 import Input from '@/components/form/Input';
 import { iconsMap } from '@/constantes/iconsMap';
+import { ModaleFileProps } from '@/types/type';
 
-const ShareFile = () => {
-  const handleShare = (e) => {
+const ShareFile: React.FC<ModaleFileProps> = () => {
+  const handleShare = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log('share');
   };
 
-  const handleChange = (e) => {
-    console.log(e.target.value);
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    console.log('change', e.target.name, e.target.value);
   };
 
   return (
@@ -44,7 +45,9 @@ const ShareFile = () => {
             type="text"
             value=""
             placeholder="Write an email"
-            handleChange={(e) => handleChange(e)}
+            handleChange={(e) =>
+              handleChange(e as React.ChangeEvent<HTMLInputElement>)
+            }
             autoComplete="off"
             error=""
             IconComponent={iconsMap.IconSearch}
@@ -53,7 +56,7 @@ const ShareFile = () => {
       </div>
       <ButtonModalWrapper
         actionLabel="Share"
-        handleAction={(e) => handleShare(e)}
+        handleAction={(e) => handleShare(e as React.FormEvent<HTMLFormElement>)}
       />
     </div>
   );

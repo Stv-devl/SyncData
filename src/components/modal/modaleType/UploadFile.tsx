@@ -9,10 +9,11 @@ import { getCurrentDate } from '@/helpers/getCurrentDate';
 import useAccordion from '@/hook/ui/useAccordion';
 import useModalStore from '@/store/ui/useModale';
 import { useFileStore } from '@/store/useFileStore';
+import { ModaleFileProps } from '@/types/type';
 import { filteredFolders } from '@/utils/filteredFolders';
 import { getFileType } from '@/utils/getFileType';
 
-const UploadFile = () => {
+const UploadFile: React.FC<ModaleFileProps> = () => {
   const { files, createFiles } = useFileStore();
 
   const {
@@ -58,6 +59,7 @@ const UploadFile = () => {
       }
 
       const fileUrl = selectedFile ? URL.createObjectURL(selectedFile) : '';
+      const parentId: string = checkedFile ? checkedFile : '';
 
       const newFile = {
         id: generateId(),
@@ -70,7 +72,7 @@ const UploadFile = () => {
         modified: getCurrentDate(),
       };
 
-      createFiles(newFile);
+      createFiles(newFile, parentId, true);
       closeModal();
       openModal('UploadLoader', newFile.id, newFile.filename);
 
@@ -125,7 +127,12 @@ const UploadFile = () => {
           />
           <span className="text-error-red text-sm">{errors.checkbox}</span>
         </div>
-        <ButtonModalWrapper actionLabel="Upload" handleAction={handleSubmit} />
+        <ButtonModalWrapper
+          actionLabel="Upload"
+          handleAction={(e) =>
+            handleSubmit(e as React.FormEvent<HTMLFormElement>)
+          }
+        />
       </form>
     </div>
   );

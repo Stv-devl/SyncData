@@ -9,9 +9,10 @@ import { createFolderSchema } from '@/helpers/validationShema';
 import useAccordion from '@/hook/ui/useAccordion';
 import useModalStore from '@/store/ui/useModale';
 import { useFileStore } from '@/store/useFileStore';
+import { ModaleFileProps } from '@/types/type';
 import { filteredFolders } from '@/utils/filteredFolders';
 
-const CreateFolder = () => {
+const CreateFolder: React.FC<ModaleFileProps> = () => {
   const { files, createFiles } = useFileStore();
   const {
     fileName,
@@ -36,6 +37,8 @@ const CreateFolder = () => {
         { abortEarly: false }
       );
 
+      const parentId: string = checkedFile ? checkedFile : '';
+
       const newFolder = {
         id: generateId(),
         filename: fileName,
@@ -47,7 +50,7 @@ const CreateFolder = () => {
         modified: getCurrentDate(),
       };
 
-      await createFiles(newFolder);
+      await createFiles(newFolder, parentId, true);
       useModalStore.getState().closeModal();
     } catch (error) {
       if (error instanceof Yup.ValidationError) {
@@ -94,7 +97,12 @@ const CreateFolder = () => {
           />
           <span className="text-error-red text-sm">{errors.checkbox}</span>
         </div>
-        <ButtonModalWrapper actionLabel="Create" handleAction={handleSubmit} />
+        <ButtonModalWrapper
+          actionLabel="Create"
+          handleAction={(e) =>
+            handleSubmit(e as React.FormEvent<HTMLFormElement>)
+          }
+        />
       </form>
     </div>
   );

@@ -1,6 +1,9 @@
 import { useEffect } from 'react';
 
-const usePopupEffect = (isOpen, handleClickClose) => {
+const usePopupEffect = (
+  isOpen: boolean,
+  handleClickClose: (event: MouseEvent) => void
+) => {
   useEffect(() => {
     if (isOpen) {
       window.addEventListener('click', handleClickClose);

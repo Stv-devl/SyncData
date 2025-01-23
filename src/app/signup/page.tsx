@@ -1,10 +1,10 @@
 'use client';
 
-import React from 'react';
 import Link from 'next/link';
-import useSignUp from '../../hook/auth/useSignup';
-import Input from '../../components/form/Input';
+import React from 'react';
 import Button from '../../components/button/Button';
+import Input from '../../components/form/Input';
+import useSignUp from '../../hook/auth/useSignup';
 import Loading from '@/components/loading/Loading';
 import { iconsMap } from '@/constantes/iconsMap';
 

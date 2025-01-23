@@ -1,11 +1,11 @@
 'use client';
 
-import { FormEvent, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { signIn } from 'next-auth/react';
-import { FormDataLogin, UseLoginReturn } from '../../types/type';
-import { loginSchema } from '../../helpers/validationShema';
+import { FormEvent, useState } from 'react';
 import * as Yup from 'yup';
+import { loginSchema } from '../../helpers/validationShema';
+import { FormDataLogin, UseLoginReturn } from '../../types/type';
 
 const useLogin = (): UseLoginReturn => {
   const [formData, setFormData] = useState<FormDataLogin>({

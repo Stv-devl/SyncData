@@ -10,6 +10,7 @@ import { ArrayFileContentProps } from '@/types/type';
 
 const FileContent: React.FC<ArrayFileContentProps> = ({
   files,
+  parentFolderId,
   updateFileName,
   handleOpenFolder,
   toggleFileChecked,
@@ -61,6 +62,7 @@ const FileContent: React.FC<ArrayFileContentProps> = ({
             {file.type === 'folder' && isDragActive && (
               <DropZoneWrapper
                 isDragIcon={false}
+                dropFolderId={parentFolderId}
                 dropStyle="absolute inset-0 z-10"
               />
             )}

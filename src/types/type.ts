@@ -56,12 +56,12 @@ export interface FileType {
   filename: string;
   type: string;
   url?: string;
-  modified: string;
+  modified?: string;
   isChecked?: boolean;
   isEdited?: boolean;
   isFavorite?: boolean;
-  acces: string;
-  files?: FileType[];
+  acces?: string;
+  files: FileType[];
   file?: File | null;
   publicId?: string | null;
 }
@@ -96,6 +96,11 @@ export interface ButtonComponent {
   disabled?: boolean;
   IconComponent?: React.FunctionComponent<React.SVGProps<SVGSVGElement>>;
   iconColor?: string;
+}
+
+export interface ButtonWrapperProps {
+  actionLabel: string;
+  handleAction: (e: FormEvent) => void;
 }
 
 //icon
@@ -153,6 +158,7 @@ export interface HeaderProps {
 
 export interface ArrayListContentProps {
   files: FileType[];
+  parentFolderId: string;
   updateFileName: (fileId: string, newName: string, fileName: string) => void;
   handleOpenFolder: (fileId: string) => void;
   toggleFileChecked: (fileId: string) => void;
@@ -174,6 +180,7 @@ export interface ArrayListContentProps {
 
 export interface ArrayFileContentProps {
   files: FileType[];
+  parentFolderId: string;
   updateFileName: (fileId: string, newName: string, fileName: string) => void;
   toggleEditedFile: (fileId: string) => void;
   handleOpenFolder: (fileId: string) => void;
@@ -188,15 +195,8 @@ export interface ArrayFileContentProps {
 }
 
 //accordion
-export interface AccordionFirstFileType {
-  id: string;
-  filename: string;
-  type: string;
-  files?: FileType[];
-}
-
 export interface AccordionMenuProps {
-  files: FileType[];
+  files: FileType[] | FileType | null;
   handleCheck: (fileId: string, isChecked: boolean) => void;
   checkedFile: string | null;
   toggleOpen: (fileId: string) => void;
@@ -204,7 +204,7 @@ export interface AccordionMenuProps {
 }
 
 export interface AccordionItemProps {
-  file: AccordionFirstFileType;
+  file: FileType;
   handleCheck: (fileId: string, isChecked: boolean) => void;
   checkedFile: string | null;
   toggleOpen: (fileId: string) => void;
@@ -221,9 +221,9 @@ export interface InfoWrapperProps {
   fileId: string | null;
 }
 
-export interface DeleteFileProps {
-  fileId: string;
-  fileName: string | string[];
+export interface ModaleFileProps {
+  fileId?: string | string[];
+  fileName?: string | string[];
 }
 
 export interface FilterSortProps {
@@ -249,6 +249,7 @@ export interface ChangeNameProps {
 //dropzone props
 export interface DropZoneWrapperProps {
   isDragIcon: boolean | null;
+  dropFolderId: string;
   dropStyle: string;
 }
 

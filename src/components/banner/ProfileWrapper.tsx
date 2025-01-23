@@ -1,10 +1,10 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import React from 'react';
-import { iconsMap } from '../../constantes/iconsMap';
 import { signOut } from 'next-auth/react';
-import usePopupStore from '@/store/ui/usePopup';
+import React from 'react';
 import { useMediaQuery } from 'react-responsive';
+import { iconsMap } from '../../constantes/iconsMap';
+import usePopupStore from '@/store/ui/usePopup';
 
 const ProfileWrapper = () => {
   const { handleMouseEnter, handleMouseLeave } = usePopupStore();

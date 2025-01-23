@@ -2,7 +2,7 @@ import { findFileRecursive } from 'lib/utils/findFileRecursive';
 import React, { useMemo } from 'react';
 import AccordionItem from './AccordionItem';
 import { useFileStore } from '@/store/useFileStore';
-import { AccordionFirstFileType, AccordionMenuProps } from '@/types/type';
+import { AccordionMenuProps, FileType } from '@/types/type';
 
 const AccordionMenu: React.FC<AccordionMenuProps> = ({
   files,
@@ -13,22 +13,30 @@ const AccordionMenu: React.FC<AccordionMenuProps> = ({
 }) => {
   const { parentFolderId } = useFileStore();
 
-  const selectedFolder = useMemo(() => {
-    const folder = findFileRecursive(files, parentFolderId);
-    return folder ? folder : null;
-  }, [files, parentFolderId]);
+  console.log('parentFolderId', parentFolderId);
 
-  const firstFile: AccordionFirstFileType = {
-    id: 'root',
-    filename: 'Home',
-    type: 'home',
-    files: files,
-  };
+  const selectedFolder = useMemo(() => {
+    const defaultFolder: FileType = {
+      id: 'root',
+      filename: 'Home',
+      type: 'home',
+      files: [],
+    };
+    if (!files) {
+      return defaultFolder;
+    }
+    const filesArray = Array.isArray(files) ? files : [files];
+    const foundFolder = findFileRecursive(filesArray, parentFolderId);
+
+    return foundFolder && !Array.isArray(foundFolder)
+      ? foundFolder
+      : { ...defaultFolder, files: filesArray };
+  }, [files, parentFolderId]);
 
   return (
     <div className="border-regular-gray h-[222px] w-full overflow-y-auto rounded-lg border p-3">
       <AccordionItem
-        file={selectedFolder ?? firstFile}
+        file={selectedFolder}
         handleCheck={handleCheck}
         checkedFile={checkedFile}
         toggleOpen={toggleOpen}
@@ -39,3 +47,22 @@ const AccordionMenu: React.FC<AccordionMenuProps> = ({
 };
 
 export default AccordionMenu;
+
+/*const selectedFolder = useMemo(() => {
+    const defaultFolder: FileType = {
+      id: 'root',
+      filename: 'Home',
+      type: 'home',
+      files: [],
+    };
+    if (!files) {
+      return defaultFolder;
+    }
+    const filesArray = Array.isArray(files) ? files : [files];
+    const foundFolder = findFileRecursive(filesArray, parentFolderId);
+
+    return foundFolder && !Array.isArray(foundFolder)
+      ? foundFolder
+      : { ...defaultFolder, files: filesArray };
+  }, [files, parentFolderId]);
+*/

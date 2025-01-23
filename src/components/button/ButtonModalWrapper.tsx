@@ -1,7 +1,11 @@
-import useModalStore from '@/store/ui/useModale';
 import Button from './Button';
+import useModalStore from '@/store/ui/useModale';
+import { ButtonWrapperProps } from '@/types/type';
 
-const ButtonModalWrapper = ({ actionLabel, handleAction }) => {
+const ButtonModalWrapper: React.FC<ButtonWrapperProps> = ({
+  actionLabel,
+  handleAction,
+}) => {
   return (
     <div className="flex justify-between">
       {['Cancel', actionLabel].map((label) => (

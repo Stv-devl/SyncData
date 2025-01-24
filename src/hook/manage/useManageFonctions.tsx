@@ -8,7 +8,7 @@ const useManageFonctions = () => {
   const { handleDownload } = useManageDownload();
 
   const getActionByType = useCallback(
-    (type: string, fileId: string | string[], fileName: string[]) => {
+    (type: string, fileId: string | string[], fileName: string | string[]) => {
       switch (type) {
         case 'upload':
           return useModalStore

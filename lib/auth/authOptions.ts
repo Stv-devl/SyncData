@@ -8,9 +8,7 @@ import { config } from './../config';
 import { getUserByEmail, verifyPassword } from './authHelpers';
 
 export const authOptions: NextAuthOptions = {
-  adapter: MongoDBAdapter(clientPromise, {
-    databaseName: 'syncData',
-  }),
+  adapter: MongoDBAdapter(clientPromise),
 
   providers: [
     GoogleProvider({

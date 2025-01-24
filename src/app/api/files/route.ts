@@ -27,20 +27,25 @@ cloudinary.config({
 
 export const runtime = 'nodejs';
 
-async function uploadFileToCloudinary(file: File) {
+type FormDataFile = {
+  name: string;
+  type: string;
+  arrayBuffer: () => Promise<ArrayBuffer>;
+};
+
+async function uploadFileToCloudinary(file: FormDataFile) {
   try {
     const buffer = await file.arrayBuffer();
     const base64String = Buffer.from(buffer).toString('base64');
     const dataUrl = `data:${file.type};base64,${base64String}`;
 
     const type = file.name.includes('.') ? file.name.split('.').pop() : null;
+    if (!type) return;
 
     const publicId = `${Date.now()}_${file.name.replace(
       /[^a-zA-Z0-9_-]/g,
       ''
     )}`;
-
-    if (!type) return;
 
     const result = await cloudinary.uploader.upload(dataUrl, {
       folder: 'user_profil',
@@ -75,7 +80,7 @@ export async function PUT(request: Request): Promise<NextResponse> {
     let userId: string | null = null;
     let parentId: string | null = null;
     let newFile: FileType | null = null;
-    let file: File | null = null;
+    let file: FormDataFile | null = null;
 
     const contentType = request.headers.get('Content-Type') || '';
 
@@ -83,9 +88,10 @@ export async function PUT(request: Request): Promise<NextResponse> {
       const formData = await request.formData();
       userId = formData.get('userId')?.toString() || null;
       parentId = formData.get('parentId')?.toString() || null;
+
       const newFileData = formData.get('newFile')?.toString();
       newFile = newFileData ? JSON.parse(newFileData) : null;
-      file = formData.get('file') as File | null;
+      file = formData.get('file') as FormDataFile | null;
     } else if (contentType.includes('application/json')) {
       const body = await request.json();
       userId = body.userId || null;
@@ -112,7 +118,7 @@ export async function PUT(request: Request): Promise<NextResponse> {
 
     let newFileWithUrl = { ...newFile };
 
-    if (newFile.type !== 'folder' && file && file instanceof File) {
+    if (newFile.type !== 'folder' && file) {
       const uploadedFile = await uploadFileToCloudinary(file);
       newFileWithUrl = {
         ...newFile,

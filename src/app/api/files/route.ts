@@ -26,9 +26,6 @@ cloudinary.config({
 });
 
 export const runtime = 'nodejs';
-export const api = {
-  bodyParser: false,
-};
 
 async function uploadFileToCloudinary(file: File) {
   try {

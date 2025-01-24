@@ -13,8 +13,6 @@ const AccordionMenu: React.FC<AccordionMenuProps> = ({
 }) => {
   const { parentFolderId } = useFileStore();
 
-  console.log('parentFolderId', parentFolderId);
-
   const selectedFolder = useMemo(() => {
     const defaultFolder: FileType = {
       id: 'root',
@@ -47,22 +45,3 @@ const AccordionMenu: React.FC<AccordionMenuProps> = ({
 };
 
 export default AccordionMenu;
-
-/*const selectedFolder = useMemo(() => {
-    const defaultFolder: FileType = {
-      id: 'root',
-      filename: 'Home',
-      type: 'home',
-      files: [],
-    };
-    if (!files) {
-      return defaultFolder;
-    }
-    const filesArray = Array.isArray(files) ? files : [files];
-    const foundFolder = findFileRecursive(filesArray, parentFolderId);
-
-    return foundFolder && !Array.isArray(foundFolder)
-      ? foundFolder
-      : { ...defaultFolder, files: filesArray };
-  }, [files, parentFolderId]);
-*/

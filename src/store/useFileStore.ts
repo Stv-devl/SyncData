@@ -128,8 +128,6 @@ export const useFileStore = create<FileState>()(
       },
 
       toggleFavoriteFiles: async (fileId) => {
-        console.log('fileId toogle', fileId);
-
         const userId = get().checkUserAuthenticated();
         if (!userId) return;
 
@@ -201,7 +199,13 @@ export const useFileStore = create<FileState>()(
       },
 
       handleOpenFolder: (fileId) => {
-        const { files, folderStack, parentFolderId, resetFilterTools } = get();
+        const {
+          files,
+          folderStack,
+          parentFolderId,
+          currentPage,
+          resetFilterTools,
+        } = get();
 
         if (!files || typeof fileId !== 'string') {
           return null;
@@ -216,6 +220,7 @@ export const useFileStore = create<FileState>()(
           set({
             parentFolderId: fileId as string,
             folderStack: [...folderStack, parentFolderId],
+            currentPage: currentPage > 1 ? 1 : currentPage,
           });
           resetFilterTools();
           get().setDisplayFiles(clickedFolder.files || []);
@@ -235,7 +240,7 @@ export const useFileStore = create<FileState>()(
           set({
             parentFolderId: previousFolderId,
             folderStack: folderStack.slice(0, -1),
-            currentPage: currentPage > 1 ? currentPage - 1 : currentPage,
+            currentPage: currentPage > 1 ? 1 : currentPage,
           });
           get().setDisplayFiles(parentFiles || []);
         } else {

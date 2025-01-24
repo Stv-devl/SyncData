@@ -28,7 +28,6 @@ const MainLayout: React.FC<{ children: React.ReactNode }> = ({
   useEffect(() => {
     if (userId && !hasFetched.current) {
       hasFetched.current = true;
-      console.log('Fetching data for userId:', userId);
       fetchData(userId);
     }
   }, [userId, fetchData]);

@@ -73,8 +73,8 @@ async function uploadFileToCloudinary(file: FormDataFile) {
 
 export async function PUT(request: Request): Promise<NextResponse> {
   const client = await clientPromise;
-  const db = client.db('syncData');
-  const usersCollection = db.collection('users');
+  const db = client.db(dbName);
+  const usersCollection = db.collection(collectionName);
 
   try {
     let userId: string | null = null;

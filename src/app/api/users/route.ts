@@ -3,6 +3,7 @@ import { clientPromise } from '../../../../lib/mongod';
 
 const dbName = 'syncData';
 const collectionName = 'users';
+export const dynamic = 'force-dynamic';
 
 /**
  * Handles GET requests to retrieve the list of users.

@@ -1,4 +1,5 @@
 import AddTeam from '@/components/modal/modaleType/AddTeam';
+import CopyLink from '@/components/modal/modaleType/CopyLink';
 import CreateFolder from '@/components/modal/modaleType/CreateFolder';
 import DeleteFile from '@/components/modal/modaleType/DeleteFile';
 import ShareFile from '@/components/modal/modaleType/ShareFile';
@@ -12,4 +13,5 @@ export const modalsMap = {
   ShareFile,
   DeleteFile,
   AddTeam,
+  CopyLink,
 };

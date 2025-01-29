@@ -32,13 +32,7 @@ export const selectedToolsBtn = [
     iconColor: '#FFFFFF',
     type: 'download',
   },
-  {
-    label: 'Share',
-    icon: iconsMap.IconShare,
-    color: 'empty',
-    iconColor: '#08396F',
-    type: 'share',
-  },
+
   {
     label: 'Delete',
     icon: iconsMap.IconDelete,

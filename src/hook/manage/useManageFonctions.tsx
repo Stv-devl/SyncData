@@ -1,4 +1,5 @@
 import React, { useCallback } from 'react';
+import useCopyToClipboard from '../ui/useCopyLink';
 import useManageDownload from './useManageDownload';
 import useModalStore from '@/store/ui/useModale';
 import { useFileStore } from '@/store/useFileStore';
@@ -6,6 +7,7 @@ import { useFileStore } from '@/store/useFileStore';
 const useManageFonctions = () => {
   const { toggleFavoriteFiles, toggleEditedFile } = useFileStore();
   const { handleDownload } = useManageDownload();
+  const { copyToClipboard } = useCopyToClipboard();
 
   const getActionByType = useCallback(
     (type: string, fileId: string | string[], fileName: string | string[]) => {
@@ -24,7 +26,7 @@ const useManageFonctions = () => {
         case 'favorite':
           return toggleFavoriteFiles(fileId as string);
         case 'share':
-          return console.log('share');
+          return copyToClipboard(fileId as string, fileName as string);
         case 'download':
           return handleDownload(fileId);
         case 'move':
@@ -40,7 +42,7 @@ const useManageFonctions = () => {
           return () => {};
       }
     },
-    [handleDownload, toggleEditedFile, toggleFavoriteFiles]
+    [handleDownload, toggleEditedFile, toggleFavoriteFiles, copyToClipboard]
   );
 
   return {

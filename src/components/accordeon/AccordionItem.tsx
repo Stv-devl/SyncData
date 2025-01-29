@@ -34,6 +34,7 @@ const AccordionItem: React.FC<AccordionItemProps> = ({
         </div>
         <input
           type="checkbox"
+          name="checkFolders"
           className="border-dark-gray size-4 border-2"
           checked={isChecked}
           onChange={handleCheckboxChange}

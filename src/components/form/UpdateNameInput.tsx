@@ -53,7 +53,7 @@ const UpdateNameInput: React.FC<ChangeNameProps> = ({
         <input
           className={inputClasses}
           type="text"
-          id={name}
+          id={name + file.id}
           name={name}
           value={value || ''}
           onChange={handleChange}

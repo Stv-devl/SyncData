@@ -10,7 +10,6 @@ import { ArrayFileContentProps } from '@/types/type';
 
 const FileContent: React.FC<ArrayFileContentProps> = ({
   files,
-  parentFolderId,
   updateFileName,
   handleOpenFolder,
   toggleFileChecked,
@@ -62,7 +61,7 @@ const FileContent: React.FC<ArrayFileContentProps> = ({
             {file.type === 'folder' && isDragActive && (
               <DropZoneWrapper
                 isDragIcon={false}
-                dropFolderId={parentFolderId}
+                dropFolderId={file.id}
                 dropStyle="absolute inset-0 z-10"
               />
             )}
@@ -103,6 +102,7 @@ const FileContent: React.FC<ArrayFileContentProps> = ({
               <div className="z-11 absolute right-2 top-2">
                 <input
                   type="checkbox"
+                  name="checkFile"
                   className="border-dark-gray size-4 border-2"
                   onClick={(e) => e.stopPropagation()}
                   onChange={() => toggleFileChecked(file.id)}

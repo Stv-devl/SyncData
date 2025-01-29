@@ -132,7 +132,6 @@ const Array = () => {
             isList ? (
               <ListContent
                 files={displayFiles}
-                parentFolderId={parentFolderId}
                 updateFileName={updateFileName}
                 handleOpenFolder={handleOpenFolder}
                 toggleFileChecked={handleCheckboxChange}
@@ -145,7 +144,6 @@ const Array = () => {
             ) : (
               <FileContent
                 files={displayFiles}
-                parentFolderId={parentFolderId}
                 updateFileName={updateFileName}
                 handleOpenFolder={handleOpenFolder}
                 toggleFileChecked={handleCheckboxChange}

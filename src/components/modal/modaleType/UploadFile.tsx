@@ -109,8 +109,9 @@ const UploadFile: React.FC<ModaleFileProps> = () => {
       </h1>
       <form action="submit" className="w-full">
         <div className="flex w-full flex-col gap-2 pb-4 sm:pb-6">
-          <label htmlFor="file">Browse your file:</label>
+          <label htmlFor="browseFile">Browse your file:</label>
           <input
+            id="browseFile"
             type="file"
             onChange={handleFileChange}
             className={browseClass}

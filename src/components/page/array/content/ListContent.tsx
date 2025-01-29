@@ -10,7 +10,6 @@ import { ArrayListContentProps } from '@/types/type';
 
 const ListContent: React.FC<ArrayListContentProps> = ({
   files,
-  parentFolderId,
   updateFileName,
   handleOpenFolder,
   toggleFileChecked,
@@ -55,6 +54,7 @@ const ListContent: React.FC<ArrayListContentProps> = ({
         >
           <input
             type="checkbox"
+            name="checkFile"
             className="border-dark-gray z-9 mr-2 size-5 shrink-0 cursor-pointer border-2 lg:mr-8"
             onChange={() => toggleFileChecked(file.id)}
             checked={file.isChecked || false}
@@ -105,13 +105,15 @@ const ListContent: React.FC<ArrayListContentProps> = ({
                 </li>
               );
             })}
-            {file.type === 'folder' && (
-              <DropZoneWrapper
-                isDragIcon={false}
-                dropFolderId={parentFolderId}
-                dropStyle="absolute inset-0"
-              />
-            )}
+            <li>
+              {file.type === 'folder' && (
+                <DropZoneWrapper
+                  isDragIcon={false}
+                  dropFolderId={file.id}
+                  dropStyle="absolute inset-0"
+                />
+              )}
+            </li>
           </ul>
           <IconsListWrapper
             file={file}

@@ -300,6 +300,11 @@ export const useFileStore = create<FileState>()(
 
         if (!userId || !files) return;
 
+        //ici le probleme vient du parentID qui devrait etre le folder ou l'on glisse
+        console.log('newFile', newFile);
+        console.log('parentId', parentId);
+        console.log('isAccordeon', isAccordeon);
+
         set({ loading: true, isUploaded: false });
 
         try {
@@ -332,10 +337,9 @@ export const useFileStore = create<FileState>()(
 
           const updatedDisplayFiles = isAccordeon
             ? getParentsFiles
-            : [
-                ...getParentsFiles.filter(({ id }) => id !== updatedFile.id),
-                updatedFile,
-              ];
+            : getParentsFiles.map((file) =>
+                file.id === updatedFile.id ? updatedFile : file
+              );
 
           set({
             files: filesWithUpdatedDates,

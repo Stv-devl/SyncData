@@ -61,6 +61,7 @@ const Header: React.FC<HeaderProps> = ({ isList, setAllFilesChecked }) => {
         >
           <input
             type="checkbox"
+            name="checkAll"
             className="size-5"
             checked={isCheckedAll ?? false}
             onChange={handleCheckAll}

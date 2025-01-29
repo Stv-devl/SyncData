@@ -21,7 +21,7 @@ const AddTeam: React.FC<ModaleFileProps> = () => {
       </h1>
       <div className="flex w-full flex-col gap-6">
         <div className="flex w-full flex-col gap-1.5">
-          <label>Add a team member :</label>
+          <label htmlFor="name">Add a team member :</label>
           <Input
             name="name"
             type="text"
@@ -39,9 +39,9 @@ const AddTeam: React.FC<ModaleFileProps> = () => {
           <div className="border-regular-gray grow border-t"></div>
         </div>
         <div className="mb-5 flex w-full flex-col gap-1.5">
-          <label>Ask a team member to join :</label>
+          <label htmlFor="email">Ask a team member to join:</label>
           <Input
-            name="name"
+            name="email"
             type="text"
             value=""
             placeholder="Write an email"

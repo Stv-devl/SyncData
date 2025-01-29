@@ -158,7 +158,6 @@ export interface HeaderProps {
 
 export interface ArrayListContentProps {
   files: FileType[];
-  parentFolderId: string;
   updateFileName: (fileId: string, newName: string, fileName: string) => void;
   handleOpenFolder: (fileId: string) => void;
   toggleFileChecked: (fileId: string) => void;
@@ -180,7 +179,6 @@ export interface ArrayListContentProps {
 
 export interface ArrayFileContentProps {
   files: FileType[];
-  parentFolderId: string;
   updateFileName: (fileId: string, newName: string, fileName: string) => void;
   toggleEditedFile: (fileId: string) => void;
   handleOpenFolder: (fileId: string) => void;

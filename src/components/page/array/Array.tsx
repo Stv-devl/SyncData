@@ -11,7 +11,6 @@ import Header from './Header';
 import DropZoneWrapper from '@/components/dropZone/DropZoneWrapper';
 import EmptyContent from '@/components/dropZone/EmptyContent';
 import Pagination from '@/components/pagination/Pagination';
-import usePopupEffect from '@/hook/ui/usePopupEffect';
 import useResponsiveFileCount from '@/hook/ui/useResponsiveFileCount';
 import usePopupStore from '@/store/ui/usePopup';
 import { useFileStore } from '@/store/useFileStore';
@@ -32,13 +31,8 @@ const Array = () => {
     handleBackFolder,
     toggleEditedFile,
   } = useFileStore();
-  const {
-    isOpen,
-    handleClickOpen,
-    handleClickClose,
-    handleMouseEnter,
-    handleMouseLeave,
-  } = usePopupStore();
+  const { handleClickOpen, handleMouseEnter, handleMouseLeave } =
+    usePopupStore();
   const { containerRef, fileCount } = useResponsiveFileCount(isList);
 
   useEffect(() => {
@@ -50,8 +44,6 @@ const Array = () => {
   const toggleIcon = useCallback(() => {
     setIsList(!isList);
   }, [isList, setIsList]);
-
-  usePopupEffect(isOpen, () => handleClickClose);
 
   const isArray = (input: unknown): input is unknown[] =>
     Object.prototype.toString.call(input) === '[object Array]';

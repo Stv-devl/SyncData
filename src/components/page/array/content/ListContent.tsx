@@ -25,6 +25,7 @@ const ListContent: React.FC<ArrayListContentProps> = ({
     handleInputChange,
     handleIconClick,
     validateName,
+    error,
   } = useFileEdition({ files, toggleEditedFile, updateFileName });
 
   const fileNameStyle = useMemo(() => 'w-28 truncate sm:w-24 lg:w-52', []);
@@ -90,7 +91,7 @@ const ListContent: React.FC<ArrayListContentProps> = ({
                             autoComplete="off"
                             toggleEditedFile={toggleEditedFile}
                             validateName={validateName}
-                            error={''}
+                            error={error}
                           />
                         ) : (
                           <span className={fileNameStyle}>

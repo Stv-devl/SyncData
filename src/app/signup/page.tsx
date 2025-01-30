@@ -21,9 +21,9 @@ const SignUp = (): JSX.Element => {
   return (
     <main>
       <section className="sm:bg-lightest-gray flex h-screen w-full flex-col bg-white sm:mt-20 sm:rounded-lg">
-        <div className="sm:mt:0 mt-10 flex w-full flex-col items-center gap-[51px] px-[5%] sm:px-0">
+        <div className="sm:mt:0 mt-5 flex w-full flex-col items-center gap-[51px]  sm:px-0">
           <iconsMap.Iconlogo />
-          <div className="flex flex-col items-start gap-[40px] bg-white sm:w-[476px] sm:p-[40px]">
+          <div className="flex w-full flex-col items-start gap-[40px] bg-white px-[5%] sm:w-[476px] sm:p-[40px]">
             <div className="flex flex-col gap-[24px]">
               <h1 className="text-titleSmall sm:text-title text-darkest-blue">
                 Create account

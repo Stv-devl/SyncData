@@ -20,7 +20,7 @@ export interface PopupState {
     rect: DOMRect | { x: number; y: number },
     fileId: string
   ) => void;
-  handleClickClose: (event: MouseEvent) => void;
+
   handleMouseEnter: (
     event: React.MouseEvent,
     label: string,

@@ -20,14 +20,14 @@ const InfoWrapper: React.FC<InfoWrapperProps> = ({ fileName, fileId }) => {
   );
 
   return (
-    <div className="flex flex-col items-center">
-      <div className="text-darkest-blue border-regular-gray w-[160px] truncate border-b p-3 text-center font-semibold capitalize">
+    <div className="flex flex-col items-center ">
+      <div className="text-darkest-blue border-regular-gray size-full truncate border-b p-3 text-center font-semibold capitalize">
         {fileName}
       </div>
       {arrayPopup.map((item) => (
         <div
           key={item.label}
-          className="hover:bg-light-blue flex w-full cursor-pointer items-center gap-2 p-2 transition-colors duration-500 lg:gap-4"
+          className="hover:bg-light-blue flex w-full cursor-pointer items-center gap-4 px-4 py-2 transition-colors duration-500"
           onClick={() => handlePopupClick(item.type, fileId, fileName)}
         >
           <item.icon

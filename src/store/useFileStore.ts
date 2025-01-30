@@ -170,6 +170,8 @@ export const useFileStore = create<FileState>()(
       },
 
       updateFileName: async (fileId, newName, fileName) => {
+        console.log(fileId, newName, fileName);
+
         const userId = get().checkUserAuthenticated();
         if (!userId || fileName === newName) return;
 

@@ -23,6 +23,7 @@ const FileContent: React.FC<ArrayFileContentProps> = ({
     handleInputChange,
     handleIconClick,
     validateName,
+    error,
   } = useFileEdition({ files, toggleEditedFile, updateFileName });
 
   const { isDragActive, getRootProps, getInputProps } = useDropzone({
@@ -82,7 +83,7 @@ const FileContent: React.FC<ArrayFileContentProps> = ({
                   autoComplete="off"
                   toggleEditedFile={toggleEditedFile}
                   validateName={validateName}
-                  error=""
+                  error={error}
                 />
               ) : (
                 <span className="w-[90%] truncate text-center">

@@ -65,13 +65,6 @@ const usePopupStore = create<PopupState>((set) => ({
     }, 100);
   },
 
-  handleClickClose: (event: MouseEvent) => {
-    const popupElement = document.getElementById('popup');
-    if (popupElement && !popupElement.contains(event.target as Node)) {
-      usePopupStore.getState().closePopup();
-    }
-  },
-
   handleMouseLeave: () => usePopupStore.getState().closePopup(),
 }));
 

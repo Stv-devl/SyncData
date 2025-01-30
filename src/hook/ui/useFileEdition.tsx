@@ -1,4 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
+import * as Yup from 'yup';
+import { updateFileNameSchema } from '@/helpers/validationShema';
 import useManageFonctions from '@/hook/manage/useManageFonctions';
 import useEditedInput from '@/hook/ui/useEditedInput';
 import { FileType, IconType, UseFileEditionProps } from '@/types/type';
@@ -9,8 +11,8 @@ function useFileEdition({
   updateFileName,
 }: UseFileEditionProps) {
   const { getActionByType } = useManageFonctions();
-
   const [newFileName, setNewFileName] = useState('');
+  const [error, setError] = useState<string | null>(null);
 
   const editedFile = useMemo(() => files.find((f) => f.isEdited), [files]);
   const editedFileRef = useEditedInput({ editedFile, toggleEditedFile });
@@ -18,16 +20,17 @@ function useFileEdition({
   useEffect(() => {
     if (editedFile) {
       setNewFileName(editedFile.filename);
+      setError(null);
     }
   }, [editedFile]);
 
   const handleInputChange = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
       setNewFileName(event.target.value);
+      setError(null);
     },
     []
   );
-
   //pourquoi icon Click passe par hook édition a bouger?
   const handleIconClick = useCallback(
     (icon: IconType, file: FileType) => {
@@ -37,9 +40,17 @@ function useFileEdition({
   );
 
   const validateName = useCallback(
-    (fileId: string, fileName: string) => {
-      updateFileName(fileId, newFileName, fileName);
-      toggleEditedFile(fileId);
+    async (fileId: string, fileName: string) => {
+      try {
+        await updateFileNameSchema.validate({ filename: newFileName });
+        setError(null);
+        updateFileName(fileId, newFileName, fileName);
+        toggleEditedFile(fileId);
+      } catch (err) {
+        if (err instanceof Yup.ValidationError) {
+          setError(err.message);
+        }
+      }
     },
     [newFileName, updateFileName, toggleEditedFile]
   );
@@ -50,6 +61,7 @@ function useFileEdition({
     handleInputChange,
     handleIconClick,
     validateName,
+    error,
   };
 }
 

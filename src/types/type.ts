@@ -238,10 +238,11 @@ export interface ChangeNameProps {
   handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   value: string;
   placeholder: string;
-  error: string;
+
   autoComplete: string;
   toggleEditedFile: (fileId: string) => void;
   validateName: (fileId: string, fileName: string) => void;
+  error: string | null;
 }
 
 //dropzone props

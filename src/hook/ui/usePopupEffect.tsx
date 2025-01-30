@@ -2,19 +2,27 @@ import { useEffect } from 'react';
 
 const usePopupEffect = (
   isOpen: boolean,
-  handleClickClose: (event: MouseEvent) => void
+  popupRef: React.RefObject<HTMLDivElement>,
+  closePopup: () => void
 ) => {
   useEffect(() => {
+    const handleOutsideClick = (event: MouseEvent) => {
+      if (
+        popupRef.current &&
+        !popupRef.current.contains(event.target as Node)
+      ) {
+        closePopup();
+      }
+    };
+
     if (isOpen) {
-      window.addEventListener('click', handleClickClose);
-    } else {
-      window.removeEventListener('click', handleClickClose);
+      document.addEventListener('mousedown', handleOutsideClick);
     }
 
     return () => {
-      window.removeEventListener('click', handleClickClose);
+      document.removeEventListener('mousedown', handleOutsideClick);
     };
-  }, [isOpen, handleClickClose]);
+  }, [isOpen, popupRef, closePopup]);
 };
 
 export default usePopupEffect;

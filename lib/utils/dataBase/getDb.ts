@@ -20,8 +20,8 @@ export async function getDb() {
   }
 
   const db: Db = globalThis._mongoClient.db(dbName);
-  const usersCollection: Collection = db.collection(collectionName);
 
+  const usersCollection: Collection = db.collection(collectionName);
   await usersCollection.createIndex(
     { 'files.id': 1 },
     { unique: true, sparse: true }

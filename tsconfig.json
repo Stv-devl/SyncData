@@ -32,7 +32,6 @@
     ".next/types/**/*.ts",
     "src/types/svg.d.ts",
     "src/component/withAuth/WithAuth.tsx",
-    "src/types/js-cookie.d.ts",
     "postcss.config.js",
     "tailwind.config.ts",
     "next.config.mjs",

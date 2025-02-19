@@ -1,32 +1,30 @@
-import { objectIdSchema } from 'lib/shema/objectIdShema';
+import { authMiddleware } from 'lib/middleware/authMiddleware';
+import { corsMiddleware } from 'lib/middleware/corsMiddleware';
+import { rateLimitMiddleware } from 'lib/middleware/rateLimitMiddleware';
 import { getDb } from 'lib/utils/dataBase/getDb';
 import { handleError } from 'lib/utils/errors/handleError';
-import { checkRateLimit } from 'lib/utils/security/checkRateLimit';
-import { handleCors } from 'lib/utils/security/handleCors';
-import { sanitizeMongoObject } from 'lib/utils/security/sanitizeMongoObject';
 import { securityHeaders } from 'lib/utils/security/securityHeaders';
 import { ObjectId } from 'mongodb';
 import { NextResponse } from 'next/server';
-import { getServerSession } from 'next-auth';
-import { authOptions } from '../auth/authOptions';
 
 export const dynamic = 'force-dynamic';
 
 export async function userHandler(request: Request): Promise<NextResponse> {
   try {
-    const corsResponse = handleCors(request);
+    const corsResponse = corsMiddleware(request);
     if (corsResponse) return corsResponse;
 
-    const rateLimitResponse = await checkRateLimit({ limit: 10, ttl: 10_000 });
+    const rateLimitResponse = await rateLimitMiddleware(request, {
+      limit: 10,
+      ttl: 10000,
+    });
     if (rateLimitResponse) return rateLimitResponse;
 
-    const session = await getServerSession(authOptions);
-    if (!session?.user?.id) return handleError(401, 'Unauthorized access');
+    const authResponse = await authMiddleware(request);
+    if (authResponse instanceof NextResponse) return authResponse;
 
-    const userId = sanitizeMongoObject(session.user.id);
-    if (!objectIdSchema.safeParse(userId).success) {
-      return handleError(400, 'Invalid user ID format');
-    }
+    const { userId } = authResponse;
+
     const { usersCollection } = await getDb();
     if (!usersCollection) {
       return handleError(500, 'Database connection error');

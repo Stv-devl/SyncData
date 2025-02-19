@@ -1,24 +1,20 @@
-import { objectIdSchema } from 'lib/shema/objectIdShema';
+import { authMiddleware } from 'lib/middleware/authMiddleware';
+import { corsMiddleware } from 'lib/middleware/corsMiddleware';
+import { rateLimitMiddleware } from 'lib/middleware/rateLimitMiddleware';
 import { getDb } from 'lib/utils/dataBase/getDb';
 import { handleError } from 'lib/utils/errors/handleError';
-import { checkRateLimit } from 'lib/utils/security/checkRateLimit';
 import {
   generateCsrfToken,
   setCsrfCookie,
   validateCsrf,
 } from 'lib/utils/security/generateCsrfToken';
-import { handleCors } from 'lib/utils/security/handleCors';
-import { sanitizeMongoObject } from 'lib/utils/security/sanitizeMongoObject';
 import { validateContentType } from 'lib/utils/security/validateContentType';
 import { Collection } from 'mongodb';
 import { NextResponse } from 'next/server';
-import { getServerSession } from 'next-auth';
-import { authOptions } from '../auth/authOptions';
 import { handleDelete } from './deleteHandler';
 import { patchFavoriteHandler } from './patchFavoriteHandler';
 import { patchFileNameHandler } from './patchFileNameHandler';
 import { handlePost } from './postHandler';
-
 export const runtime = 'nodejs';
 
 /**
@@ -27,23 +23,23 @@ export const runtime = 'nodejs';
  * @returns A Promise that resolves to the NextResponse object.
  */
 export async function handlerRequest(request: Request): Promise<NextResponse> {
-  const corsResponse = handleCors(request);
+  const corsResponse = corsMiddleware(request);
   if (corsResponse) return corsResponse;
 
-  const response = new NextResponse();
-
   if (request.method !== 'DELETE') {
-    const rateLimitResponse = await checkRateLimit({ limit: 40, ttl: 10_000 });
+    const rateLimitResponse = await rateLimitMiddleware(request, {
+      limit: 40,
+      ttl: 5000,
+    });
     if (rateLimitResponse) return rateLimitResponse;
   }
 
-  const session = await getServerSession(authOptions);
-  if (!session?.user?.id) return handleError(401, 'Unauthorized access');
+  const authResponse = await authMiddleware(request);
+  if (authResponse instanceof NextResponse) return authResponse;
 
-  const userId = sanitizeMongoObject(session.user.id);
-  if (!objectIdSchema.safeParse(userId).success) {
-    return handleError(400, 'Invalid user ID format');
-  }
+  const { userId } = authResponse;
+
+  const response = new NextResponse();
 
   if (request.method === 'GET') {
     const csrfToken = generateCsrfToken();

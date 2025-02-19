@@ -1,8 +1,8 @@
 import { authOptions } from 'lib/api/auth/authOptions';
 import { LRUCache } from 'lru-cache';
 import { headers } from 'next/headers';
+import { NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
-import { handleError } from '../errors/handleError';
 
 export interface RateLimitOptions {
   limit: number;
@@ -32,23 +32,22 @@ function getClientIp(): string {
 }
 
 /**
- * Checks the rate limit.
- * - If the user is logged in, limit by userId.
- * - Otherwise, limit by IP.
- * @param {RateLimitOptions} options - Limit and TTL in ms.
- * @returns Returns null if OK, otherwise a 429 error.
+ * Middleware to handle rate limit.
+ * @param request - The incoming request
+ * @param options - The options `{ limit, ttl }`
+ * @returns NextResponse | null - Blocks if too many requests, otherwise null
  */
-export async function checkRateLimit(options: Partial<RateLimitOptions> = {}) {
-  if (
-    !options ||
-    typeof options.limit !== 'number' ||
-    typeof options.ttl !== 'number'
-  ) {
+export async function rateLimitMiddleware(
+  request: Request,
+  options: RateLimitOptions
+): Promise<NextResponse | null> {
+  const { limit, ttl } = options;
+
+  if (typeof limit !== 'number' || typeof ttl !== 'number') {
     throw new Error(
       'Rate limit options (limit and ttl) are required and must be numbers'
     );
   }
-  const { limit, ttl } = options;
 
   const session = await getServerSession(authOptions);
   const ip = getClientIp();
@@ -67,7 +66,10 @@ export async function checkRateLimit(options: Partial<RateLimitOptions> = {}) {
   const currentCount = cacheToUse.get(key) ?? 0;
 
   if (currentCount >= limit) {
-    return handleError(429, 'Too many requests. Please try again later.');
+    return new NextResponse(
+      JSON.stringify({ error: 'Too many requests. Please try again later.' }),
+      { status: 429, headers: { 'Content-Type': 'application/json' } }
+    );
   }
 
   cacheToUse.set(key, currentCount + 1, { ttl });

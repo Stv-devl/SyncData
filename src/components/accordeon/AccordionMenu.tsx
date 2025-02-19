@@ -1,4 +1,4 @@
-import { findFileRecursive } from 'lib/utils/findFileRecursive';
+import { findFileRecursive } from 'lib/utils/fileOperations/findFileRecursive';
 import React, { useMemo } from 'react';
 import AccordionItem from './AccordionItem';
 import { useFileStore } from '@/store/useFileStore';

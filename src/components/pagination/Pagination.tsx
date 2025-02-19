@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import { findFileRecursive } from 'lib/utils/findFileRecursive';
+import { findFileRecursive } from 'lib/utils/fileOperations/findFileRecursive';
 import React, { useCallback, useMemo } from 'react';
 import usePagination from '../../hook/ui/usePagination';
 import { useFileStore } from '@/store/useFileStore';

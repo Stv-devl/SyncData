@@ -3,8 +3,8 @@ import { ObjectId } from 'mongodb';
 import { NextAuthOptions } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import GoogleProvider from 'next-auth/providers/google';
-import { clientPromise } from '../mongod';
-import { config } from './../config';
+import { config } from '../../config';
+import { clientPromise } from '../../mongod';
 import { getUserByEmail, verifyPassword } from './authHelpers';
 
 export const authOptions: NextAuthOptions = {

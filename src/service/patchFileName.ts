@@ -1,17 +1,25 @@
-const putFileName = async (
+import { getCsrfToken } from '@/helpers/getCsrfToken';
+
+const patchFileName = async (
   userId: string,
   fileId: string,
-  fileName: string
+  fileName: string,
+  actionType: string
 ) => {
-  const url = `${process.env.NEXT_PUBLIC_API_URL}/updateName`;
+  const url = `${process.env.NEXT_PUBLIC_API_URL}/files`;
 
   try {
+    const csrfToken = await getCsrfToken();
+    if (!csrfToken) throw new Error('Missing CSRF token');
+
     const response = await fetch(url, {
-      method: 'PUT',
+      method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
+        'X-CSRF-Token': csrfToken,
       },
-      body: JSON.stringify({ userId, fileId, fileName }),
+      body: JSON.stringify({ userId, fileId, fileName, actionType }),
+      credentials: 'include',
     });
     if (!response.ok) {
       throw new Error(`Error updating the name. Status: ${response.status}`);
@@ -26,4 +34,4 @@ const putFileName = async (
   }
 };
 
-export default putFileName;
+export default patchFileName;

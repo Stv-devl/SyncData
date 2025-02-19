@@ -12,14 +12,17 @@ export const useUserStore = create<UserState>((set) => ({
   setUser: (user) => set({ user }),
 
   fetchData: async (userId: string): Promise<void> => {
+    if (!userId) {
+      set({ error: 'User ID is not available', loading: false });
+      return;
+    }
+
     set({ loading: true, error: null });
     try {
-      const response = await getUsers();
-      const user = response.users.find((u) => u._id === userId) || null;
-
+      const user = await getUsers(userId);
       if (user) {
         set({
-          user: user,
+          user,
           profile: user.profile,
           loading: false,
         });

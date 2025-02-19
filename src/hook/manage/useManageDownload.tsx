@@ -1,6 +1,6 @@
 import { saveAs } from 'file-saver';
 import JSZip from 'jszip';
-import { findFileRecursive } from 'lib/utils/findFileRecursive';
+import { findFileRecursive } from 'lib/utils/fileOperations/findFileRecursive';
 import React from 'react';
 import { useFileStore } from '@/store/useFileStore';
 const useManageDownload = () => {

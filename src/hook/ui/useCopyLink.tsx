@@ -1,4 +1,4 @@
-import { findFileRecursive } from 'lib/utils/findFileRecursive';
+import { findFileRecursive } from 'lib/utils/fileOperations/findFileRecursive';
 import React, { useRef } from 'react';
 import { useCallback } from 'react';
 import useModalStore from '@/store/ui/useModale';

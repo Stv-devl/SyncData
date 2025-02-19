@@ -1,4 +1,4 @@
-import { findFileRecursive } from 'lib/utils/findFileRecursive';
+import { findFileRecursive } from 'lib/utils/fileOperations/findFileRecursive';
 import { FileType } from '@/types/type';
 
 export const getParentFiles = (files: FileType[], parentId: string) => {

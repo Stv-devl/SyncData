@@ -1,11 +1,14 @@
+import { getCsrfToken } from '@/helpers/getCsrfToken';
+
 /**
- * Deletes a user's file based on userId and fileId.
+ * Deletes a user file based on userId and fileId.
  * Sends a DELETE request to the API and handles the response.
  * @param {string} userId - The ID of the user.
- * @param {string} fileId - The Id of the file to delete.
+ * @param {string[]} fileId - The IDs of the files to delete.
+ * @param {string} parentId - The ID of the parent folder.
+ * @param {string[]} publicId - The public IDs of the files in Cloudinary.
  * @returns {Promise<void>} A promise that resolves when the deletion is complete.
  */
-
 async function deleteFile(
   userId: string,
   fileId: string[],
@@ -13,14 +16,26 @@ async function deleteFile(
   publicId: string[]
 ): Promise<void> {
   try {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/files`, {
-      method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ userId, fileId, parentId, publicId }),
-    });
-    console.log(' publicId in delete', publicId);
+    const csrfToken = await getCsrfToken();
+    if (!csrfToken) throw new Error('Missing CSRF token');
+
+    const queryParams = new URLSearchParams({
+      userId,
+      parentId,
+      publicId: JSON.stringify(publicId),
+      fileId: JSON.stringify(fileId),
+    }).toString();
+
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/files?${queryParams}`,
+      {
+        method: 'DELETE',
+        headers: {
+          'X-CSRF-Token': csrfToken,
+        },
+        credentials: 'include',
+      }
+    );
 
     if (response.ok) {
       const data = await response.json();
@@ -30,7 +45,7 @@ async function deleteFile(
       console.error(errorData.message);
     }
   } catch (error) {
-    console.error('Error deleting Link:', error);
+    console.error('Error deleting file:', error);
   }
 }
 

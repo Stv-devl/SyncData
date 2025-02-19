@@ -17,8 +17,6 @@ export async function POST(request: Request): Promise<NextResponse> {
       'credentials.email': newUser.email,
     });
 
-    console.log('new user', newUser);
-
     if (existingUser) {
       return NextResponse.json(
         { error: 'Email already in use' },
@@ -40,8 +38,6 @@ export async function POST(request: Request): Promise<NextResponse> {
       },
       files: [],
     };
-
-    console.log('user data', userData);
 
     const result = await usersCollection.insertOne(userData);
 

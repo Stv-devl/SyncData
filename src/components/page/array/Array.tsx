@@ -1,7 +1,7 @@
 'use client';
 
 import clsx from 'clsx';
-import { findFileRecursive } from 'lib/utils/findFileRecursive';
+import { findFileRecursive } from 'lib/utils/fileOperations/findFileRecursive';
 import React, { useCallback, useEffect, useMemo } from 'react';
 import { twMerge } from 'tailwind-merge';
 import { iconsMap } from '../../../constantes/iconsMap';

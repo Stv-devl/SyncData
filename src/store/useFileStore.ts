@@ -1,19 +1,19 @@
-import { deleteFileToParent } from 'lib/utils/deleteFileToParent';
-import { filterById } from 'lib/utils/filterById';
-import { findFileRecursive } from 'lib/utils/findFileRecursive';
-import { updateParentDates } from 'lib/utils/updateParentDates';
+import { deleteFileToParent } from 'lib/utils/fileOperations/deleteFileToParent';
+import { filterById } from 'lib/utils/fileOperations/filterById';
+import { findFileRecursive } from 'lib/utils/fileOperations/findFileRecursive';
+import { updateParentDates } from 'lib/utils/fileOperations/updateParentDates';
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import { addFileToParent } from '../../lib/utils/addFileToParent';
+import { addFileToParent } from '../../lib/utils/fileOperations/addFileToParent';
 import { flattenedFiles } from '../helpers/filterDatas/flattendedFiles';
 import { deleteFilesById } from '@/helpers/deleteFilesById';
 import { getDisplayFiles } from '@/helpers/filterDatas/getDisplayFiles';
 import { getCurrentDate } from '@/helpers/getCurrentDate';
 import { getParentFiles } from '@/helpers/getParentFiles';
 import deleteFile from '@/service/deleteFile';
-import putAddFile from '@/service/putAddFile';
-import putFileName from '@/service/putFileName';
-import putToggleFavorite from '@/service/putToggleFavorite';
+import patchFavorite from '@/service/patchFavorite';
+import patchFileName from '@/service/patchFileName';
+import postAddFile from '@/service/postAddFile';
 import { useUserStore } from '@/store/useUserStore';
 import { FileState } from '@/types/storeType';
 import { FileType } from '@/types/type';
@@ -132,7 +132,7 @@ export const useFileStore = create<FileState>()(
         if (!userId) return;
 
         try {
-          await putToggleFavorite(userId, fileId);
+          await patchFavorite(userId, fileId, 'updateFavorite');
           set((state) => {
             const updateFavorite = (file: FileType): FileType =>
               file.id === fileId
@@ -178,7 +178,7 @@ export const useFileStore = create<FileState>()(
         const newDate = getCurrentDate();
 
         try {
-          await putFileName(userId, fileId, newName);
+          await patchFileName(userId, fileId, newName, 'updateName');
 
           set((state) => {
             const updateFile = (file: FileType): FileType =>
@@ -301,16 +301,10 @@ export const useFileStore = create<FileState>()(
         const { files, parentFolderId } = get();
 
         if (!userId || !files) return;
-
-        //ici le probleme vient du parentID qui devrait etre le folder ou l'on glisse
-        console.log('newFile', newFile);
-        console.log('parentId', parentId);
-        console.log('isAccordeon', isAccordeon);
-
         set({ loading: true, isUploaded: false });
 
         try {
-          const response = await putAddFile(userId, parentId, newFile);
+          const response = await postAddFile(userId, parentId, newFile);
 
           if (!response?.file) {
             throw new Error('Invalid file response from server');

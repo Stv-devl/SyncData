@@ -1,3 +1,4 @@
+import { handleError } from 'lib/utils/errors/handleError';
 import { NextResponse } from 'next/server';
 
 const originRegex = process.env.NEXT_PUBLIC_ORIGIN_REGEX;
@@ -20,13 +21,7 @@ export function corsMiddleware(request: Request): NextResponse | null {
 
   if (!requestOrigin) return null;
   if (!allowedOrigins.test(requestOrigin)) {
-    return new NextResponse(
-      JSON.stringify({ error: 'Forbidden: Unauthorized request origin' }),
-      {
-        status: 403,
-        headers: { 'Content-Type': 'application/json' },
-      }
-    );
+    return handleError(403, 'Forbidden: Unauthorized request origin');
   }
 
   return null;

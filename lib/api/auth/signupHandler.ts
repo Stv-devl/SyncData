@@ -14,7 +14,7 @@ export async function signupHandler(request: Request): Promise<NextResponse> {
     const corsResponse = corsMiddleware(request);
     if (corsResponse) return corsResponse;
 
-    const rateLimitResponse = await rateLimitMiddleware(request, {
+    const rateLimitResponse = await rateLimitMiddleware({
       limit: 10,
       ttl: 10000,
     });

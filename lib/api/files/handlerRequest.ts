@@ -15,6 +15,7 @@ import { handleDelete } from './deleteHandler';
 import { patchFavoriteHandler } from './patchFavoriteHandler';
 import { patchFileNameHandler } from './patchFileNameHandler';
 import { handlePost } from './postHandler';
+
 export const runtime = 'nodejs';
 
 /**
@@ -27,14 +28,14 @@ export async function handlerRequest(request: Request): Promise<NextResponse> {
   if (corsResponse) return corsResponse;
 
   if (request.method !== 'DELETE') {
-    const rateLimitResponse = await rateLimitMiddleware(request, {
+    const rateLimitResponse = await rateLimitMiddleware({
       limit: 40,
       ttl: 5000,
     });
     if (rateLimitResponse) return rateLimitResponse;
   }
 
-  const authResponse = await authMiddleware(request);
+  const authResponse = await authMiddleware();
   if (authResponse instanceof NextResponse) return authResponse;
 
   const { userId } = authResponse;

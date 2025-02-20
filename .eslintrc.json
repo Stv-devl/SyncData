@@ -14,7 +14,6 @@
     "react-hooks",
     "import"
   ],
-
   "env": {
     "browser": true,
     "es2021": true
@@ -26,7 +25,10 @@
         "vars": "all",
         "varsIgnorePattern": "^_",
         "args": "after-used",
-        "argsIgnorePattern": "^_"
+        "argsIgnorePattern": "^_",
+        "caughtErrors": "all",
+        "destructuredArrayIgnorePattern": "^_",
+        "ignoreRestSiblings": true
       }
     ],
     "react/react-in-jsx-scope": "off",
@@ -37,7 +39,7 @@
     "no-var": "off",
     "react-hooks/rules-of-hooks": "error",
     "react-hooks/exhaustive-deps": "warn",
-    "tailwindcss/classnames-order": ["warn"],
+    "tailwindcss/classnames-order": "warn",
     "tailwindcss/enforces-shorthand": "warn",
     "tailwindcss/no-custom-classname": "off",
     "import/order": [
@@ -67,6 +69,13 @@
         "ecmaFeatures": {
           "jsx": true
         }
+      },
+      "rules": {
+        "@typescript-eslint/no-unused-vars": "warn",
+        "@typescript-eslint/no-unused-vars-experimental": "off",
+        "@typescript-eslint/no-unused-expressions": "warn",
+        "@typescript-eslint/no-unused-locals": "warn",
+        "@typescript-eslint/no-unused-parameters": "warn"
       }
     }
   ],

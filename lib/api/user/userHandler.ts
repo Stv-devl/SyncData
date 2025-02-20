@@ -7,20 +7,18 @@ import { securityHeaders } from 'lib/utils/security/securityHeaders';
 import { ObjectId } from 'mongodb';
 import { NextResponse } from 'next/server';
 
-export const dynamic = 'force-dynamic';
-
 export async function userHandler(request: Request): Promise<NextResponse> {
   try {
     const corsResponse = corsMiddleware(request);
     if (corsResponse) return corsResponse;
 
-    const rateLimitResponse = await rateLimitMiddleware(request, {
+    const rateLimitResponse = await rateLimitMiddleware({
       limit: 10,
       ttl: 10000,
     });
     if (rateLimitResponse) return rateLimitResponse;
 
-    const authResponse = await authMiddleware(request);
+    const authResponse = await authMiddleware();
     if (authResponse instanceof NextResponse) return authResponse;
 
     const { userId } = authResponse;

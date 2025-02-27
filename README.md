@@ -33,11 +33,11 @@ The user can:
 
 ### Screenshot
 
-![](./images/Screenshot_login.png)
-![](./images/Screenshot_signup.png)
-![](./images/Screenshot_desktop_List.png)
-![](./images/Screenshot_desktop_Files.png)
-![](./images/Screenshot_modale.png)
+![](./public/images/Screenshot_login.png)
+![](./public/images/Screenshot_signup.png)
+![](./public/images/Screenshot_desktop_List.png)
+![](./public/images/Screenshot_desktop_Files.png)
+![](./public/images/Screenshot_modale.png)
 
 ### Links
 

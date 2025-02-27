@@ -196,17 +196,16 @@ const Array = () => {
           ) : null}
         </>
         <div className="relative hidden sm:block lg:flex-1">
-          {!isFavoritePage ||
-            (filterTools.searchbar && (
-              <>
-                <DropZoneWrapper
-                  isDragIcon={true}
-                  dropFolderId={parentFolderId}
-                  dropStyle="absolute inset-0"
-                />
-              </>
-            ))}
-          {!isFavoritePage || (filterTools.searchbar && <EmptyContent />)}
+          {(!isFavoritePage || filterTools.searchbar.length === 0) && (
+            <>
+              <DropZoneWrapper
+                isDragIcon={true}
+                dropFolderId={parentFolderId}
+                dropStyle="absolute inset-0"
+              />
+            </>
+          )}
+          {filterTools.searchbar.length === 0 && <EmptyContent />}
         </div>
         <Pagination />
       </div>

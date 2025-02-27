@@ -1,36 +1,110 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Syncdata - Cloud Storage Application
 
-## Getting Started
+A full-stack cloud storage application built with Next.js, TailwindCSS, Node.js and Mongodb that allows users to upload, organize, share and manage their files.
 
-First, run the development server:
+## Table of contents
+
+- [Overview](#overview)
+  - [Usage details](#usage-details)
+  - [Screenshot](#screenshot)
+  - [Links](#links)
+- [My process](#my-process)
+  - [Try](#try)
+  - [Built with](#built-with)
+  - [Key Features](#key-features)
+  - [What I learned](#what-i-learned)
+  - [Continued development](#continued-development)
+- [Author](#author)
+
+## Overview
+
+### Usage details
+
+The user can:
+
+- Create folders and upload files to organize their data
+- Drag and drop files to upload them
+- Navigate through folder hierarchies easily
+- Mark files as favorites for quick access
+- Search and filter files by name and type
+- Sort files by different criteria (name, date, etc.)
+- View files in both list and grid layouts
+- Manage files with basic operations (rename, delete, etc.)
+
+### Screenshot
+
+![](./images/Screenshot_login.png)
+![](./images/Screenshot_signup.png)
+![](./images/Screenshot_desktop_List.png)
+![](./images/Screenshot_desktop_Files.png)
+![](./images/Screenshot_modale.png)
+
+### Links
+
+- Live Site URL: [SyncData](https://syncdata.vercel.app/)
+
+## My process
+
+### Try
+
+You can create your own account or test the application with these credentials:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+email: test@test.com
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+```bash
+password: 0000
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Built with
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- Next.js 14
+- TypeScript
+- Zustand for state management
+- MongoDB for data storage
+- TailwindCSS for styling
 
-## Learn More
+### Key Features
 
-To learn more about Next.js, take a look at the following resources:
+- **File Management**
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+  - Hierarchical folder structure
+  - File upload and organization
+  - Favorite files system
+  - Search and filter capabilities
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- **User Interface**
 
-## Deploy on Vercel
+  - Responsive design
+  - List/Grid view toggle
+  - Drag and drop support
+  - Real-time updates
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- **Security**
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+  - JWT authentication
+  - Protected routes
+  - Secure file access
+
+### What I learned
+
+- Advanced state management with Zustand
+- File system operations in Next.js
+- MongoDB integration and data modeling
+- Cloud storage implementation
+- TypeScript best practices
+
+### Continued development
+
+- Add stripe subscription for premium features
+- Add user profile page
+- Implement file sharing between users
+- Add file preview capabilities
+- Add collaborative features
+
+## Author
+
+- Github- [Github](https://github.com/Stv-devl)
+- LinkedIn - [LinkedIn](https://www.linkedin.com/in/stevan-l-793141128/)
+- Portfolio - [Portfolio](https://www.stevandev.com/)

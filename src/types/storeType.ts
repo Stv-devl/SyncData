@@ -49,9 +49,9 @@ export interface UserState {
   error: string | null;
   setUser: (user: UserType) => void;
   fetchData: (userId: string) => Promise<void>;
+  getUserId: () => string | undefined;
 }
 
-//filtertool
 export type FilterToolsProps = {
   headerType: keyof FileType | null;
   upselected: boolean | null;
@@ -62,11 +62,13 @@ export interface FileState {
   files: FileType[] | null;
   flattenedFiles: FileType[] | null;
   isList: boolean;
+  isFavoritePage: boolean;
   isUploaded: boolean;
   currentPage: number;
   entriesPerPage: number;
   displayFiles: FileType[] | null;
   savedDisplayFiles: FileType[] | null;
+  displayFavoritesFiles: FileType[] | null;
   filterTools: FilterToolsProps;
   parentFolderId: string;
   folderStack: string[];
@@ -77,8 +79,10 @@ export interface FileState {
   setCurrentPage: (value: number) => void;
   setEntriesPerPage: (value: number) => void;
   setDisplayFiles: (files: FileType[] | null) => void;
+  updateDisplayFiles: (files: FileType[], isFavorite?: boolean) => void;
   resetFilterTools: () => void;
   setFilterTools: (updates: FilterToolsProps) => void;
+  updateFileState: (updateState: (file: FileType) => FileType) => void;
   toggleEditedFile: (fileId: string) => Promise<void>;
   toggleFavoriteFiles: (fileId: string) => Promise<void>;
   updateFileName: (
@@ -86,12 +90,12 @@ export interface FileState {
     newName: string,
     fileName: string
   ) => Promise<void>;
-  checkUserAuthenticated: () => string | null;
   resetToRoot: () => void;
+  navigateToFolder: (folderId: string | null) => void;
   handleOpenFolder: (fileId: string | string[]) => void;
   handleBackFolder: () => void;
   toggleFileChecked: (fileId: string | string[]) => void;
-  setAllFilesChecked: (isChecked: boolean) => void;
+  setFilesChecked: (isChecked: boolean) => void;
   resetCheckedFiles: () => void;
   createFiles: (
     newFile: FileType,
@@ -99,6 +103,8 @@ export interface FileState {
     isAccordeon: boolean
   ) => Promise<void>;
   removeFile: (fileId: string | string[]) => Promise<void>;
+  setDisplayFavoritesFile: (files: FileType[]) => void;
+  setIsFavoritePage: (value: boolean) => void;
 }
 
 export interface CreateFileResponse {

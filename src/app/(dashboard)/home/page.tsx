@@ -1,11 +1,15 @@
 'use client';
 import React from 'react';
-import PageWrapper from '@/components/wrapper/PageWrapper';
+import Array from '@/components/page/array/Array';
+import SearchBar from '@/components/page/searchBar/SearchBar';
+import ToolsBar from '@/components/page/toolsBar/ToolsBar';
 
 const Home: React.FC = (): JSX.Element => {
   return (
     <>
-      <PageWrapper />
+      <SearchBar />
+      <ToolsBar />
+      <Array />
     </>
   );
 };

@@ -3,13 +3,21 @@ import { useFileStore } from './useFileStore';
 import getUsers from '@/service/getUsers';
 import { UserState } from '@/types/storeType';
 
-export const useUserStore = create<UserState>((set) => ({
+export const useUserStore = create<UserState>((set, get) => ({
   user: null,
   profile: null,
   loading: false,
   error: null,
 
   setUser: (user) => set({ user }),
+
+  getUserId: () => {
+    const userId = get().user?._id;
+    if (!userId) {
+      set({ error: 'User not logged in', loading: false });
+    }
+    return userId;
+  },
 
   fetchData: async (userId: string): Promise<void> => {
     if (!userId) {

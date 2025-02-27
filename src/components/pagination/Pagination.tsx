@@ -2,6 +2,7 @@ import clsx from 'clsx';
 import { findFileRecursive } from 'lib/utils/fileOperations/findFileRecursive';
 import React, { useCallback, useMemo } from 'react';
 import usePagination from '../../hook/ui/usePagination';
+import { findFavoriteFiles } from '@/helpers/findFavoriteFiles';
 import { useFileStore } from '@/store/useFileStore';
 
 const Pagination = () => {
@@ -11,17 +12,20 @@ const Pagination = () => {
     filterTools,
     currentPage,
     entriesPerPage,
+    isFavoritePage,
     setCurrentPage,
     setDisplayFiles,
+    setDisplayFavoritesFile,
   } = useFileStore();
 
   const fileToPaginate = useMemo(() => {
+    if (isFavoritePage) return findFavoriteFiles(files || []);
     if (parentFolderId === 'root' || !files) return files;
     const findFolder = findFileRecursive(files, parentFolderId);
     return findFolder && !Array.isArray(findFolder)
       ? findFolder.files || []
       : null;
-  }, [files, parentFolderId]);
+  }, [files, parentFolderId, isFavoritePage]);
 
   const pageNumber = useMemo(() => {
     if (filterTools.searchbar.length > 0) return null;
@@ -38,11 +42,19 @@ const Pagination = () => {
   const handleChangePage = useCallback(
     (newPage: number) => {
       setCurrentPage(newPage);
-      if (fileToPaginate) {
+      if (fileToPaginate && !isFavoritePage) {
         setDisplayFiles(fileToPaginate);
+      } else {
+        setDisplayFavoritesFile(fileToPaginate || []);
       }
     },
-    [setCurrentPage, setDisplayFiles, fileToPaginate]
+    [
+      setCurrentPage,
+      setDisplayFiles,
+      fileToPaginate,
+      isFavoritePage,
+      setDisplayFavoritesFile,
+    ]
   );
 
   const getButtonClasses = (isActive: boolean) =>

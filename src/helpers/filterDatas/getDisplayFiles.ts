@@ -18,5 +18,5 @@ export const getDisplayFiles = (
     filterTools
   );
 
-  return paginateFiles(filteredFiles, currentPage, entriesPerPage);
+  return paginateFiles(filteredFiles, currentPage, entriesPerPage, filterTools);
 };

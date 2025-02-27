@@ -2,14 +2,17 @@ import { deleteFileToParent } from 'lib/utils/fileOperations/deleteFileToParent'
 import { filterById } from 'lib/utils/fileOperations/filterById';
 import { findFileRecursive } from 'lib/utils/fileOperations/findFileRecursive';
 import { updateParentDates } from 'lib/utils/fileOperations/updateParentDates';
+import isEqual from 'lodash/isEqual';
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { addFileToParent } from '../../lib/utils/fileOperations/addFileToParent';
-import { flattenedFiles } from '../helpers/filterDatas/flattendedFiles';
-import { deleteFilesById } from '@/helpers/deleteFilesById';
+import { flattenedFiles } from '../helpers/filterDatas/flattenedFiles';
 import { getDisplayFiles } from '@/helpers/filterDatas/getDisplayFiles';
+import { findFavoriteFiles } from '@/helpers/findFavoriteFiles';
 import { getCurrentDate } from '@/helpers/getCurrentDate';
 import { getParentFiles } from '@/helpers/getParentFiles';
+import { removeFilesById } from '@/helpers/removeFilesById';
+import { updatePageStatus } from '@/helpers/updatePageStatus';
 import deleteFile from '@/service/deleteFile';
 import patchFavorite from '@/service/patchFavorite';
 import patchFileName from '@/service/patchFileName';
@@ -24,9 +27,11 @@ export const useFileStore = create<FileState>()(
       files: null,
       flattenedFiles: null,
       isList: true,
+      isFavoritePage: false,
       currentPage: 1,
       entriesPerPage: 1,
       filterTools: { searchbar: '', headerType: null, upselected: null },
+      displayFavoritesFiles: null,
       displayFiles: null,
       savedDisplayFiles: null,
       parentFolderId: 'root',
@@ -37,24 +42,64 @@ export const useFileStore = create<FileState>()(
 
       setIsList: (value) => set(() => ({ isList: value })),
 
+      setIsFavoritePage: (value) => set(() => ({ isFavoritePage: value })),
+
       setFiles: (files: FileType[]) => {
+        const newFlattenedFiles = flattenedFiles(files);
         set(() => ({
           files,
           displayFiles: files,
-          flattenedFiles: flattenedFiles(files),
+          flattenedFiles: newFlattenedFiles,
         }));
       },
+
       setCurrentPage: (page: number) => set({ currentPage: page }),
 
       setEntriesPerPage: (entries: number) => set({ entriesPerPage: entries }),
 
-      checkUserAuthenticated: () => {
-        const { user } = useUserStore.getState();
-        if (!user?._id) {
-          set({ error: 'User not logged in', loading: false });
-          return null;
+      updateDisplayFiles: (files: FileType[]) => {
+        const {
+          flattenedFiles,
+          filterTools,
+          currentPage,
+          isFavoritePage,
+          entriesPerPage,
+          displayFiles,
+          displayFavoritesFiles,
+        } = get();
+
+        const newDisplayFiles = getDisplayFiles(
+          files,
+          flattenedFiles,
+          filterTools,
+          currentPage,
+          entriesPerPage
+        );
+
+        const currentFiles = isFavoritePage
+          ? displayFavoritesFiles
+          : displayFiles;
+
+        if (!isEqual(newDisplayFiles, currentFiles)) {
+          set(
+            isFavoritePage
+              ? { displayFavoritesFiles: newDisplayFiles }
+              : { displayFiles: newDisplayFiles }
+          );
         }
-        return user._id;
+      },
+
+      setDisplayFiles: (files: FileType[] | null) => {
+        if (!files) return;
+        get().updateDisplayFiles(files);
+        set({ flattenedFiles: flattenedFiles(files) }); //ok du coup voir si flattened au setFile est nécessaire
+      },
+
+      setDisplayFavoritesFile: (files: FileType[]) => {
+        if (!files) return;
+        const favoriteFiles = findFavoriteFiles(files);
+        get().updateDisplayFiles(favoriteFiles);
+        set({ flattenedFiles: flattenedFiles(favoriteFiles) });
       },
 
       resetToRoot: () => {
@@ -66,6 +111,8 @@ export const useFileStore = create<FileState>()(
         get().setDisplayFiles(files || []);
       },
 
+      resetCheckedFiles: () => get().setFilesChecked(false),
+
       resetFilterTools: () =>
         set({
           filterTools: { searchbar: '', headerType: null, upselected: null },
@@ -75,94 +122,80 @@ export const useFileStore = create<FileState>()(
         const {
           files,
           displayFiles,
-          savedDisplayFiles,
-          filterTools,
+          isFavoritePage,
           parentFolderId,
+          setDisplayFavoritesFile,
           setDisplayFiles,
         } = get();
 
         if (!files) return;
 
         const getDisplayFiles = getParentFiles(files, parentFolderId);
+        const { upselected, searchbar } = updates;
 
-        if (!savedDisplayFiles && !filterTools.searchbar) {
-          set({ savedDisplayFiles: displayFiles });
-        }
         set((state) => ({
           filterTools: { ...state.filterTools, ...updates },
         }));
 
-        const { upselected, searchbar } = updates;
-
-        if (typeof upselected === 'boolean') {
-          setDisplayFiles(getDisplayFiles || displayFiles);
-        } else if (searchbar?.length > 0) {
-          setDisplayFiles(files);
+        if (!isFavoritePage) {
+          if (typeof upselected === 'boolean') {
+            setDisplayFiles(getDisplayFiles || displayFiles);
+          } else if (searchbar?.length > 0) {
+            setDisplayFiles(files);
+          } else {
+            setDisplayFiles(files);
+          }
         } else {
-          set({
-            displayFiles: savedDisplayFiles || displayFiles,
-            savedDisplayFiles: null,
-          });
+          setDisplayFavoritesFile(files);
         }
       },
 
-      setDisplayFiles: (files: FileType[] | null) => {
-        const { flattenedFiles, filterTools, currentPage, entriesPerPage } =
-          get();
-
-        const newDisplayFiles = getDisplayFiles(
-          files,
-          flattenedFiles,
-          filterTools,
-          currentPage,
-          entriesPerPage
-        );
-
-        if (
-          JSON.stringify(newDisplayFiles) !== JSON.stringify(get().displayFiles)
-        ) {
-          set({
-            displayFiles: newDisplayFiles,
-          });
-        }
+      updateFileState: (updateState: (file: FileType) => FileType) => {
+        set((state) => ({
+          files: state.files?.map(updateState) || [],
+          displayFiles: state.displayFiles?.map(updateState) || [],
+        }));
       },
 
       toggleFavoriteFiles: async (fileId) => {
-        const userId = get().checkUserAuthenticated();
-        if (!userId) return;
+        const { files, displayFavoritesFiles, parentFolderId, currentPage } =
+          get();
+
+        const userId = useUserStore.getState().getUserId();
+        if (!userId || !files) return;
 
         try {
           await patchFavorite(userId, fileId, 'updateFavorite');
-          set((state) => {
-            const updateFavorite = (file: FileType): FileType =>
-              file.id === fileId
-                ? { ...file, isFavorite: !file.isFavorite }
-                : file;
 
-            return {
-              files: state.files?.map(updateFavorite),
-              displayFiles: state.displayFiles?.map(updateFavorite),
-            };
-          });
+          get().updateFileState((file) =>
+            file.id === fileId
+              ? { ...file, isFavorite: !file.isFavorite }
+              : file
+          );
+
+          const parentFiles = getParentFiles(files, parentFolderId);
+          const updatedFavorites = removeFilesById(parentFiles || [], fileId);
+
+          if (!displayFavoritesFiles) return;
+          const screenFiles = removeFilesById(displayFavoritesFiles, fileId);
+
+          const changeCurrentPage = updatePageStatus(screenFiles, currentPage);
+
+          get().setCurrentPage(changeCurrentPage);
+          get().setDisplayFavoritesFile(updatedFavorites);
         } catch (error) {
-          console.error('Error to add to favorite:', error);
-          set({ error: 'Error to add to favorite' });
+          console.error('Error toggling favorite:', error);
+          set({ error: 'Error toggling favorite' });
         }
       },
 
       toggleEditedFile: async (fileId: string) => {
         try {
-          set((state) => {
-            const toggleEdited = (file: FileType) =>
-              file.id === fileId
-                ? { ...file, isEdited: !file.isEdited }
-                : { ...file, isEdited: file.isEdited ? false : file.isEdited };
-
-            return {
-              files: state.files?.map(toggleEdited),
-              displayFiles: state.displayFiles?.map(toggleEdited),
-            };
-          });
+          get().updateFileState((file) =>
+            file.id === fileId
+              ? { ...file, isEdited: !file.isEdited }
+              : { ...file, isEdited: false }
+          );
         } catch (error) {
           console.error('Error to edit the file:', error);
           set({ error: 'Error to edit the file' });
@@ -170,9 +203,7 @@ export const useFileStore = create<FileState>()(
       },
 
       updateFileName: async (fileId, newName, fileName) => {
-        console.log(fileId, newName, fileName);
-
-        const userId = get().checkUserAuthenticated();
+        const userId = useUserStore.getState().getUserId();
         if (!userId || fileName === newName) return;
 
         const newDate = getCurrentDate();
@@ -180,19 +211,11 @@ export const useFileStore = create<FileState>()(
         try {
           await patchFileName(userId, fileId, newName, 'updateName');
 
-          set((state) => {
-            const updateFile = (file: FileType): FileType =>
-              file.id === fileId
-                ? { ...file, filename: newName, modified: newDate }
-                : { ...file, files: file.files?.map(updateFile) };
-
-            const updatedFiles = state.files?.map(updateFile);
-            return {
-              files: updatedFiles,
-              displayFiles: state.displayFiles?.map(updateFile),
-            };
-          });
-
+          get().updateFileState((file) =>
+            file.id === fileId
+              ? { ...file, filename: newName, modified: newDate }
+              : file
+          );
           console.log('Name of the file successfully updated');
         } catch (error) {
           console.error('Error updating the name:', error);
@@ -200,104 +223,79 @@ export const useFileStore = create<FileState>()(
         }
       },
 
-      handleOpenFolder: (fileId) => {
-        const {
-          files,
-          folderStack,
-          parentFolderId,
-          currentPage,
-          resetFilterTools,
-        } = get();
+      navigateToFolder: (folderId: string | null) => {
+        const { files, currentPage, resetFilterTools, resetCheckedFiles } =
+          get();
+        if (!files || !folderId) return;
 
-        if (!files || typeof fileId !== 'string') {
-          return null;
-        }
+        const targetFiles =
+          folderId === 'root' ? files : getParentFiles(files, folderId);
+
+        const newFolderStack =
+          folderId === 'root'
+            ? []
+            : [...get().folderStack, get().parentFolderId];
+
+        resetFilterTools();
+        resetCheckedFiles();
+        set({
+          parentFolderId: folderId,
+          folderStack: newFolderStack,
+          currentPage: currentPage > 1 ? 1 : currentPage,
+        });
+
+        get().setDisplayFiles(targetFiles || []);
+      },
+
+      handleOpenFolder: (fileId: string | string[]) => {
+        const { files } = get();
+        if (!files || typeof fileId !== 'string') return;
+
         const clickedFolder = findFileRecursive(files, fileId);
-
         if (
           clickedFolder &&
           !Array.isArray(clickedFolder) &&
           clickedFolder.type === 'folder'
         ) {
-          set({
-            parentFolderId: fileId as string,
-            folderStack: [...folderStack, parentFolderId],
-            currentPage: currentPage > 1 ? 1 : currentPage,
-          });
-          resetFilterTools();
-          get().setDisplayFiles(clickedFolder.files || []);
-        } else return;
+          get().navigateToFolder(fileId);
+        }
       },
 
       handleBackFolder: () => {
-        const { files, folderStack, currentPage, resetFilterTools } = get();
-
-        if (!files || folderStack.length === 0) return;
-
-        const previousFolderId = folderStack.at(-1); //to get last item
-
-        if (previousFolderId) {
-          const parentFiles = getParentFiles(files, previousFolderId);
-          resetFilterTools();
-          set({
-            parentFolderId: previousFolderId,
-            folderStack: folderStack.slice(0, -1),
-            currentPage: currentPage > 1 ? 1 : currentPage,
-          });
-          get().setDisplayFiles(parentFiles || []);
-        } else {
+        const { folderStack, currentPage } = get();
+        if (folderStack.length === 0) {
           get().resetToRoot();
+        } else {
+          const previousFolderId = folderStack.at(-1);
+          if (previousFolderId) {
+            console.log('navigateToFolder');
+            get().navigateToFolder(previousFolderId);
+            set({
+              folderStack: folderStack.slice(0, -1),
+              currentPage: currentPage > 1 ? 1 : currentPage,
+            });
+          }
         }
       },
 
       toggleFileChecked: (fileId: string | string[]) => {
-        set((state) => {
-          const toggleCheckedStatus = (file: FileType): FileType => {
-            return {
-              ...file,
-              isChecked: file.id === fileId ? !file.isChecked : file.isChecked,
-              files: file.files?.map(toggleCheckedStatus),
-            };
-          };
-          const updatedFiles = state.files?.map(toggleCheckedStatus);
-          const updatedDisplayFiles =
-            state.displayFiles?.map(toggleCheckedStatus);
-
+        get().updateFileState((file) => {
+          const shouldToggle = Array.isArray(fileId)
+            ? fileId.includes(file.id)
+            : file.id === fileId;
           return {
-            files: updatedFiles,
-            displayFiles: updatedDisplayFiles,
+            ...file,
+            isChecked: shouldToggle ? !file.isChecked : file.isChecked,
           };
         });
       },
 
-      setAllFilesChecked: (isChecked) => {
-        set((state) => {
-          const updatedDisplayFiles = state.displayFiles?.map((file) => ({
-            ...file,
-            isChecked,
-          }));
-
-          return {
-            displayFiles: updatedDisplayFiles,
-          };
-        });
-      },
-
-      resetCheckedFiles: () => {
-        set((state) => {
-          const updatedDisplayFiles = state.displayFiles?.map((file) => ({
-            ...file,
-            isChecked: false,
-          }));
-
-          return {
-            displayFiles: updatedDisplayFiles,
-          };
-        });
+      setFilesChecked: (isChecked: boolean) => {
+        get().updateFileState((file) => ({ ...file, isChecked }));
       },
 
       createFiles: async (newFile, parentId, isAccordeon) => {
-        const userId = get().checkUserAuthenticated();
+        const userId = useUserStore.getState().getUserId();
         const { files, parentFolderId } = get();
 
         if (!userId || !files) return;
@@ -362,7 +360,7 @@ export const useFileStore = create<FileState>()(
           displayFiles,
           currentPage,
         } = get();
-        const userId = get().checkUserAuthenticated();
+        const userId = useUserStore.getState().getUserId();
 
         if (!userId || !files) return;
 
@@ -412,18 +410,12 @@ export const useFileStore = create<FileState>()(
             };
           });
           const parentFiles = getParentFiles(files, parentFolderId);
-
-          const updatedDisplayFiles = deleteFilesById(parentFiles, fileId);
+          const updatedDisplayFiles = removeFilesById(parentFiles, fileId);
 
           if (!displayFiles) return;
-          const screenFiles = deleteFilesById(displayFiles, fileId);
+          const screenFiles = removeFilesById(displayFiles, fileId);
 
-          const changeCurrentPage =
-            currentPage === 1
-              ? 1
-              : screenFiles && screenFiles.length > 0
-              ? currentPage
-              : currentPage - 1;
+          const changeCurrentPage = updatePageStatus(screenFiles, currentPage);
 
           get().setCurrentPage(changeCurrentPage);
           get().setDisplayFiles(updatedDisplayFiles);

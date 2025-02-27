@@ -28,7 +28,7 @@ const ToolsBar = () => {
   );
 
   return (
-    <section className="mx-auto flex h-[65px] w-full items-center justify-center rounded-lg bg-white px-2 sm:h-[90px] sm:justify-start sm:px-4 md:px-10">
+    <section className="mx-auto flex h-[65px] w-full items-center justify-center rounded-lg bg-white px-2 sm:min-h-[80px] sm:justify-start sm:px-4 md:px-10">
       <div className="flex items-center gap-11 sm:gap-4 md:gap-8">
         {combinedButtons.map((item) => (
           <ToolsBarWrapper

@@ -9,7 +9,7 @@ import usePopupStore from '@/store/ui/usePopup';
 import { useFileStore } from '@/store/useFileStore';
 import { FileType, HeaderProps } from '@/types/type';
 
-const Header: React.FC<HeaderProps> = ({ isList, setAllFilesChecked }) => {
+const Header: React.FC<HeaderProps> = ({ isList, setFilesChecked }) => {
   const { handleMouseEnter, handleMouseLeave } = usePopupStore();
   const { displayFiles, filterTools, setFilterTools } = useFileStore();
 
@@ -26,9 +26,9 @@ const Header: React.FC<HeaderProps> = ({ isList, setAllFilesChecked }) => {
   const handleCheckAll = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
       const isChecked = e.target.checked;
-      setAllFilesChecked(isChecked);
+      setFilesChecked(isChecked);
     },
-    [setAllFilesChecked]
+    [setFilesChecked]
   );
 
   const handleSortFilter = useCallback(
@@ -46,7 +46,7 @@ const Header: React.FC<HeaderProps> = ({ isList, setAllFilesChecked }) => {
         });
       }
     },
-    [headerType, upselected, setFilterTools]
+    [headerType, upselected, filterTools, setFilterTools]
   );
 
   return (
@@ -68,7 +68,7 @@ const Header: React.FC<HeaderProps> = ({ isList, setAllFilesChecked }) => {
           />
         </div>
       </li>
-      <li className={twMerge(clsx(isList && 'grow', ' cursor-pointer px-2'))}>
+      <li className={twMerge(clsx(isList && 'grow', 'cursor-pointer px-2'))}>
         <div
           className="flex items-center gap-3"
           onMouseEnter={(e) =>

@@ -153,7 +153,7 @@ export type ToolsBarWrapperProps = {
 //array
 export interface HeaderProps {
   isList: boolean;
-  setAllFilesChecked: (isChecked: boolean) => void;
+  setFilesChecked: (isChecked: boolean) => void;
 }
 
 export interface ArrayListContentProps {

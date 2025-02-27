@@ -18,7 +18,6 @@ import { ObjectId, Collection } from 'mongodb';
 import { NextResponse } from 'next/server';
 import { getCurrentDate } from '@/helpers/getCurrentDate';
 import { FileType } from '@/types/type';
-
 export async function handlePost(
   request: Request,
   usersCollection: Collection,

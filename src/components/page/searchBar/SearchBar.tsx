@@ -1,8 +1,6 @@
 import React from 'react';
 import Input from '../../form/Input';
-import Button from '@/components/button/Button';
 import { iconsMap } from '@/constantes/iconsMap';
-import useModalStore from '@/store/ui/useModale';
 import { useFileStore } from '@/store/useFileStore';
 
 const SearchBar = () => {
@@ -10,12 +8,17 @@ const SearchBar = () => {
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event) {
-      setFilterTools({ ...filterTools, searchbar: event.target.value });
+      setFilterTools({
+        ...filterTools,
+        searchbar: event.target.value,
+        upselected: null,
+        headerType: null,
+      });
     }
   };
 
   return (
-    <section className="mx-auto flex h-[80px] w-full flex-row items-center justify-between rounded-lg bg-white px-2 sm:h-[100px] sm:px-4 md:px-10 ">
+    <section className="mx-auto flex h-[80px] w-full items-center justify-between rounded-lg bg-white px-2 sm:min-h-[80px] sm:px-4 md:px-10 ">
       <div className="flex w-3/6 items-center gap-2 text-sm sm:w-[250px] sm:text-base lg:w-[400px]">
         <Input
           name="searchbar"
@@ -25,20 +28,6 @@ const SearchBar = () => {
           placeholder={`search for a files`}
           autoComplete="off"
           IconComponent={iconsMap.IconSearch}
-        />
-      </div>
-      <div className="h-[35px] w-2/5 text-sm sm:h-[40px] sm:w-[210px] sm:text-base">
-        <Button
-          label={
-            <>
-              <span className="block sm:hidden">Add team</span>
-              <span className="hidden sm:block">Add a team member</span>
-            </>
-          }
-          color={'empty'}
-          onClick={() => useModalStore.getState().openModal('AddTeam', [], [])}
-          disabled={false}
-          IconComponent={iconsMap.IconAddTeam}
         />
       </div>
     </section>

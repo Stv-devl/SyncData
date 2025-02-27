@@ -1,6 +1,6 @@
 import { FileType } from '@/types/type';
 
-export const deleteFilesById = (
+export const removeFilesById = (
   files: FileType[],
   fileId: string | string[]
 ) => {

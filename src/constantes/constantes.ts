@@ -4,7 +4,6 @@ export const navItems = [
   { path: '/home', type: 'Home' },
   { path: '/favorite', type: 'Favorite' },
   { path: '/pricing', type: 'Pricing' },
-  { path: '/bin', type: 'Bin' },
 ];
 
 export const toolsBtn = [
@@ -16,7 +15,7 @@ export const toolsBtn = [
     type: 'upload',
   },
   {
-    label: 'Create a file',
+    label: 'Create a folder',
     icon: iconsMap.IconAddFile,
     color: 'empty',
     iconColor: '#08396F',
@@ -60,7 +59,6 @@ export const arrayPopup = [
   { icon: iconsMap.IconFavorite, type: 'favorite', label: 'Favorite' },
   { icon: iconsMap.IconShare, type: 'share', label: 'Share link' },
   { icon: iconsMap.IconDownload, type: 'download', label: 'Download' },
-  { icon: iconsMap.IconMoveFile, type: 'move', label: 'Move file' },
   { icon: iconsMap.IconChangeName, type: 'change', label: 'Change name' },
   { icon: iconsMap.IconDelete, type: 'delete', label: 'Delete' },
 ];

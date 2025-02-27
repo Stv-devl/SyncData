@@ -1,7 +1,6 @@
 'use client';
 
 import clsx from 'clsx';
-import { findFileRecursive } from 'lib/utils/fileOperations/findFileRecursive';
 import React, { useCallback, useEffect, useMemo } from 'react';
 import { twMerge } from 'tailwind-merge';
 import { iconsMap } from '../../../constantes/iconsMap';
@@ -11,6 +10,7 @@ import Header from './Header';
 import DropZoneWrapper from '@/components/dropZone/DropZoneWrapper';
 import EmptyContent from '@/components/dropZone/EmptyContent';
 import Pagination from '@/components/pagination/Pagination';
+import useCurrentFolderName from '@/hook/manage/useManageCurrentFolderName';
 import useResponsiveFileCount from '@/hook/ui/useResponsiveFileCount';
 import usePopupStore from '@/store/ui/usePopup';
 import { useFileStore } from '@/store/useFileStore';
@@ -18,49 +18,55 @@ import { useFileStore } from '@/store/useFileStore';
 const Array = () => {
   const {
     files,
+    displayFiles,
+    displayFavoritesFiles,
+    setDisplayFiles,
+    setDisplayFavoritesFile,
     isList,
+    isFavoritePage,
+    filterTools,
     setIsList,
     setEntriesPerPage,
     updateFileName,
-    displayFiles,
-    setDisplayFiles,
-    setAllFilesChecked,
+    setFilesChecked,
     toggleFileChecked,
+    setCurrentPage,
     parentFolderId,
     handleOpenFolder,
     handleBackFolder,
     toggleEditedFile,
   } = useFileStore();
+
   const { handleClickOpen, handleMouseEnter, handleMouseLeave } =
     usePopupStore();
   const { containerRef, fileCount } = useResponsiveFileCount(isList);
 
+  const currentFolderName = useCurrentFolderName(
+    filterTools,
+    parentFolderId,
+    files ?? []
+  );
+
+
   useEffect(() => {
-    if (fileCount === 0) return;
+    if (fileCount === 0 || !files) return;
+    setCurrentPage(1);
     setEntriesPerPage(fileCount);
-    setDisplayFiles(displayFiles);
-  }, [fileCount, setEntriesPerPage, setDisplayFiles]);
+    if (isFavoritePage) {
+      setDisplayFavoritesFile(files);
+    } else {
+      setDisplayFiles(files);
+    }
+  }, [fileCount, isFavoritePage, setEntriesPerPage, setDisplayFiles]);
+
+
+  const displayFileToArray = isFavoritePage
+    ? displayFavoritesFiles
+    : displayFiles;
 
   const toggleIcon = useCallback(() => {
     setIsList(!isList);
   }, [isList, setIsList]);
-
-  const isArray = (input: unknown): input is unknown[] =>
-    Object.prototype.toString.call(input) === '[object Array]';
-
-  const currentFolderName = useMemo(() => {
-    if (parentFolderId === 'root') {
-      return 'root';
-    }
-
-    const folder = findFileRecursive(files ?? [], parentFolderId);
-
-    if (folder && !isArray(folder)) {
-      return folder.filename;
-    }
-
-    return 'unknown';
-  }, [parentFolderId, files]);
 
   const toggleIconClasses = useMemo(
     () =>
@@ -106,10 +112,10 @@ const Array = () => {
 
   return (
     <section className="relative mx-auto size-full rounded-lg bg-white p-4 lg:p-8">
-      <Header isList={isList} setAllFilesChecked={setAllFilesChecked} />
+      <Header isList={isList} setFilesChecked={setFilesChecked} />
       <div className="bg-lightest-gray flex h-[97%] w-full flex-col overflow-y-auto rounded-lg transition-all duration-300">
         <>
-          {currentFolderName !== 'root' && (
+          {currentFolderName !== 'root' && !isFavoritePage && (
             <div className="flex flex-row content-center p-2">
               <iconsMap.IconChevronLeft
                 className="cursor-pointer"
@@ -120,10 +126,10 @@ const Array = () => {
               </p>
             </div>
           )}
-          {displayFiles && displayFiles.length > 0 ? (
+          {displayFileToArray && displayFileToArray.length > 0 ? (
             isList ? (
               <ListContent
-                files={displayFiles}
+                files={displayFileToArray}
                 updateFileName={updateFileName}
                 handleOpenFolder={handleOpenFolder}
                 toggleFileChecked={handleCheckboxChange}
@@ -135,7 +141,7 @@ const Array = () => {
               />
             ) : (
               <FileContent
-                files={displayFiles}
+                files={displayFileToArray}
                 updateFileName={updateFileName}
                 handleOpenFolder={handleOpenFolder}
                 toggleFileChecked={handleCheckboxChange}
@@ -147,12 +153,17 @@ const Array = () => {
           ) : null}
         </>
         <div className="relative hidden sm:block lg:flex-1">
-          <DropZoneWrapper
-            isDragIcon={true}
-            dropFolderId={parentFolderId}
-            dropStyle="absolute inset-0"
-          />
-          <EmptyContent />
+          {!isFavoritePage ||
+            (filterTools.searchbar && (
+              <>
+                <DropZoneWrapper
+                  isDragIcon={true}
+                  dropFolderId={parentFolderId}
+                  dropStyle="absolute inset-0"
+                />
+              </>
+            ))}
+          {!isFavoritePage || (filterTools.searchbar && <EmptyContent />)}
         </div>
         <Pagination />
       </div>

@@ -3,15 +3,27 @@ import useModalStore from '../../../store/ui/useModale';
 import { useFileStore } from '@/store/useFileStore';
 import { ModaleFileProps } from '@/types/type';
 
+/**
+ * UploadLoader component that displays a loading state for file uploads
+ * @component
+ * @param {ModaleFileProps} props.fileName - The name of the file to upload
+ * @param {ModaleFileProps} props.fileId - The id of the file to upload
+ * @returns {JSX.Element} The rendered UploadLoader component with a loading state
+ */
+
 const UploadLoader: React.FC<ModaleFileProps> = ({ fileName, fileId }) => {
   const isUploaded = useFileStore((state) => state.isUploaded);
   const closeModal = useModalStore((state) => state.closeModal);
 
+  const [error, setError] = useState<string | null>(null);
   const [uploadState, setUploadState] = useState<
     'idle' | 'uploading' | 'uploaded' | 'error'
   >('idle');
-  const [error, setError] = useState<string | null>(null);
 
+  /**
+   * Starts the file upload process
+   * @returns {void}
+   */
   const startUpload = useCallback(() => {
     if (!fileName || !fileId) {
       setError('No file to upload');
@@ -34,6 +46,10 @@ const UploadLoader: React.FC<ModaleFileProps> = ({ fileName, fileId }) => {
     }
   }, [isUploaded, closeModal, uploadState]);
 
+  /**
+   * Renders the content based on the upload state
+   * @returns {JSX.Element} The rendered content
+   */
   const renderContent = () => {
     switch (uploadState) {
       case 'uploading':

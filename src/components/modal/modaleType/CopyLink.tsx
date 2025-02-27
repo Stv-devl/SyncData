@@ -1,7 +1,11 @@
 import React from 'react';
-import { ModaleFileProps } from '@/types/type';
 
-const CopyLink: React.FC<ModaleFileProps> = () => {
+/**
+ * CopyLink component that displays a success message when a link is copied
+ * @returns {JSX.Element} The rendered CopyLink component with a centered success message
+ */
+
+const CopyLink = () => {
   return (
     <>
       <p className="text-darkest-blue mt-4 text-center font-medium">

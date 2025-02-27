@@ -6,7 +6,9 @@ const collectionName = 'users';
 
 /**
  * Establishes a connection to MongoDB and reuses it for subsequent calls.
+ * @returns A Promise that resolves to the database connection and collection.
  */
+
 export async function getDb() {
   if (!globalThis._mongoClient) {
     try {

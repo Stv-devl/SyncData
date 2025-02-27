@@ -9,12 +9,22 @@ import usePopupStore from '@/store/ui/usePopup';
 import { useFileStore } from '@/store/useFileStore';
 import { FileType, HeaderProps } from '@/types/type';
 
+/**
+ * Header component that displays the header of the array
+ * @component
+ * @param {HeaderProps} props - The properties for the Header component
+ * @returns {JSX.Element} The rendered Header component
+ */
 const Header: React.FC<HeaderProps> = ({ isList, setFilesChecked }) => {
   const { handleMouseEnter, handleMouseLeave } = usePopupStore();
   const { displayFiles, filterTools, setFilterTools } = useFileStore();
 
   const { headerType, upselected } = filterTools;
 
+  /**
+   * Checks if all files are checked
+   * @returns {boolean} True if all files are checked, false otherwise
+   */
   const isCheckedAll = useMemo(() => {
     return (
       displayFiles &&
@@ -23,6 +33,10 @@ const Header: React.FC<HeaderProps> = ({ isList, setFilesChecked }) => {
     );
   }, [displayFiles]);
 
+  /**
+   * Handles the checkbox change event
+   * @param {React.ChangeEvent<HTMLInputElement>} e - The change event
+   */
   const handleCheckAll = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
       const isChecked = e.target.checked;
@@ -31,6 +45,10 @@ const Header: React.FC<HeaderProps> = ({ isList, setFilesChecked }) => {
     [setFilesChecked]
   );
 
+  /**
+   * Handles the sort filter event
+   * @param {string | null} type - The type of the filter
+   */
   const handleSortFilter = useCallback(
     (type: string | null) => {
       if (headerType === type) {

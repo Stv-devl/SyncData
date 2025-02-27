@@ -8,6 +8,12 @@ import { iconsMap } from '../../constantes/iconsMap';
 import useLogin from '../../hook/auth/useLogin';
 import Loading from '@/components/loading/Loading';
 
+/**
+ * Login page component that handles user authentication
+ * @component
+ * @returns {JSX.Element} The rendered login page component with form inputs and authentication options
+ */
+
 const Login = (): JSX.Element => {
   const {
     handleSubmit,

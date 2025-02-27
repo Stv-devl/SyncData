@@ -8,6 +8,11 @@ import useSignUp from '../../hook/auth/useSignup';
 import Loading from '@/components/loading/Loading';
 import { iconsMap } from '@/constantes/iconsMap';
 
+/**
+ * Signup page component
+ * @returns The signup page component
+ */
+
 const SignUp = (): JSX.Element => {
   const {
     handleSubmit,

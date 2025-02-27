@@ -1,5 +1,10 @@
 import React from 'react';
 
+/**
+ * IconSort component
+ * @param {React.SVGProps<SVGSVGElement>} props - The props for the IconSort component
+ * @returns {React.ReactElement} The IconSort component
+ */
 const IconSort: React.FC<React.SVGProps<SVGSVGElement>> = (props) => {
   return (
     <svg

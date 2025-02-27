@@ -1,6 +1,14 @@
 import { callFilesRecursive } from './callFilesRecursive';
 import { FileType } from '@/types/type';
 
+/**
+ * Deletes a file from the parent directory
+ * @param files - The array of files
+ * @param fileId - The ID of the file to delete
+ * @param parentId - The ID of the parent directory
+ * @returns The updated array of files
+ */
+
 export const deleteFileToParent = (
   files: FileType[],
   fileId: string | string[],

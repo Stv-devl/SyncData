@@ -63,6 +63,10 @@ export async function handlerRequest(request: Request): Promise<NextResponse> {
   const { usersCollection } = await getDb();
   if (!usersCollection) return handleError(500, 'Database connection error');
 
+  /**
+   * Mapping of action types to their corresponding handlers.
+   * @type {Record<string, (fileId: string, usersCollection: Collection, userId: string, fileName?: string) => Promise<NextResponse>>}
+   */
   const handlersMap: Record<
     string,
     (
@@ -83,9 +87,15 @@ export async function handlerRequest(request: Request): Promise<NextResponse> {
 
   return handler(request, usersCollection, userId);
 }
+
 /**
  * Handles PATCH requests based on the requested action.
+ * @param request - The HTTP request object.
+ * @param usersCollection - The MongoDB collection for user data.
+ * @param userId - The ID of the user performing the request.
+ * @returns A Promise that resolves to the NextResponse object.
  */
+
 async function handlePatchRequest(
   request: Request,
   usersCollection: Collection,

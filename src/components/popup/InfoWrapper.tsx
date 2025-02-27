@@ -6,10 +6,22 @@ import useManageFonctions from '@/hook/manage/useManageFonctions';
 import usePopupStore from '@/store/ui/usePopup';
 import { InfoWrapperProps } from '@/types/type';
 
+/**
+ * InfoWrapper component that displays a list of actions for a file
+ * @component
+ * @param {InfoWrapperProps} props - The properties for the InfoWrapper component
+ * @returns {JSX.Element} The rendered InfoWrapper component with a list of actions
+ */
 const InfoWrapper: React.FC<InfoWrapperProps> = ({ fileName, fileId }) => {
   const { getActionByType } = useManageFonctions();
   const { closePopup } = usePopupStore();
 
+  /**
+   * Handles the popup click event
+   * @param {string} type - The type of the action
+   * @param {string | null} fileId - The id of the file
+   * @param {string | null} fileName - The name of the file
+   */
   const handlePopupClick = useCallback(
     (type: string, fileId: string | null, fileName: string | null) => {
       if (!fileId || !fileName) return;
@@ -19,6 +31,10 @@ const InfoWrapper: React.FC<InfoWrapperProps> = ({ fileName, fileId }) => {
     [getActionByType, closePopup]
   );
 
+  /**
+   * Renders the InfoWrapper component
+   * @returns {JSX.Element} The rendered InfoWrapper component
+   */
   return (
     <div className="flex flex-col items-center ">
       <div className="text-darkest-blue border-regular-gray size-full truncate border-b p-3 text-center font-semibold capitalize">

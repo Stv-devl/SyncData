@@ -1,3 +1,8 @@
+/**
+ * fileTypeMap constant that defines the file type map for the application
+ * @constant
+ * @type {Object}
+ */
 export const fileTypeMap = {
   //Document types
   pdf: 'pdf',

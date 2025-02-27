@@ -1,6 +1,12 @@
 import { useEffect, useRef } from 'react';
 import { FileType } from '@/types/type';
 
+/**
+ * Custom hook for managing the edited file input
+ * @param {FileType | undefined} editedFile - The edited file
+ * @param {Function} toggleEditedFile - The function to toggle the edited file
+ * @returns {RefObject<HTMLDivElement>} The ref of the edited file
+ */
 interface UseEditedInputProps {
   editedFile: FileType | undefined;
   toggleEditedFile: (fileId: string) => void;

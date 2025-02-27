@@ -1,6 +1,13 @@
 import { ObjectId } from 'mongodb';
 import { z } from 'zod';
 
+/**
+ * Schéma pour créer un fichier
+ * @typedef {Object} PostSchema
+ * @property {string} userId - ID de l'utilisateur
+ * @property {Object} newFile - Nouveau fichier à créer
+ */
+
 export const postSchema = z.object({
   userId: z.string().min(1, 'User ID is required'),
   newFile: z.object({

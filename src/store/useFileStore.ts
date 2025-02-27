@@ -21,6 +21,26 @@ import { useUserStore } from '@/store/useUserStore';
 import { FileState } from '@/types/storeType';
 import { FileType } from '@/types/type';
 
+/**
+ * Zustand store for managing file state and operations.
+ * Provides state variables and actions to handle files, folders, favorites, and display settings.
+ *
+ * @interface FileState
+ * @property {FileType[] | null} files - Array of all files in the system
+ * @property {FileType[] | null} flattenedFiles - Flattened array of all files
+ * @property {boolean} isList - Display mode toggle between list and grid view
+ * @property {boolean} isFavoritePage - Whether currently viewing favorites page
+ * @property {number} currentPage - Current page number for pagination
+ * @property {number} entriesPerPage - Number of entries to display per page
+ * @property {Object} filterTools - Tools for filtering and searching files
+ * @property {FileType[] | null} displayFavoritesFiles - Files to display in favorites view
+ * @property {FileType[] | null} displayFiles - Currently displayed files
+ * @property {string} parentFolderId - ID of current parent folder
+ * @property {string[]} folderStack - Stack of parent folder IDs for navigation
+ * @property {boolean} isUploaded - Whether a file upload is complete
+ * @property {boolean} loading - Loading state indicator
+ * @property {string | null} error - Error message if any
+ */
 export const useFileStore = create<FileState>()(
   persist(
     (set, get) => ({
@@ -33,17 +53,28 @@ export const useFileStore = create<FileState>()(
       filterTools: { searchbar: '', headerType: null, upselected: null },
       displayFavoritesFiles: null,
       displayFiles: null,
-      savedDisplayFiles: null,
       parentFolderId: 'root',
       folderStack: [],
       isUploaded: false,
       loading: false,
       error: null,
 
+      /**
+       * Sets the list view.
+       * @param {boolean} value - The value to set.
+       */
       setIsList: (value) => set(() => ({ isList: value })),
 
+      /**
+       * Sets the favorite page.
+       * @param {boolean} value - The value to set.
+       */
       setIsFavoritePage: (value) => set(() => ({ isFavoritePage: value })),
 
+      /**
+       * Sets the files in the store.
+       * @param {FileType[]} files - The files to set.
+       */
       setFiles: (files: FileType[]) => {
         const newFlattenedFiles = flattenedFiles(files);
         set(() => ({
@@ -53,10 +84,22 @@ export const useFileStore = create<FileState>()(
         }));
       },
 
+      /**
+       * Sets the current page.
+       * @param {number} page - The current page.
+       */
       setCurrentPage: (page: number) => set({ currentPage: page }),
 
+      /**
+       * Sets the number of entries per page.
+       * @param {number} entries - The number of entries per page.
+       */
       setEntriesPerPage: (entries: number) => set({ entriesPerPage: entries }),
 
+      /**
+       * Updates the display files based on the filter conditions.
+       * @param {FileType[]} files - The files to display.
+       */
       updateDisplayFiles: (files: FileType[]) => {
         const {
           flattenedFiles,
@@ -89,12 +132,20 @@ export const useFileStore = create<FileState>()(
         }
       },
 
+      /**
+       * Sets the display files to the files.
+       * @param {FileType[]} files - The files to display.
+       */
       setDisplayFiles: (files: FileType[] | null) => {
         if (!files) return;
         get().updateDisplayFiles(files);
         set({ flattenedFiles: flattenedFiles(files) }); //ok du coup voir si flattened au setFile est nécessaire
       },
 
+      /**
+       * Sets the display files to the favorite files.
+       * @param {FileType[]} files - The files to display.
+       */
       setDisplayFavoritesFile: (files: FileType[]) => {
         if (!files) return;
         const favoriteFiles = findFavoriteFiles(files);
@@ -102,6 +153,9 @@ export const useFileStore = create<FileState>()(
         set({ flattenedFiles: flattenedFiles(favoriteFiles) });
       },
 
+      /**
+       * Resets the display files to the root folder.
+       */
       resetToRoot: () => {
         const { files } = get();
         set({
@@ -111,13 +165,23 @@ export const useFileStore = create<FileState>()(
         get().setDisplayFiles(files || []);
       },
 
+      /**
+       * Resets the checked files to their default state.
+       */
       resetCheckedFiles: () => get().setFilesChecked(false),
 
+      /**
+       * Resets the filter tools to their default state.
+       */
       resetFilterTools: () =>
         set({
           filterTools: { searchbar: '', headerType: null, upselected: null },
         }),
 
+      /**
+       * Sets the filter tools and updates the display files based on the filter conditions.
+       * @param {Object} updates - The filter updates to apply.
+       */
       setFilterTools: (updates) => {
         const {
           files,
@@ -150,6 +214,10 @@ export const useFileStore = create<FileState>()(
         }
       },
 
+      /**
+       * Updates the state of a file.
+       * @param {Function} updateState - A function that updates the file state.
+       */
       updateFileState: (updateState: (file: FileType) => FileType) => {
         set((state) => ({
           files: state.files?.map(updateState) || [],
@@ -157,6 +225,10 @@ export const useFileStore = create<FileState>()(
         }));
       },
 
+      /**
+       * Toggles the favorite status of a file.
+       * @param {string} fileId - The ID of the file to toggle.
+       */
       toggleFavoriteFiles: async (fileId) => {
         const { files, displayFavoritesFiles, parentFolderId, currentPage } =
           get();
@@ -189,6 +261,10 @@ export const useFileStore = create<FileState>()(
         }
       },
 
+      /**
+       * Toggles the edited status of a file.
+       * @param {string} fileId - The ID of the file to toggle.
+       */
       toggleEditedFile: async (fileId: string) => {
         try {
           get().updateFileState((file) =>
@@ -202,6 +278,12 @@ export const useFileStore = create<FileState>()(
         }
       },
 
+      /**
+       * Updates the name of a file.
+       * @param {string} fileId - The ID of the file to update.
+       * @param {string} newName - The new name for the file.
+       * @param {string} fileName - The current name of the file.
+       */
       updateFileName: async (fileId, newName, fileName) => {
         const userId = useUserStore.getState().getUserId();
         if (!userId || fileName === newName) return;
@@ -223,6 +305,10 @@ export const useFileStore = create<FileState>()(
         }
       },
 
+      /**
+       * Navigates to a specific folder.
+       * @param {string | null} folderId - The ID of the folder to navigate to.
+       */
       navigateToFolder: (folderId: string | null) => {
         const { files, currentPage, resetFilterTools, resetCheckedFiles } =
           get();
@@ -247,6 +333,10 @@ export const useFileStore = create<FileState>()(
         get().setDisplayFiles(targetFiles || []);
       },
 
+      /**
+       * Handles opening a folder and go to next folder.
+       * @param {string | string[]} fileId - The ID of the file to open.
+       */
       handleOpenFolder: (fileId: string | string[]) => {
         const { files } = get();
         if (!files || typeof fileId !== 'string') return;
@@ -261,6 +351,9 @@ export const useFileStore = create<FileState>()(
         }
       },
 
+      /**
+       * Handles going back to the previous folder.
+       */
       handleBackFolder: () => {
         const { folderStack, currentPage } = get();
         if (folderStack.length === 0) {
@@ -278,6 +371,10 @@ export const useFileStore = create<FileState>()(
         }
       },
 
+      /**
+       * Toggles the checked status of a file.
+       * @param {string | string[]} fileId - The ID of the file to toggle.
+       */
       toggleFileChecked: (fileId: string | string[]) => {
         get().updateFileState((file) => {
           const shouldToggle = Array.isArray(fileId)
@@ -289,11 +386,16 @@ export const useFileStore = create<FileState>()(
           };
         });
       },
-
       setFilesChecked: (isChecked: boolean) => {
         get().updateFileState((file) => ({ ...file, isChecked }));
       },
 
+      /**
+       * Creates new files in the store and uploads them to the server
+       * @param {Object} newFile - The new file object to create
+       * @param {string} parentId - ID of the parent folder where the file will be created
+       * @param {boolean} isAccordeon - Whether the file is being created in accordion mode
+       */
       createFiles: async (newFile, parentId, isAccordeon) => {
         const userId = useUserStore.getState().getUserId();
         const { files, parentFolderId } = get();
@@ -352,6 +454,10 @@ export const useFileStore = create<FileState>()(
         }
       },
 
+      /**
+       * Removes a file or multiple files.
+       * @param {string | string[]} fileId - ID(s) of the file(s) to delete.
+       */
       removeFile: async (fileId): Promise<void> => {
         const {
           files,

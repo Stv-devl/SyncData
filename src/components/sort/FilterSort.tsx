@@ -4,6 +4,12 @@ import React from 'react';
 import { iconsMap } from '../../constantes/iconsMap';
 import { FilterSortProps } from '@/types/type';
 
+/**
+ * FilterSort component that displays a filter sort for the array
+ * @component
+ * @param {FilterSortProps} props - The properties for the FilterSort component
+ * @returns {JSX.Element} The rendered FilterSort component
+ */
 const FilterSort: React.FC<FilterSortProps> = ({
   type,
   selectedType,

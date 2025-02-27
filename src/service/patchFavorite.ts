@@ -1,5 +1,12 @@
 import { getCsrfToken } from '@/helpers/getCsrfToken';
 
+/**
+ * patchFavorite function
+ * @param {string} userId - The user ID
+ * @param {string} fileId - The file ID
+ * @param {string} actionType - The action type
+ * @returns {Promise} The response from the API
+ */
 const patchFavorite = async (
   userId: string,
   fileId: string,

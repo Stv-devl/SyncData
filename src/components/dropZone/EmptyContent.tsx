@@ -1,6 +1,11 @@
 import React from 'react';
 import { iconsMap } from '../../constantes/iconsMap';
 
+/**
+ * EmptyContent component that displays a message when the drop zone is empty
+ * @returns The EmptyContent component
+ */
+
 const EmptyContent = () => {
   return (
     <div className="mt-2  flex size-full items-center justify-center">

@@ -4,6 +4,17 @@ import AccordionItem from './AccordionItem';
 import { useFileStore } from '@/store/useFileStore';
 import { AccordionMenuProps, FileType } from '@/types/type';
 
+/**
+ * Accordion menu component that displays a list of files and folders
+ * @param {Object} props - Component props
+ * @param {FileType[]} props.files - The list of files and folders to display
+ * @param {Function} props.handleCheck - Handler for checkbox changes
+ * @param {string} props.checkedFile - ID of currently checked file
+ * @param {Function} props.toggleOpen - Handler for expanding/collapsing folders
+ * @param {Function} props.isOpen - Function to check if a folder is open
+ * @returns {JSX.Element} Rendered accordion menu component
+ */
+
 const AccordionMenu: React.FC<AccordionMenuProps> = ({
   files,
   handleCheck,

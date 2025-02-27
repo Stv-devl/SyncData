@@ -3,14 +3,17 @@ import { cookies } from 'next/headers';
 import { NextResponse } from 'next/server';
 
 /**
- * Generate a CSRF token.
+ * Generates a random CSRF token
+ * @returns A 64-character hexadecimal string to be used as a CSRF token
  */
 export function generateCsrfToken(): string {
   return randomBytes(32).toString('hex');
 }
 
 /**
- * Set the CSRF token in the cookie.
+ * Sets a CSRF token cookie on the response
+ * @param response - The Next.js response object
+ * @param token - The CSRF token to set in the cookie
  */
 export function setCsrfCookie(response: NextResponse, token: string) {
   response.cookies.set('X-CSRF-Token', token, {
@@ -22,7 +25,9 @@ export function setCsrfCookie(response: NextResponse, token: string) {
 }
 
 /**
- * Validate the CSRF token from the request.
+ * Validates a CSRF token from a request
+ * @param request - The Next.js request object
+ * @returns True if the CSRF token is valid, false otherwise
  */
 export function validateCsrf(request: Request): boolean {
   const csrfTokenHeader = request.headers.get('X-CSRF-Token') ?? '';

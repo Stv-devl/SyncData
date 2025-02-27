@@ -2,6 +2,11 @@
 
 import * as Yup from 'yup';
 
+/**
+ * Login validation schema
+ * @constant
+ * @type {Yup.ObjectSchema}
+ */
 export const loginSchema = Yup.object().shape({
   email: Yup.string()
     .email('Invalid email address')
@@ -11,6 +16,11 @@ export const loginSchema = Yup.object().shape({
     .required('Password is required'),
 });
 
+/**
+ * Signup validation schema
+ * @constant
+ * @type {Yup.ObjectSchema}
+ */
 export const signupValidationSchema = Yup.object({
   email: Yup.string()
     .email('Invalid email address')
@@ -23,6 +33,11 @@ export const signupValidationSchema = Yup.object({
     .required('Password is required'),
 });
 
+/**
+ * Create folder validation schema
+ * @constant
+ * @type {Yup.ObjectSchema}
+ */
 export const createFolderSchema = Yup.object().shape({
   name: Yup.string()
     .min(3, 'Folder name must be at least 3 characters')
@@ -31,11 +46,21 @@ export const createFolderSchema = Yup.object().shape({
   checkbox: Yup.string().required('You must select a folder'),
 });
 
+/**
+ * Upload file validation schema
+ * @constant
+ * @type {Yup.ObjectSchema}
+ */
 export const ulpoadFileSchema = Yup.object().shape({
   name: Yup.string().required('You should browse a file'),
   checkbox: Yup.string().required('You must select a folder'),
 });
 
+/**
+ * Update file name validation schema
+ * @constant
+ * @type {Yup.ObjectSchema}
+ */
 export const updateFileNameSchema = Yup.object({
   filename: Yup.string()
     .trim()

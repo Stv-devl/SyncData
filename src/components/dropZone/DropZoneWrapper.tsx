@@ -9,6 +9,14 @@ import { useFileStore } from '@/store/useFileStore';
 import { DropZoneWrapperProps } from '@/types/type';
 import { getFileType } from '@/utils/getFileType';
 
+/**
+ * DropZoneWrapper component that displays a drop zone for file uploads
+ * @param {Object} props - Component props
+ * @param {string} props.dropStyle - The style of the drop zone
+ * @param {string} props.dropFolderId - The ID of the drop folder
+ * @returns {JSX.Element} The rendered DropZoneWrapper component
+ */
+
 const DropZoneWrapper: React.FC<DropZoneWrapperProps> = ({
   dropStyle,
   dropFolderId,

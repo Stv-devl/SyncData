@@ -8,6 +8,12 @@ import { arrayHeader } from '@/constantes/constantes';
 import useFileEdition from '@/hook/ui/useFileEdition';
 import { ArrayListContentProps } from '@/types/type';
 
+/**
+ * ListContent component that displays a list of files and allows users to edit their names
+ * @component
+ * @param {ArrayListContentProps} props - The properties for the ListContent component
+ * @returns {JSX.Element} The rendered ListContent component with a list of files and edit form
+ */
 const ListContent: React.FC<ArrayListContentProps> = ({
   files,
   updateFileName,
@@ -30,6 +36,11 @@ const ListContent: React.FC<ArrayListContentProps> = ({
 
   const fileNameStyle = useMemo(() => 'w-28 truncate sm:w-24 lg:w-52', []);
 
+  /**
+   * Generates a class string for header elements based on their name
+   * @param {string} name - The name of the header element
+   * @returns {string} The generated class string
+   */
   const headerClass = (name: string) =>
     clsx(
       name === 'checked' && 'w-10 flex-none lg:w-16',

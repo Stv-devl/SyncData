@@ -1,5 +1,10 @@
 import React from 'react';
 
+/**
+ * IconShare component
+ * @param {React.SVGProps<SVGSVGElement>} props - The props for the IconShare component
+ * @returns {React.ReactElement} The IconShare component
+ */
 const IconShare: React.FC<React.SVGProps<SVGSVGElement>> = (props) => {
   return (
     <svg

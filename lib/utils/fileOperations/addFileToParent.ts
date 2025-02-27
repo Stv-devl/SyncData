@@ -1,6 +1,15 @@
 import { callFilesRecursive } from './callFilesRecursive';
 import { FileType } from '@/types/type';
 
+/**
+ * Adds a file to the parent directory
+ * @param files - The array of files
+ * @param newFile - The new file to add
+ * @param parentId - The ID of the parent directory
+ * @param publicId - The public ID of the file
+ * @returns The updated array of files
+ */
+
 export const addFileToParent = (
   files: FileType[],
   newFile: FileType,

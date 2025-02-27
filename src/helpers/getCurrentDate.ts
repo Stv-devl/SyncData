@@ -1,3 +1,7 @@
+/**
+ * Gets the current date in the format MM/DD/YYYY
+ * @returns {string} The current date in the format MM/DD/YYYY
+ */
 export const getCurrentDate = (): string => {
   const today = new Date();
   const month = String(today.getMonth() + 1).padStart(2, '0');

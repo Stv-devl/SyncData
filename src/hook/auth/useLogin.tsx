@@ -7,6 +7,10 @@ import * as Yup from 'yup';
 import { loginSchema } from '../../helpers/validationShema';
 import { FormDataLogin, UseLoginReturn } from '../../types/type';
 
+/**
+ * UseLogin hook that handles the login process
+ * @returns {UseLoginReturn} The UseLoginReturn object
+ */
 const useLogin = (): UseLoginReturn => {
   const [formData, setFormData] = useState<FormDataLogin>({
     email: '',
@@ -23,16 +27,27 @@ const useLogin = (): UseLoginReturn => {
 
   const router = useRouter();
 
+  /**
+   * Handles input changes in the login form
+   * @param {React.ChangeEvent<HTMLInputElement>} e - The change event
+   */
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
     setLoginErrors({ email: '', password: '', general: '' });
   };
 
+  /**
+   * Redirects the user to the home page
+   */
   const redirectToHome = () => {
     router.push('/home');
   };
 
+  /**
+   * Handles errors during the login process
+   * @param {unknown} error - The error that occurred
+   */
   const handleError = (error: unknown) => {
     if (error instanceof Yup.ValidationError) {
       const fieldErrors = error.inner.reduce((acc, err) => {
@@ -46,6 +61,11 @@ const useLogin = (): UseLoginReturn => {
     }
   };
 
+  /**
+   * Handles the form submission for login
+   * @param {FormEvent} e - The form event
+   * @returns {Promise<void>} A promise that resolves when the login process is complete
+   */
   const handleSubmit = async (e: FormEvent): Promise<void> => {
     e.preventDefault();
     setIsLoading(true);
@@ -74,6 +94,10 @@ const useLogin = (): UseLoginReturn => {
     }
   };
 
+  /**
+   * Handles Google sign-in
+   * @returns {Promise<void>} A promise that resolves when the Google sign-in process is complete
+   */
   const handleGoogleSignIn = async (): Promise<void> => {
     setIsLoading(true);
 

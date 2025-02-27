@@ -3,9 +3,18 @@ import Input from '../../form/Input';
 import { iconsMap } from '@/constantes/iconsMap';
 import { useFileStore } from '@/store/useFileStore';
 
+/**
+ * SearchBar component that displays a search bar for the array
+ * @component
+ * @returns {JSX.Element} The rendered SearchBar component
+ */
 const SearchBar = () => {
   const { filterTools, setFilterTools } = useFileStore();
 
+  /**
+   * Handles the input change event
+   * @param {React.ChangeEvent<HTMLInputElement>} event - The change event
+   */
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event) {
       setFilterTools({

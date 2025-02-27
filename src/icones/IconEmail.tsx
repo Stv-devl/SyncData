@@ -1,5 +1,10 @@
 import React from 'react';
 
+/**
+ * IconEmail component
+ * @param {React.SVGProps<SVGSVGElement>} props - The props for the IconEmail component
+ * @returns {React.ReactElement} The IconEmail component
+ */
 const IconEmail: React.FC<React.SVGProps<SVGSVGElement>> = (props) => {
   return (
     <svg

@@ -4,6 +4,14 @@ import useModalStore from '@/store/ui/useModale';
 import { useFileStore } from '@/store/useFileStore';
 import { ModaleFileProps } from '@/types/type';
 
+/**
+ * DeleteFile component that displays a confirmation dialog for deleting a file
+ * @component
+ * @param {ModaleFileProps} props - The properties for the DeleteFile component
+ * @param {string} props.fileId - The ID of the file to delete
+ * @param {string|string[]} props.fileName - The name(s) of the file(s) to delete
+ * @returns {JSX.Element|null} The rendered DeleteFile component or null if no fileId provided
+ */
 const DeleteFile: React.FC<ModaleFileProps> = ({ fileId, fileName }) => {
   const { removeFile } = useFileStore();
 

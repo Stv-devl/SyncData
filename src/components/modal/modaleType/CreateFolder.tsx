@@ -12,6 +12,12 @@ import { useFileStore } from '@/store/useFileStore';
 import { ModaleFileProps } from '@/types/type';
 import { filteredFolders } from '@/utils/filteredFolders';
 
+/**
+ * CreateFolder component that allows users to create a new folder
+ * @component
+ * @param {ModaleFileProps} props - The properties for the CreateFolder component
+ * @returns {JSX.Element} The rendered CreateFolder form with input fields and validation
+ */
 const CreateFolder: React.FC<ModaleFileProps> = () => {
   const { files, createFiles } = useFileStore();
   const {

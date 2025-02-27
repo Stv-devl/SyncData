@@ -1,5 +1,12 @@
 import { useEffect } from 'react';
 
+/**
+ * Custom hook for managing popup effects
+ * @param {boolean} isOpen - Whether the popup is open
+ * @param {React.RefObject<HTMLDivElement>} popupRef - The ref of the popup
+ * @param {Function} closePopup - The function to close the popup
+ * @returns {void}
+ */
 const usePopupEffect = (
   isOpen: boolean,
   popupRef: React.RefObject<HTMLDivElement>,

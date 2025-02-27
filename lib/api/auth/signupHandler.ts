@@ -9,6 +9,12 @@ import { NextResponse } from 'next/server';
 
 const saltRounds = 10;
 
+/**
+ * Handles user signup requests
+ * @param request - The HTTP request object
+ * @returns A NextResponse object with the result of the signup operation
+ */
+
 export async function signupHandler(request: Request): Promise<NextResponse> {
   try {
     const corsResponse = corsMiddleware(request);

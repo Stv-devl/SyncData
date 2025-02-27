@@ -1,5 +1,10 @@
 import React, { SVGProps } from 'react';
 
+/**
+ * IconLogout component
+ * @param {React.SVGProps<SVGSVGElement>} props - The props for the IconLogout component
+ * @returns {React.ReactElement} The IconLogout component
+ */
 const IconLogout: React.FC<SVGProps<SVGSVGElement>> = (props) => {
   return (
     <svg

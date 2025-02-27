@@ -6,6 +6,13 @@ import React from 'react';
 import { twMerge } from 'tailwind-merge';
 import { NavWrapperProps } from '@/types/type';
 
+/**
+ * NavWrapper component that displays a navigation link
+ * @param {Object} props - Component props
+ * @param {string} props.type - The type of the link
+ * @param {boolean} props.isSelected - Whether the link is selected
+ * @param {string} props.link - The link to navigate to
+ */
 const NavWrapper: React.FC<NavWrapperProps> = ({
   type,
   isSelected,

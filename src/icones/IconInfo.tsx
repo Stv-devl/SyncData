@@ -1,5 +1,10 @@
 import React from 'react';
 
+/**
+ * IconInfo component
+ * @param {React.SVGProps<SVGSVGElement>} props - The props for the IconInfo component
+ * @returns {React.ReactElement} The IconInfo component
+ */
 const IconInfo: React.FC<React.SVGProps<SVGSVGElement>> = (props) => {
   return (
     <svg

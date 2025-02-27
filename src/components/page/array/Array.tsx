@@ -15,6 +15,11 @@ import useResponsiveFileCount from '@/hook/ui/useResponsiveFileCount';
 import usePopupStore from '@/store/ui/usePopup';
 import { useFileStore } from '@/store/useFileStore';
 
+/**
+ * Array component that displays files in either list or grid view
+ * @component
+ * @returns {JSX.Element} The rendered Array component with files display and controls
+ */
 const Array = () => {
   const {
     files,
@@ -41,13 +46,20 @@ const Array = () => {
     usePopupStore();
   const { containerRef, fileCount } = useResponsiveFileCount(isList);
 
+  /**
+   * Gets the current folder name
+   */
   const currentFolderName = useCurrentFolderName(
     filterTools,
     parentFolderId,
     files ?? []
   );
 
-
+  /**
+   * Sets the current page and entries per page based on the file count
+   * if its favorite page, set the display of the favorite files
+   * else set the display of the files
+   */
   useEffect(() => {
     if (fileCount === 0 || !files) return;
     setCurrentPage(1);
@@ -59,15 +71,24 @@ const Array = () => {
     }
   }, [fileCount, isFavoritePage, setEntriesPerPage, setDisplayFiles]);
 
-
+  /**
+   * Displays the favorite files or the files on the page
+   * @returns {Array} The displayed files
+   */
   const displayFileToArray = isFavoritePage
     ? displayFavoritesFiles
     : displayFiles;
 
+  /**
+   * Toggles the icon between list and grid view
+   */
   const toggleIcon = useCallback(() => {
     setIsList(!isList);
   }, [isList, setIsList]);
 
+  /**
+   * Generates a class string for the icon toggle
+   */
   const toggleIconClasses = useMemo(
     () =>
       twMerge(
@@ -79,6 +100,14 @@ const Array = () => {
     [isList]
   );
 
+  /**
+   * Handles the context menu event
+   * @param {React.MouseEvent} e - The mouse event
+   * @param {string} filename - The name of the file
+   * @param {DOMRect} rect - The rectangle of the file
+   * @param {string} fileId - The id of the file
+   *
+   */
   const handleContextMenu = useCallback(
     (e: React.MouseEvent, filename: string, rect: DOMRect, fileId: string) => {
       e.preventDefault();
@@ -87,6 +116,10 @@ const Array = () => {
     [handleClickOpen]
   );
 
+  /**
+   * Handles the checkbox change event
+   * @param {string} fileId - The id of the file
+   */
   const handleCheckboxChange = useCallback(
     (fileId: string) => {
       toggleFileChecked(fileId);
@@ -94,6 +127,12 @@ const Array = () => {
     [toggleFileChecked]
   );
 
+  /**
+   * Handles the mouse enter event
+   * @param {React.MouseEvent} event - The mouse event
+   * @param {string} type - The type of the element
+   * @param {string} transform - The transform of the element
+   */
   const handleMouseEnterCallback = useCallback(
     (event: React.MouseEvent, type: string, transform: string) => {
       handleMouseEnter(event, type, transform);
@@ -101,6 +140,10 @@ const Array = () => {
     [handleMouseEnter]
   );
 
+  /**
+   * Handles the mouse leave event
+   * @param {React.MouseEvent} event - The mouse event
+   */
   const handleMouseLeaveCallback = useCallback(() => {
     handleMouseLeave();
   }, [handleMouseLeave]);

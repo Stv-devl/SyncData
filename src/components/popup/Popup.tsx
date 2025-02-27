@@ -6,6 +6,11 @@ import InfoWrapper from './InfoWrapper';
 import usePopupEffect from '@/hook/ui/usePopupEffect';
 import usePopupStore from '@/store/ui/usePopup';
 
+/**
+ * Popup component that displays a popup with a content based on the popup type
+ * @component
+ * @returns {JSX.Element} The rendered Popup component with a content based on the popup type
+ */
 const Popup = () => {
   const popupRef = useRef<HTMLDivElement>(null);
 
@@ -16,6 +21,10 @@ const Popup = () => {
 
   usePopupEffect(isOpen, popupRef, closePopup);
 
+  /**
+   * Gets the popup class based on the open state
+   * @returns {string} The popup class
+   */
   const popupClass = useMemo(
     () =>
       twMerge(
@@ -25,6 +34,10 @@ const Popup = () => {
     [isOpen]
   );
 
+  /**
+   * Gets the style for the popup
+   * @returns {Object} The style for the popup
+   */
   const style = {
     top: y,
     left: x,

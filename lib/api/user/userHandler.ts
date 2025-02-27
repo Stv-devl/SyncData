@@ -1,4 +1,3 @@
-import { NextResponse } from 'next/server';
 import { authMiddleware } from 'lib/middleware/authMiddleware';
 import { corsMiddleware } from 'lib/middleware/corsMiddleware';
 import { rateLimitMiddleware } from 'lib/middleware/rateLimitMiddleware';
@@ -6,6 +5,13 @@ import { getDb } from 'lib/utils/dataBase/getDb';
 import { handleError } from 'lib/utils/errors/handleError';
 import { securityHeaders } from 'lib/utils/security/securityHeaders';
 import { ObjectId } from 'mongodb';
+import { NextResponse } from 'next/server';
+
+/**
+ * Handles user requests
+ * @param request - The HTTP request object
+ * @returns A Promise that resolves to the NextResponse object
+ */
 
 export async function userHandler(request: Request): Promise<NextResponse> {
   try {

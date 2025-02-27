@@ -1,5 +1,10 @@
 import React from 'react';
 
+/**
+ * IconFavorite component
+ * @param {React.SVGProps<SVGSVGElement>} props - The props for the IconFavorite component
+ * @returns {React.ReactElement} The IconFavorite component
+ */
 const IconFavorite: React.FC<React.SVGProps<SVGSVGElement>> = (props) => {
   return (
     <svg

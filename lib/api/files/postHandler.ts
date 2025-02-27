@@ -18,6 +18,15 @@ import { ObjectId, Collection } from 'mongodb';
 import { NextResponse } from 'next/server';
 import { getCurrentDate } from '@/helpers/getCurrentDate';
 import { FileType } from '@/types/type';
+
+/**
+ * Handles POST requests to create a new file or folder
+ * @param request - The HTTP request object
+ * @param usersCollection - The MongoDB collection for user data
+ * @param userId - The ID of the user performing the request
+ * @returns A Promise that resolves to the NextResponse object
+ */
+
 export async function handlePost(
   request: Request,
   usersCollection: Collection,

@@ -67,7 +67,6 @@ export interface FileState {
   currentPage: number;
   entriesPerPage: number;
   displayFiles: FileType[] | null;
-  savedDisplayFiles: FileType[] | null;
   displayFavoritesFiles: FileType[] | null;
   filterTools: FilterToolsProps;
   parentFolderId: string;

@@ -1,5 +1,10 @@
 import React from 'react';
 
+/**
+ * IconCrossCircle component
+ * @param {React.SVGProps<SVGSVGElement>} props - The props for the IconCrossCircle component
+ * @returns {React.ReactElement} The IconCrossCircle component
+ */
 const IconCrossCircle: React.FC<React.SVGProps<SVGSVGElement>> = (props) => {
   return (
     <svg

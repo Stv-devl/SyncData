@@ -2,6 +2,14 @@ import Button from './Button';
 import useModalStore from '@/store/ui/useModale';
 import { ButtonWrapperProps } from '@/types/type';
 
+/**
+ * ButtonModalWrapper component that displays a modal with two buttons
+ * @param {Object} props - Component props
+ * @param {string} props.actionLabel - The label of the action button
+ * @param {Function} props.handleAction - The function to handle the action button
+ * @returns {JSX.Element} The rendered ButtonModalWrapper component
+ */
+
 const ButtonModalWrapper: React.FC<ButtonWrapperProps> = ({
   actionLabel,
   handleAction,

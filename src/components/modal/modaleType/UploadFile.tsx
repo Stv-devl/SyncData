@@ -9,11 +9,15 @@ import { getCurrentDate } from '@/helpers/getCurrentDate';
 import useAccordion from '@/hook/ui/useAccordion';
 import useModalStore from '@/store/ui/useModale';
 import { useFileStore } from '@/store/useFileStore';
-import { ModaleFileProps } from '@/types/type';
 import { filteredFolders } from '@/utils/filteredFolders';
 import { getFileType } from '@/utils/getFileType';
 
-const UploadFile: React.FC<ModaleFileProps> = () => {
+/**
+ * UploadFile component that allows users to upload files and organize them in folders
+ * @component
+ * @returns {JSX.Element} The rendered UploadFile component with file upload form and folder selection
+ */
+const UploadFile = () => {
   const { files, createFiles } = useFileStore();
 
   const {
@@ -33,6 +37,10 @@ const UploadFile: React.FC<ModaleFileProps> = () => {
     checkbox: '',
   });
 
+  /**
+   * Handles file selection change event
+   * @param {React.ChangeEvent<HTMLInputElement>} event - The file input change event
+   */
   const handleFileChange = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
       const file = event.target.files?.[0];
@@ -46,6 +54,10 @@ const UploadFile: React.FC<ModaleFileProps> = () => {
     [handleChange]
   );
 
+  /**
+   * Handles form submission for file upload
+   * @param {React.FormEvent<HTMLFormElement>} e - The form submission event
+   */
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {

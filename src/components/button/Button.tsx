@@ -5,14 +5,17 @@ import { twMerge } from 'tailwind-merge';
 import { ButtonComponent } from '../../../src/types/type';
 
 /**
- * Button component renders a button with a label and an optional onClick handler.
- * It includes a hover effect when the mouse is over the button.
- * @param {ButtonComponent} props - Component properties.
- * @param {string} props.label - The text content of the button.
- * @param {() => void} props.onClick - The function to be called when the button is clicked.
- * @returns {JSX.Element} The Button component.
+ * Reusable button component with various style options
+ * @param {Object} props - Component properties
+ * @param {string} props.label - Text to display on the button
+ * @param {Function} props.onClick - Callback function triggered when the button is clicked
+ * @param {string} props.color - Button color ('empty' for a button with border, otherwise filled)
+ * @param {React.ComponentType} props.IconComponent - Optional icon component to display
+ * @param {boolean} props.disabled - Indicates if the button is disabled
+ * @param {string} props.type - HTML button type ('button', 'submit', 'reset')
+ * @param {string} props.iconColor - Color of the icon if present
+ * @returns {JSX.Element} The rendered button component
  */
-
 const Button: React.FC<ButtonComponent> = ({
   label,
   onClick,

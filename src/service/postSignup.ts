@@ -6,6 +6,13 @@
  * @throws {Error} If the sign-up request fails.
  */
 
+/**
+ * postSignup function
+ * @param {string} email - The user's email.
+ * @param {string} password - The user's password.
+ * @returns {Promise<{ token: string; userId: string }>} The created user data returned from the server.
+ * @throws {Error} If the sign-up request fails.
+ */
 const postSignup = async (
   email: string,
   password: string

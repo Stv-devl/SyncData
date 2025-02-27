@@ -8,6 +8,7 @@ const FORBIDDEN_EXTENSIONS = [
   'com',
   'scr',
 ];
+
 /**
  * Check if a file has a forbidden extension
  * @param filename - File name

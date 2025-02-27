@@ -1,7 +1,13 @@
-import { log } from 'node:console';
 import { FilterToolsProps } from '@/types/storeType';
 import { FileType } from '@/types/type';
 
+/**
+ * Sort and search filters for the application
+ * @param {FileType[] | null} files - The array of files to sort and search
+ * @param {FileType[] | null} flattenedFiles - The flattened array of files
+ * @param {FilterToolsProps} filterTools - The filter tools for the application
+ * @returns {FileType[]} The sorted and filtered files
+ */
 export const sortAndSearchFilters = (
   files: FileType[] | null,
   flattenedFiles: FileType[] | null,

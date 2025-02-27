@@ -1,5 +1,12 @@
 import { FileType } from '@/types/type';
 
+/**
+ * Creates a FormData object from a userId, parentId, and newFile
+ * @param {string} userId - The userId of the user
+ * @param {string} parentId - The parentId of the file
+ * @param {FileType} newFile - The new file to be created
+ * @returns {FormData} The FormData object
+ */
 export const createFormData = (
   userId: string,
   parentId: string,

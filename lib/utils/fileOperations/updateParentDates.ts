@@ -2,6 +2,14 @@ import { callFilesRecursive } from './callFilesRecursive';
 import { findFileRecursive } from './findFileRecursive';
 import { FileType } from '@/types/type';
 
+/**
+ * Updates the parent dates of a file
+ * @param files - The array of files
+ * @param childId - The ID of the child file
+ * @param newDate - The new date
+ * @param isRemove - Whether to remove the child file
+ * @returns The updated array of files
+ */
 export const updateParentDates = (
   files: FileType[],
   childId: string,

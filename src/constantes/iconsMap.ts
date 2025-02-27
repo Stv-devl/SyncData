@@ -42,6 +42,11 @@ import IconSortList from '@/icones/IconSortList';
 import IconSortUp from '@/icones/iconSortUp';
 import IconValidate from '@/icones/IconValidate';
 
+/**
+ * iconsMap constant that defines the icons map for the application
+ * @constant
+ * @type {Object}
+ */
 export const iconsMap = {
   Iconemail,
   Iconpassword,

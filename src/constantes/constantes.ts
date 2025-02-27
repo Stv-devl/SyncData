@@ -1,11 +1,21 @@
 import { iconsMap } from './iconsMap';
 
+/**
+ * NavItems constant that defines the navigation items for the application
+ * @constant
+ * @type {Array}
+ */
 export const navItems = [
   { path: '/home', type: 'Home' },
   { path: '/favorite', type: 'Favorite' },
   { path: '/pricing', type: 'Pricing' },
 ];
 
+/**
+ * ToolsBtn constant that defines the tools buttons for the application
+ * @constant
+ * @type {Array}
+ */
 export const toolsBtn = [
   {
     label: 'Upload',
@@ -23,6 +33,11 @@ export const toolsBtn = [
   },
 ];
 
+/**
+ * SelectedToolsBtn constant that defines the selected tools buttons for the application
+ * @constant
+ * @type {Array}
+ */
 export const selectedToolsBtn = [
   {
     label: 'Download',
@@ -41,12 +56,22 @@ export const selectedToolsBtn = [
   },
 ];
 
+/**
+ * ArrayHeader constant that defines the array header for the application
+ * @constant
+ * @type {Array}
+ */
 export const arrayHeader = [
   { name: 'filename' },
   { name: 'modified' },
   { name: 'acces' },
 ];
 
+/**
+ * ArrayIcone constant that defines the array icon for the application
+ * @constant
+ * @type {Array}
+ */
 export const arrayIcone = [
   { icon: iconsMap.IconFavorite, type: 'favorite' },
   { icon: iconsMap.IconShare, type: 'share' },
@@ -54,6 +79,11 @@ export const arrayIcone = [
   { icon: iconsMap.IconDelete, type: 'delete' },
 ];
 
+/**
+ * ArrayPopup constant that defines the array popup for the application
+ * @constant
+ * @type {Array}
+ */
 export const arrayPopup = [
   { icon: iconsMap.IconInfo, type: 'information', label: 'Information' },
   { icon: iconsMap.IconFavorite, type: 'favorite', label: 'Favorite' },

@@ -1,5 +1,13 @@
 import { FileType } from '@/types/type';
 
+/**
+ * Calls a callback function for each file in the array
+ * @param files - The array of files
+ * @param callback - The callback function
+ * @param parent - The parent file
+ * @returns The updated array of files
+ */
+
 export const callFilesRecursive = (
   files: FileType[],
   callback: (file: FileType, parent?: FileType) => FileType,

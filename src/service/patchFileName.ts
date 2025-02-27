@@ -1,5 +1,13 @@
 import { getCsrfToken } from '@/helpers/getCsrfToken';
 
+/**
+ * patchFileName function
+ * @param {string} userId - The user ID
+ * @param {string} fileId - The file ID
+ * @param {string} fileName - The new file name
+ * @param {string} actionType - The action type
+ * @returns {Promise} The response from the API
+ */
 const patchFileName = async (
   userId: string,
   fileId: string,

@@ -6,6 +6,11 @@ import { useMediaQuery } from 'react-responsive';
 import { iconsMap } from '../../constantes/iconsMap';
 import usePopupStore from '@/store/ui/usePopup';
 
+/**
+ * ProfileWrapper component that displays the profile information
+ * @returns The ProfileWrapper component
+ */
+
 const ProfileWrapper = () => {
   const { handleMouseEnter, handleMouseLeave } = usePopupStore();
   const isImage = false;

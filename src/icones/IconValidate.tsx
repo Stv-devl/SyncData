@@ -1,5 +1,10 @@
 import React from 'react';
 
+/**
+ * IconValidate component
+ * @param {React.SVGProps<SVGSVGElement>} props - The props for the IconValidate component
+ * @returns {React.ReactElement} The IconValidate component
+ */
 const IconValidate: React.FC<React.SVGProps<SVGSVGElement>> = (props) => {
   return (
     <svg

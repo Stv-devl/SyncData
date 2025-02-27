@@ -1,5 +1,12 @@
 import { z } from 'zod';
 
+/**
+ * Schema for validating update operations
+ * @typedef {Object} UpdateSchema
+ * @property {string} fileId - The ID of the file to update
+ * @property {string} fileName - The name of the file to update
+ */
+
 export const updateSchema = z
   .object({
     fileId: z

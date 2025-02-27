@@ -1,5 +1,9 @@
 import React, { useCallback, useState } from 'react';
 
+/**
+ * Custom hook for managing accordion functionality
+ * @returns {Object} Object containing fileName, checkedFile, handleCheck, handleChange, toggleOpen, and isOpen
+ */
 const useAccordion = () => {
   const [fileName, setFileName] = useState<string>('');
   const [checkedFile, setCheckedFile] = useState<string | null>(null);

@@ -7,6 +7,11 @@ import NavMobile from './NavMobile';
 import NavWrapper from './NavWrapper';
 import ProfileWrapper from './ProfileWrapper';
 
+/**
+ * Banner component that displays the navigation bar and profile information
+ * @returns The banner component
+ */
+
 const Banner = () => {
   const [isMounted, setIsMounted] = useState(false);
 

@@ -7,6 +7,10 @@ import { config } from '../../config';
 import { clientPromise } from '../../mongod';
 import { getUserByEmail, verifyPassword } from './authHelpers';
 
+/**
+ * Configuration options for NextAuth authentication
+ * @type {NextAuthOptions}
+ */
 export const authOptions: NextAuthOptions = {
   adapter: MongoDBAdapter(clientPromise),
 

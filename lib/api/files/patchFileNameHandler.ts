@@ -9,6 +9,15 @@ import { Collection, ObjectId } from 'mongodb';
 import { NextResponse } from 'next/server';
 import { getCurrentDate } from '@/helpers/getCurrentDate';
 
+/**
+ * Handles PATCH requests to update the name of a file.
+ * @param fileId - The ID of the file to update
+ * @param usersCollection - The MongoDB collection for user data
+ * @param userId - The ID of the user performing the request
+ * @param fileName - The new name for the file
+ * @returns A Promise that resolves to the NextResponse object
+ */
+
 export async function patchFileNameHandler(
   fileId: string,
   usersCollection: Collection,

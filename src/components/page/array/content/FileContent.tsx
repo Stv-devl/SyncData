@@ -8,6 +8,13 @@ import useFileEdition from '@/hook/ui/useFileEdition';
 import IconFavorited from '@/icones/iconFavorited';
 import { ArrayFileContentProps } from '@/types/type';
 
+/**
+ * FileContent component that displays a list of files and allows users to edit their names
+ * @component
+ * @param {ArrayFileContentProps} props - The properties for the FileContent component
+ * @returns {JSX.Element} The rendered FileContent component with a list of files and edit form
+ */
+
 const FileContent: React.FC<ArrayFileContentProps> = ({
   files,
   updateFileName,

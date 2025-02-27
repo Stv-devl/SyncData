@@ -5,6 +5,11 @@ import useManageFonctions from '@/hook/manage/useManageFonctions';
 import useCheckedItems from '@/hook/ui/useCheckedItems';
 import { useFileStore } from '@/store/useFileStore';
 
+/**
+ * ToolsBar component that displays the tools bar for the array
+ * @component
+ * @returns {JSX.Element} The rendered ToolsBar component
+ */
 const ToolsBar = () => {
   const { displayFiles } = useFileStore();
 
@@ -12,6 +17,10 @@ const ToolsBar = () => {
 
   const { getActionByType } = useManageFonctions();
 
+  /**
+   * Handles the button click event
+   * @param {string} type - The type of the button
+   */
   const handleButtonClick = useCallback(
     (type: string) => {
       getActionByType(type, fileId, fileName);
@@ -19,6 +28,10 @@ const ToolsBar = () => {
     [fileId, fileName, getActionByType]
   );
 
+  /**
+   * Combines the buttons
+   * @returns {Array} The combined buttons
+   */
   const combinedButtons = useMemo(
     () =>
       checkedItems && checkedItems.length > 0

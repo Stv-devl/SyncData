@@ -1,5 +1,13 @@
 import { FileType } from '@/types/type';
 
+/**
+ * Finds a file in the array of files
+ * @param files - The array of files
+ * @param idOrIds - The ID or IDs of the file to find
+ * @param action - The action to perform on the file
+ * @returns The file or files found
+ */
+
 export function findFileRecursive(
   files: FileType[],
   idOrIds: string | string[],

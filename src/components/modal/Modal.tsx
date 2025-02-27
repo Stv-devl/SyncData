@@ -3,6 +3,11 @@ import { iconsMap } from '../../constantes/iconsMap';
 import { modalsMap } from '../../constantes/modalsMap';
 import useModalStore from '@/store/ui/useModale';
 
+/**
+ * Modal component that displays a modal with a content based on the modal type
+ * @component
+ * @returns {JSX.Element} The rendered Modal component with a content based on the modal type
+ */
 const Modal = () => {
   const { isOpen, type, fileId, fileName } = useModalStore();
 

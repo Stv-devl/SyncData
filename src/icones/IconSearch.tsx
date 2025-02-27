@@ -1,5 +1,10 @@
 import React, { SVGProps } from 'react';
 
+/**
+ * IconSearch component
+ * @param {React.SVGProps<SVGSVGElement>} props - The props for the IconSearch component
+ * @returns {React.ReactElement} The IconSearch component
+ */
 const IconSearch: React.FC<SVGProps<SVGSVGElement>> = (props) => {
   return (
     <svg

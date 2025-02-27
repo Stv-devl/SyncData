@@ -9,13 +9,8 @@ import { FormDataSignUp, UseSignUpReturn } from '../../types/type';
 /**
  * Custom hook for handling user sign-up functionality.
  * Manages form state, validates form data, and submits the sign-up request.
- * @returns {UseSignUpReturn} An object containing:
- * - `handleSubmit`: Function to handle form submission for signing up a new user.
- * - `handleChange`: Function to handle changes to the form inputs.
- * - `formData`: The current state of the sign-up form data.
- * - `signupErrors`: An object containing any validation errors from the sign-up form.
- * - `isLoading`: A boolean indicating if a request is currently being processed.
- */
+ * @returns {UseSignUpReturn} An object containing handleSubmit, handleChange, handleGoogleSignIn, formData, signupErrors, isLoading
+ **/
 
 const useSignUp = (): UseSignUpReturn => {
   const [formData, setFormData] = useState<FormDataSignUp>({
@@ -33,6 +28,10 @@ const useSignUp = (): UseSignUpReturn => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const router = useRouter();
 
+  /**
+   * Handles changes to form input fields
+   * @param {React.ChangeEvent<HTMLInputElement>} e - The input change event
+   */
   const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData((prevFormData) => ({
@@ -42,6 +41,10 @@ const useSignUp = (): UseSignUpReturn => {
     setSignupErrors({ email: '', password: '', repeat: '' });
   }, []);
 
+  /**
+   * Handles validation and other errors during the signup process
+   * @param {unknown} error - The error to handle
+   */
   const handleError = (error: unknown) => {
     if (error instanceof Yup.ValidationError) {
       const fieldErrors = error.inner.reduce((acc, err) => {
@@ -58,10 +61,18 @@ const useSignUp = (): UseSignUpReturn => {
     }
   };
 
+  /**
+   * Redirects user to home page after successful signup
+   */
   const redirectToHome = () => {
     router.push('/home');
   };
 
+  /**
+   * Handles the form submission for user signup
+   * @param {FormEvent<HTMLFormElement>} e - The form submission event
+   * @returns {Promise<void>}
+   */
   const handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault();
     setIsLoading(true);
@@ -93,6 +104,10 @@ const useSignUp = (): UseSignUpReturn => {
     }
   };
 
+  /**
+   * Handles Google OAuth sign-in process
+   * @returns {Promise<void>}
+   */
   const handleGoogleSignIn = async (): Promise<void> => {
     setIsLoading(true);
     try {

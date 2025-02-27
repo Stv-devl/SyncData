@@ -2,10 +2,10 @@ import { handleError } from 'lib/utils/errors/handleError';
 import { Collection, ObjectId } from 'mongodb';
 
 /**
- * Récupère les fichiers d'un utilisateur à partir de MongoDB.
- * @param usersCollection - La collection MongoDB des utilisateurs.
- * @param userId - L'ID de l'utilisateur.
- * @returns Les fichiers de l'utilisateur ou une réponse d'erreur.
+ * Retrieves a user's files from MongoDB.
+ * @param usersCollection - The MongoDB users collection.
+ * @param userId - The user's ID.
+ * @returns The user's files or an error response.
  */
 export async function findUserFiles(
   usersCollection: Collection,

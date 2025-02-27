@@ -1,6 +1,13 @@
 import { callFilesRecursive } from './callFilesRecursive';
 import { FileType } from '@/types/type';
 
+/**
+ * Filters files by ID
+ * @param files - The array of files
+ * @param fileId - The ID of the file to filter
+ * @returns The filtered array of files
+ */
+
 export const filterById = (
   files: FileType[],
   fileId: string | string[]

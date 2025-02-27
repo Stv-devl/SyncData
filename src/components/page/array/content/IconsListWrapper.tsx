@@ -5,6 +5,12 @@ import { arrayIcone } from '@/constantes/constantes';
 import { iconsMap } from '@/constantes/iconsMap';
 import { IconsListWrapperProps } from '@/types/type';
 
+/**
+ * IconsListWrapper component that displays a list of icons for a file
+ * @component
+ * @param {IconsListWrapperProps} props - The properties for the IconsListWrapper component
+ * @returns {JSX.Element} The rendered IconsListWrapper component with a list of icons
+ */
 const IconsListWrapper: React.FC<IconsListWrapperProps> = ({
   file,
   handleIconClick,

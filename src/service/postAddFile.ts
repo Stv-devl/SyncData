@@ -3,6 +3,14 @@ import { createFormData } from '@/helpers/createFromData';
 import { CreateFileResponse } from '@/types/storeType';
 import { FileType } from '@/types/type';
 
+/**
+ * postAddFile function
+ * @param {string} userId - The user ID
+ * @param {string} parentId - The parent ID
+ * @param {FileType} newFile - The new file
+ * @returns {Promise<CreateFileResponse>} The response from the API
+ */
+
 const postAddFile = async (
   userId: string,
   parentId: string,

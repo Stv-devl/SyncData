@@ -5,12 +5,21 @@ const ITEM_WIDTH = 112;
 const DESKTOP_THRESHOLD = 1024;
 const MIN_GAP = 16;
 
+/**
+ * Custom hook for managing responsive file count
+ * @param {boolean} isList - Whether the list is in list view
+ * @returns {Object} Object containing containerRef and fileCount
+ */
 const useResponsiveFileCount = (isList: boolean) => {
   const containerRef = useRef<HTMLUListElement>(null);
   const [fileCount, setFileCount] = useState(0);
 
   const { setEntriesPerPage } = useFileStore();
 
+  /**
+   * Calculates the file count based on the container width and height
+   * @returns {void}
+   */
   const calculateFileCount = useCallback(() => {
     const containerElement = containerRef.current;
     if (!containerElement) {

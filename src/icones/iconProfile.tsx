@@ -1,5 +1,10 @@
 import React, { SVGProps } from 'react';
 
+/**
+ * IconProfile component
+ * @param {React.SVGProps<SVGSVGElement>} props - The props for the IconProfile component
+ * @returns {React.ReactElement} The IconProfile component
+ */
 const IconProfile: React.FC<SVGProps<SVGSVGElement>> = (props) => {
   return (
     <svg

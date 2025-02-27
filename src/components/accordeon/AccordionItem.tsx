@@ -4,6 +4,17 @@ import { iconsMap } from '@/constantes/iconsMap';
 import { AccordionItemProps, FileType } from '@/types/type';
 import { filteredFolders } from '@/utils/filteredFolders';
 
+/**s
+ * Accordion item component that displays a file/folder item with nested children
+ * @param {Object} props - Component props
+ * @param {FileType} props.file - The file/folder object to display
+ * @param {Function} props.handleCheck - Handler for checkbox changes
+ * @param {string} props.checkedFile - ID of currently checked file
+ * @param {Function} props.toggleOpen - Handler for expanding/collapsing folders
+ * @param {Function} props.isOpen - Function to check if a folder is open
+ * @returns {JSX.Element} Rendered accordion item component
+ */
+
 const AccordionItem: React.FC<AccordionItemProps> = ({
   file,
   handleCheck,

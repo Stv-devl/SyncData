@@ -1,5 +1,9 @@
 const isDev = process.env.NODE_ENV !== 'production';
 
+/**
+ * Sets security headers for the response
+ * @returns The security headers
+ */
 export const securityHeaders = {
   'Access-Control-Allow-Origin': isDev
     ? '*'

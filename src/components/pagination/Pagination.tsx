@@ -5,6 +5,11 @@ import usePagination from '../../hook/ui/usePagination';
 import { findFavoriteFiles } from '@/helpers/findFavoriteFiles';
 import { useFileStore } from '@/store/useFileStore';
 
+/**
+ * Pagination component that handles file pagination and navigation
+ * @component
+ * @returns {JSX.Element} The rendered Pagination component
+ */
 const Pagination = () => {
   const {
     files,
@@ -18,6 +23,10 @@ const Pagination = () => {
     setDisplayFavoritesFile,
   } = useFileStore();
 
+  /**
+   * Gets the files to paginate based on the favorite page and parent folder id
+   * @returns {Array} The files to paginate
+   */
   const fileToPaginate = useMemo(() => {
     if (isFavoritePage) return findFavoriteFiles(files || []);
     if (parentFolderId === 'root' || !files) return files;
@@ -27,6 +36,10 @@ const Pagination = () => {
       : null;
   }, [files, parentFolderId, isFavoritePage]);
 
+  /**
+   * Gets the page number based on the searchbar and entries per page
+   * @returns {number} The page number
+   */
   const pageNumber = useMemo(() => {
     if (filterTools.searchbar.length > 0) return null;
     return fileToPaginate
@@ -39,6 +52,10 @@ const Pagination = () => {
     currentPage,
   });
 
+  /**
+   * Handles page change and updates displayed files
+   * @param {number} newPage - The new page number to display
+   */
   const handleChangePage = useCallback(
     (newPage: number) => {
       setCurrentPage(newPage);
@@ -57,6 +74,11 @@ const Pagination = () => {
     ]
   );
 
+  /**
+   * Gets button classes based on active state
+   * @param {boolean} isActive - Whether the button is active
+   * @returns {string} The button classes
+   */
   const getButtonClasses = (isActive: boolean) =>
     clsx(
       'rounded-lg px-3 py-[5px] transition duration-300',

@@ -6,6 +6,11 @@ import IconCrossCircle from '@/icones/IconCrossCircle';
 import IconValidate from '@/icones/IconValidate';
 import { ChangeNameProps } from '@/types/type';
 
+/**
+ * UpdateNameInput component that displays an input field for updating a file name
+ * @param {ChangeNameProps} props - The properties for the UpdateNameInput component.
+ * @returns {JSX.Element} The rendered UpdateNameInput component
+ */
 const UpdateNameInput: React.FC<ChangeNameProps> = ({
   file,
   isFile,

@@ -1,6 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import usePopupStore from '@/store/ui/usePopup';
 
+/**
+ * Custom hook for managing popup position
+ * @param {React.RefObject<HTMLDivElement>} popupRef - The ref of the popup
+ * @returns {Object} Object containing popupPosition
+ */
 const usePopupPosition = (popupRef: React.RefObject<HTMLDivElement>) => {
   const { isOpen, x, y } = usePopupStore();
 

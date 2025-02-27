@@ -8,7 +8,12 @@ import { FileType } from '@/types/type';
 
 /**
  * Handles PATCH requests to update the favorite status of a file.
+ * @param fileId - The ID of the file to update
+ * @param usersCollection - The MongoDB collection for user data
+ * @param userId - The ID of the user performing the request
+ * @returns A Promise that resolves to the NextResponse object
  */
+
 export async function patchFavoriteHandler(
   fileId: string,
   usersCollection: Collection,

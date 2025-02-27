@@ -1,5 +1,10 @@
 import React from 'react';
 
+/**
+ * IconeDelete component
+ * @param {React.SVGProps<SVGSVGElement>} props - The props for the IconeDelete component
+ * @returns {React.ReactElement} The IconeDelete component
+ */
 const IconeDelete: React.FC<React.SVGProps<SVGSVGElement>> = (props) => {
   return (
     <svg

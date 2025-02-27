@@ -5,6 +5,11 @@ import useManageFonctions from '@/hook/manage/useManageFonctions';
 import useEditedInput from '@/hook/ui/useEditedInput';
 import { FileType, IconType, UseFileEditionProps } from '@/types/type';
 
+/**
+ * Custom hook for managing file edition functionality
+ * @param {UseFileEditionProps} props - The props for the useFileEdition hook
+ * @returns {Object} Object containing newFileName, editedFileRef, handleInputChange, handleIconClick, validateName, and error
+ */
 function useFileEdition({
   files,
   toggleEditedFile,

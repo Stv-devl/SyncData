@@ -1,18 +1,33 @@
 import { v2 as cloudinary } from 'cloudinary';
 import { v4 as uuidv4 } from 'uuid';
 
+/**
+ * Configures the Cloudinary client
+ */
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
   api_key: process.env.CLOUDINARY_API_KEY,
   api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
+/**
+ * FormDataFile type definition
+ * @typedef {Object} FormDataFile
+ * @property {string} name - The name of the file
+ * @property {string} type - The type of the file
+ * @property {function} arrayBuffer - The arrayBuffer of the file
+ */
 export type FormDataFile = {
   name: string;
   type: string;
   arrayBuffer: () => Promise<ArrayBuffer>;
 };
 
+/**
+ * Uploads a file to Cloudinary
+ * @param file - The file to upload
+ * @returns The uploaded file
+ */
 export async function uploadFileToCloudinary(file: FormDataFile) {
   try {
     const buffer = await file.arrayBuffer();

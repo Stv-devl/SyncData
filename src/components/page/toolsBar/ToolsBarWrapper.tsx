@@ -2,6 +2,12 @@ import React from 'react';
 import Button from '@/components/button/Button';
 import { ToolsBarWrapperProps } from '@/types/type';
 
+/**
+ * ToolsBarWrapper component that displays a button with an icon and a label
+ * @component
+ * @param {ToolsBarWrapperProps} props - The properties for the ToolsBarWrapper component
+ * @returns {JSX.Element} The rendered ToolsBarWrapper component
+ */
 const ToolsBarWrapper: React.FC<ToolsBarWrapperProps> = ({
   label,
   icon: IconComponent,

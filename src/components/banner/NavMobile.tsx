@@ -7,6 +7,11 @@ import ProfileWrapper from './ProfileWrapper';
 import { iconsMap } from '@/constantes/iconsMap';
 import useBurgerStore from '@/store/ui/useBurgerMenu';
 
+/**
+ * NavMobile component that displays the mobile navigation bar
+ * @returns The NavMobile component
+ */
+
 const NavMobile = () => {
   const { isOpen, toggleBurger } = useBurgerStore();
   const pathname = usePathname();

@@ -205,7 +205,8 @@ const Array = () => {
               />
             </>
           )}
-          {filterTools.searchbar.length === 0 && <EmptyContent />}
+          {!isFavoritePage ||
+            (filterTools.searchbar.length === 0 && <EmptyContent />)}
         </div>
         <Pagination />
       </div>

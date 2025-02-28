@@ -33,7 +33,9 @@ const useManageFonctions = () => {
             .getState()
             .openModal('CreateFolder', fileId as string[], fileName);
         case 'information':
-          return console.log('information in construction');
+          return useModalStore
+            .getState()
+            .openModal('Information', fileId as string[], fileName);
         case 'favorite':
           return toggleFavoriteFiles(fileId as string);
         case 'share':

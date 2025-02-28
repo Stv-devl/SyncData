@@ -153,6 +153,8 @@ const Array = () => {
     ? 'translate(-20%, -110%)'
     : 'translate(0%, -100%)';
 
+  console.log('favorite', isFavoritePage);
+
   return (
     <section className="relative mx-auto size-full rounded-lg bg-white p-4 lg:p-8">
       <Header isList={isList} setFilesChecked={setFilesChecked} />
@@ -196,17 +198,17 @@ const Array = () => {
           ) : null}
         </>
         <div className="relative hidden sm:block lg:flex-1">
-          {(!isFavoritePage || filterTools.searchbar.length === 0) && (
+          {!isFavoritePage && !filterTools.searchbar && (
             <>
               <DropZoneWrapper
                 isDragIcon={true}
                 dropFolderId={parentFolderId}
                 dropStyle="absolute inset-0"
               />
+
+              <EmptyContent />
             </>
           )}
-          {!isFavoritePage ||
-            (filterTools.searchbar.length === 0 && <EmptyContent />)}
         </div>
         <Pagination />
       </div>

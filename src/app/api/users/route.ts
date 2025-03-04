@@ -1,10 +1,10 @@
-import { userHandler } from 'lib/api/user/userHandler';
-
-export const dynamic = 'force-dynamic';
-export const revalidate = 0;
+import {
+  handlerRequests as GET,
+  handlerRequests as PATCH,
+} from '../../../../lib/api/user/handlerRequests';
 
 /**
- * GET route for users
- * @returns The GET route for users
+ * GET, PATCH routes for users
+ * @returns The GET, PATCH routes for users
  */
-export { userHandler as GET };
+export { GET, PATCH };

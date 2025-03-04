@@ -103,9 +103,12 @@ export const authOptions: NextAuthOptions = {
               profile: {
                 firstname: '',
                 lastname: '',
-                picture: '',
+                image: '',
+                email: user.email || '',
+                subscription: 'free',
               },
               files: [],
+              createdAt: new Date(),
             },
           }
         );

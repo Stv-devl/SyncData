@@ -3,7 +3,7 @@ import { handleError } from 'lib/utils/errors/handleError';
 import { addFileToParent } from 'lib/utils/fileOperations/addFileToParent';
 import { findFileRecursive } from 'lib/utils/fileOperations/findFileRecursive';
 import { findUserFiles } from 'lib/utils/fileOperations/findUserFIles';
-import { sanitizeFileName } from 'lib/utils/fileOperations/sanitizeFileName';
+import { sanitizeInput } from 'lib/utils/fileOperations/sanitizeInput';
 import { updateParentDates } from 'lib/utils/fileOperations/updateParentDates';
 import {
   FormDataFile,
@@ -76,7 +76,7 @@ export async function handlePost(
     }
 
     try {
-      newFile.filename = sanitizeFileName(newFile.filename);
+      newFile.filename = sanitizeInput(newFile.filename);
     } catch (error) {
       return handleError(
         400,

@@ -1,4 +1,4 @@
-import { getCsrfToken } from '../helpers/getCsrfToken';
+import { getCsrfToken } from 'next-auth/react';
 import { createFormData } from '@/helpers/createFromData';
 import { CreateFileResponse } from '@/types/storeType';
 import { FileType } from '@/types/type';

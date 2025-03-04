@@ -3,11 +3,7 @@ import { corsMiddleware } from 'lib/middleware/corsMiddleware';
 import { rateLimitMiddleware } from 'lib/middleware/rateLimitMiddleware';
 import { getDb } from 'lib/utils/dataBase/getDb';
 import { handleError } from 'lib/utils/errors/handleError';
-import {
-  generateCsrfToken,
-  setCsrfCookie,
-  validateCsrf,
-} from 'lib/utils/security/generateCsrfToken';
+import { nextAuthValidateCsrf } from 'lib/utils/security/nextAuthValidateCsrf';
 import { validateContentType } from 'lib/utils/security/validateContentType';
 import { Collection } from 'mongodb';
 import { NextResponse } from 'next/server';
@@ -40,19 +36,10 @@ export async function handlerRequest(request: Request): Promise<NextResponse> {
 
   const { userId } = authResponse;
 
-  const response = new NextResponse();
-
-  if (request.method === 'GET') {
-    const csrfToken = generateCsrfToken();
-    setCsrfCookie(response, csrfToken);
-
-    response.headers.set('X-CSRF-Token', csrfToken);
-    response.headers.append('Access-Control-Expose-Headers', 'X-CSRF-Token');
-    return response;
-  }
-
   if (['POST', 'PATCH'].includes(request.method)) {
-    if (!validateCsrf(request)) return handleError(403, 'Invalid CSRF token');
+    if (!nextAuthValidateCsrf(request)) {
+      return handleError(403, 'Invalid CSRF token');
+    }
     if (
       !validateContentType(request, ['application/json', 'multipart/form-data'])
     ) {

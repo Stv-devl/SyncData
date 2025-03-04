@@ -30,6 +30,7 @@ The user can:
 - Sort files by different criteria (name, date, etc.)
 - View files in both list and grid layouts
 - Manage files with basic operations (rename, delete, etc.)
+- Manage their profile (edit firstname, lastname, picture and email)
 
 ### Screenshot
 
@@ -38,6 +39,7 @@ The user can:
 ![](./public/images/Screenshot_desktop_List.png)
 ![](./public/images/Screenshot_desktop_Files.png)
 ![](./public/images/Screenshot_modale.png)
+![](./public/images/Screenshot_userProfile.png)
 
 ### Links
 
@@ -81,6 +83,11 @@ password: 0000
   - Drag and drop support
   - Real-time updates
 
+  - **User Profile**
+
+  - Edit user profile details (name, email, etc.)
+  - Update profile image
+
 - **Security**
 
   - JWT authentication
@@ -98,7 +105,6 @@ password: 0000
 ### Continued development
 
 - Add stripe subscription for premium features
-- Add user profile page
 - Implement file sharing between users
 - Add file preview capabilities
 - Add collaborative features

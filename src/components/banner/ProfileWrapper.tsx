@@ -1,10 +1,11 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { signOut } from 'next-auth/react';
-import React from 'react';
+import React, { useState } from 'react';
 import { useMediaQuery } from 'react-responsive';
 import { iconsMap } from '../../constantes/iconsMap';
 import usePopupStore from '@/store/ui/usePopup';
+import { useUserStore } from '@/store/useUserStore';
 
 /**
  * ProfileWrapper component that displays the profile information
@@ -12,8 +13,8 @@ import usePopupStore from '@/store/ui/usePopup';
  */
 
 const ProfileWrapper = () => {
+  const { profile } = useUserStore();
   const { handleMouseEnter, handleMouseLeave } = usePopupStore();
-  const isImage = false;
 
   const isTablet = useMediaQuery({ minWidth: 641, maxWidth: 1024 });
 
@@ -24,27 +25,32 @@ const ProfileWrapper = () => {
     ? 'translate(-20%, 120%)'
     : 'translate(70%, 0%)';
 
+  const [imageError, setImageError] = useState(false);
+  const profileImage = typeof profile?.image === 'string' ? profile.image : '';
+
   return (
     <>
       <Link
         href="/profile"
         onMouseEnter={(e) => handleMouseEnter(e, 'Profile', transformProfile)}
         onMouseLeave={handleMouseLeave}
+        className="min-w-[48px]"
       >
-        {!isImage ? (
+        {!imageError && profileImage ? (
+          <Image
+            src={profileImage}
+            width={48}
+            height={48}
+            className="text-darkest-blue size-[40px] rounded-full border-2 object-cover"
+            alt="Profile"
+            priority
+            onError={() => setImageError(true)}
+          />
+        ) : (
           <iconsMap.Iconprofile
             width={50}
             height={50}
-            className=" size-[40px] rounded-full border-2 border-blue-600"
-          />
-        ) : (
-          <Image
-            src=""
-            width={48}
-            height={48}
-            className="text-darkest-blue size-[40px] rounded-full border-2"
-            alt="Profile"
-            priority
+            className="size-[40px] rounded-full border-2 border-blue-600"
           />
         )}
       </Link>

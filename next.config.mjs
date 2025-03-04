@@ -15,8 +15,19 @@ const nextConfig = {
     CLOUDINARY_API_SECRET: process.env.CLOUDINARY_API_SECRET,
   },
   images: {
-    domains: ['res.cloudinary.com'],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'res.cloudinary.com',
+      },
+    ],
   },
+  api: {
+    bodyParser: {
+      sizeLimit: '10mb',
+    },
+  },
+
   webpack(config) {
     config.module.rules.push({
       test: /\.svg$/,

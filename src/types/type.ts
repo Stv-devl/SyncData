@@ -1,3 +1,4 @@
+import { ObjectId } from 'mongodb';
 import { FormEvent, SVGProps } from 'react';
 
 //user
@@ -8,10 +9,16 @@ export interface UserType {
   files: FileType[];
 }
 
+export interface ProfileType {
+  profile: UserProfile;
+}
+
 export interface UserProfile {
+  _id?: ObjectId;
   firstname: string;
   lastname: string;
-  picture: string;
+  email: string;
+  image?: File | string | null;
 }
 
 export interface UserCredentials {
@@ -263,4 +270,25 @@ export interface UseFileEditionProps {
 export interface UsePaginationProps {
   pageNumber: number;
   currentPage: number;
+}
+
+//profile
+
+export interface ProfileWrapperProps {
+  profile: UserProfile | null;
+  handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  profilErrors: Record<string, string>;
+}
+
+export interface ProfilePictureWrapperProps {
+  imagePreview: string | null;
+  handleImageChange: (file: File) => void;
+}
+
+export interface ProfileErrors {
+  firstname: string;
+  lastname: string;
+  email: string;
+  changed: string;
+  [key: string]: string;
 }

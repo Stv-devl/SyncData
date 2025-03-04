@@ -47,9 +47,9 @@ export interface UserState {
   profile: UserProfile | null;
   loading: boolean;
   error: string | null;
-  setUser: (user: UserType) => void;
   fetchData: (userId: string) => Promise<void>;
   getUserId: () => string | undefined;
+  updateProfile: (updatedProfile: UserProfile) => Promise<void>;
 }
 
 export type FilterToolsProps = {
@@ -111,4 +111,10 @@ export interface CreateFileResponse {
   file: FileType;
   parentId: string;
   type: string;
+}
+
+export interface UpdateProfileResponse {
+  success: boolean;
+  message?: string;
+  profile?: UserProfile;
 }

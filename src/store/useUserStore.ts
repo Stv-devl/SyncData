@@ -1,7 +1,9 @@
 import { create } from 'zustand';
+import patchProfile from '../service/patchProfile';
 import { useFileStore } from './useFileStore';
 import getUsers from '@/service/getUsers';
 import { UserState } from '@/types/storeType';
+import { UserProfile } from '@/types/type';
 
 /**
  * User store for managing user data and actions.
@@ -17,12 +19,6 @@ export const useUserStore = create<UserState>((set, get) => ({
   profile: null,
   loading: false,
   error: null,
-
-  /**
-   * Sets the user object in the store.
-   * @param {User} user - The user object to set.
-   */
-  setUser: (user) => set({ user }),
 
   /**
    * Gets the user ID from the user object.
@@ -66,6 +62,30 @@ export const useUserStore = create<UserState>((set, get) => ({
       const errorMsg =
         error instanceof Error ? error.message : 'An unknown error occurred';
       set({ error: errorMsg, loading: false });
+    }
+  },
+
+  /**
+   * Updates the user's profile in the backend and shows a success modal.
+   * @param {ProfilDetail} updatedProfile - The updated profile details.
+   * @returns {Promise<void>} A promise that resolves when the profile is updated.
+   */
+  updateProfile: async (updatedProfile: UserProfile): Promise<void> => {
+    const userId = get().getUserId();
+    if (!userId) return;
+    try {
+      const response = await patchProfile(userId, updatedProfile);
+      const updatedProfileData = response.updatedData;
+
+      if (!updatedProfileData) {
+        throw new Error('Profile is not valid.');
+      }
+      set((state) => ({
+        profile: { ...state.profile, ...updatedProfileData },
+      }));
+    } catch (error) {
+      console.error('Error updating the profile:', error);
+      set({ error: 'Error updating the profile' });
     }
   },
 }));

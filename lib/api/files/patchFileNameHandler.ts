@@ -2,7 +2,7 @@ import { updateSchema } from 'lib/shema/udpateSchema';
 import { handleError } from 'lib/utils/errors/handleError';
 import { findFileRecursive } from 'lib/utils/fileOperations/findFileRecursive';
 import { findUserFiles } from 'lib/utils/fileOperations/findUserFIles';
-import { sanitizeFileName } from 'lib/utils/fileOperations/sanitizeFileName';
+import { sanitizeInput } from 'lib/utils/fileOperations/sanitizeInput';
 import { updateParentDates } from 'lib/utils/fileOperations/updateParentDates';
 import { securityHeaders } from 'lib/utils/security/securityHeaders';
 import { Collection, ObjectId } from 'mongodb';
@@ -33,7 +33,7 @@ export async function patchFileNameHandler(
 
     let sanitizedFileName: string;
     try {
-      sanitizedFileName = sanitizeFileName(fileName);
+      sanitizedFileName = sanitizeInput(fileName);
     } catch (error) {
       return handleError(
         400,

@@ -68,3 +68,26 @@ export const updateFileNameSchema = Yup.object({
     .max(20, 'Should not exceed 20 characters')
     .required('Folder is required'),
 });
+
+/**
+ * Profile validation schema
+ * @constant
+ * @type {Yup.ObjectSchema}
+ */
+export const profileValidationSchema = Yup.object().shape({
+  firstname: Yup.lazy((value) =>
+    value === undefined
+      ? Yup.string()
+      : Yup.string().min(2, '2 characters minimum').required("Can't be empty")
+  ),
+  lastname: Yup.lazy((value) =>
+    value === undefined
+      ? Yup.string()
+      : Yup.string().min(2, '2 characters minimum').required("Can't be empty")
+  ),
+  email: Yup.lazy((value) =>
+    value === undefined
+      ? Yup.string()
+      : Yup.string().email('Invalid email address').required("Can't be empty")
+  ),
+});

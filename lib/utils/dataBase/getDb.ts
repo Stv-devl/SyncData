@@ -1,33 +1,37 @@
-import { Db, Collection } from 'mongodb';
+import { Db, Collection, MongoClient } from 'mongodb';
 import { clientPromise } from '../../mongod';
+import { UserProfile } from '@/types/type';
 
 const dbName = 'syncData';
 const collectionName = 'users';
+
+let client: MongoClient | null = null;
 
 /**
  * Establishes a connection to MongoDB and reuses it for subsequent calls.
  * @returns A Promise that resolves to the database connection and collection.
  */
-
 export async function getDb() {
-  if (!globalThis._mongoClient) {
-    try {
-      console.log('Connecting to MongoDB...');
-      globalThis._mongoClient = await clientPromise;
+  try {
+    if (!client) {
+      console.log('connecting to MongoDB...');
+      client = await clientPromise;
       console.log('Connected to MongoDB');
-    } catch (error) {
-      console.error('Error connecting to MongoDB:', error);
-      throw new Error('Database connection failed');
     }
+
+    const db: Db = client.db(dbName);
+
+    const usersCollection: Collection<UserProfile> =
+      db.collection<UserProfile>(collectionName);
+
+    await usersCollection.createIndex(
+      { 'files.id': 1 },
+      { unique: true, sparse: true }
+    );
+
+    return { db, usersCollection };
+  } catch (error) {
+    console.error('Error connecting to MongoDB:', error);
+    throw new Error('Database connection failed');
   }
-
-  const db: Db = globalThis._mongoClient.db(dbName);
-
-  const usersCollection: Collection = db.collection(collectionName);
-  await usersCollection.createIndex(
-    { 'files.id': 1 },
-    { unique: true, sparse: true }
-  );
-
-  return { db, usersCollection };
 }

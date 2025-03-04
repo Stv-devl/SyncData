@@ -153,8 +153,6 @@ const Array = () => {
     ? 'translate(-20%, -110%)'
     : 'translate(0%, -100%)';
 
-  console.log('favorite', isFavoritePage);
-
   return (
     <section className="relative mx-auto size-full rounded-lg bg-white p-4 lg:p-8">
       <Header isList={isList} setFilesChecked={setFilesChecked} />

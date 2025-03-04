@@ -1,4 +1,4 @@
-import { getCsrfToken } from '@/helpers/getCsrfToken';
+import { getCsrfToken } from 'next-auth/react';
 
 /**
  * patchFavorite function

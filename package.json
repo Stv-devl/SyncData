@@ -16,6 +16,7 @@
     "bcryptjs": "^2.4.3",
     "cloudinary": "^2.5.1",
     "clsx": "^2.1.1",
+    "cookie": "^1.0.2",
     "dotenv": "^16.4.5",
     "eslint-plugin-tailwindcss": "^3.17.4",
     "file-saver": "^2.0.5",

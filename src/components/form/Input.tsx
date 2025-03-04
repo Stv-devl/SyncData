@@ -44,7 +44,7 @@ const Input: React.FC<CustomsInputProps> = ({
       isSearch ? 'hidden' : '',
       error && label !== 'Link' ? 'text-error-red' : 'text-darkest-gray'
     ),
-    'text-xs'
+    'text-sm w-[100px]'
   );
 
   return (

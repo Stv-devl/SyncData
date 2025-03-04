@@ -1,4 +1,4 @@
-import { getCsrfToken } from '@/helpers/getCsrfToken';
+import { getCsrfToken } from 'next-auth/react';
 
 /**
  * Deletes a user file based on userId and fileId.

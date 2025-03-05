@@ -79,7 +79,6 @@ export const authOptions: NextAuthOptions = {
         sameSite: 'lax',
         path: '/',
         secure: process.env.NODE_ENV === 'production',
-        domain: process.env.NEXT_PUBLIC_ORIGIN || 'https://syncdata.vercel.app',
       },
     },
     sessionToken: {

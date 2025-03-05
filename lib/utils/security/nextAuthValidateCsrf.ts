@@ -14,8 +14,12 @@ export function nextAuthValidateCsrf(request: Request): boolean {
     cookies().get('next-auth.csrf-token')?.value ||
     '';
 
+  console.log('tokenCookie in nextAuthValidateCsrf', tokenCookie);
+
   if (!tokenCookie) return false;
 
   const [cookieCsrf] = tokenCookie.split('|');
+  console.log('cookieCsrf in nextAuthValidateCsrf', cookieCsrf);
+  console.log('csrfHeader in nextAuthValidateCsrf', csrfHeader);
   return cookieCsrf === csrfHeader;
 }

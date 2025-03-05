@@ -125,7 +125,6 @@ const useManageProfile = () => {
           ...finalUpdatedFields,
         } as UserProfile;
         setFile(null);
-        console.log('Profil mis à jour:', finalUpdatedFields);
       } catch (error) {
         if (error instanceof Yup.ValidationError) {
           setProfilErrors(

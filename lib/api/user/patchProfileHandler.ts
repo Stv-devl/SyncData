@@ -23,6 +23,7 @@ export async function patchProfileHandler(
     const { requestUserId, usersCollection } = context;
 
     if (!nextAuthValidateCsrf(request)) {
+      console.log('Invalid CSRF token');
       return handleError(403, 'Invalid CSRF token');
     }
 

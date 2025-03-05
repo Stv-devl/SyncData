@@ -12,6 +12,7 @@ import { UserProfile } from '@/types/type';
 const patchProfile = async (userId: string, updatedProfile: UserProfile) => {
   try {
     const csrfToken = await getCsrfToken();
+    console.log('csrfToken', csrfToken);
     if (!csrfToken) {
       throw new Error('Could not retrieve CSRF token from NextAuth');
     }

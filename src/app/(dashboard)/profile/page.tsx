@@ -17,8 +17,6 @@ const Profile: React.FC = () => {
     handleSubmit,
   } = useManageProfile();
 
-  console.log('profilErrors', profilErrors);
-
   return (
     <div className="space-between flex size-full flex-col bg-white p-6 sm:max-w-screen-lg sm:rounded-lg sm:p-12">
       <h1 className="text-titleSmall sm:text-title text-darkest-blue mb-4">

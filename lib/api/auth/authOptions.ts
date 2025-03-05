@@ -70,7 +70,7 @@ export const authOptions: NextAuthOptions = {
 
   secret: config.secretKey,
 
-  useSecureCookies: process.env.NODE_ENV === 'production',
+  useSecureCookies: true,
   cookies: {
     csrfToken: {
       name: 'next-auth.csrf-token',
@@ -78,7 +78,7 @@ export const authOptions: NextAuthOptions = {
         httpOnly: true,
         sameSite: 'none',
         path: '/',
-        secure: process.env.NODE_ENV === 'production',
+        secure: true,
       },
     },
     sessionToken: {
@@ -87,7 +87,7 @@ export const authOptions: NextAuthOptions = {
         httpOnly: true,
         sameSite: 'lax',
         path: '/',
-        secure: process.env.NODE_ENV === 'production',
+        secure: true,
       },
     },
   },

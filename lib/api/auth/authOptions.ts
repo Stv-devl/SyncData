@@ -70,6 +70,28 @@ export const authOptions: NextAuthOptions = {
 
   secret: config.secretKey,
 
+  useSecureCookies: process.env.NODE_ENV === 'production',
+  cookies: {
+    csrfToken: {
+      name: 'next-auth.csrf-token',
+      options: {
+        httpOnly: true,
+        sameSite: 'lax',
+        path: '/',
+        secure: process.env.NODE_ENV === 'production',
+      },
+    },
+    sessionToken: {
+      name: `next-auth.session-token`,
+      options: {
+        httpOnly: true,
+        sameSite: 'lax',
+        path: '/',
+        secure: process.env.NODE_ENV === 'production',
+      },
+    },
+  },
+
   callbacks: {
     async jwt({ token, user }) {
       if (user) {

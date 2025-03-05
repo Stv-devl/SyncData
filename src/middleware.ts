@@ -4,9 +4,6 @@ import { withAuth } from 'next-auth/middleware';
  * Middleware for authentication.
  */
 export default withAuth({
-  callbacks: {
-    authorized: ({ token }) => !!token,
-  },
   pages: {
     signIn: '/login',
   },

@@ -1,13 +1,8 @@
 import { handleError } from 'lib/utils/errors/handleError';
 import { securityHeaders } from 'lib/utils/security/securityHeaders';
-import { Collection, ObjectId } from 'mongodb';
+import { ObjectId } from 'mongodb';
 import { NextResponse } from 'next/server';
-import { UserProfile } from '@/types/type';
-
-interface HandlerContext {
-  requestUserId: string;
-  usersCollection: Collection<UserProfile>;
-}
+import { HandlerContext } from '@/types/type';
 
 /**
  * Handles user profile retrieval

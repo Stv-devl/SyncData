@@ -5,14 +5,9 @@ import { processImage } from 'lib/utils/fileOperations/processImage';
 import { nextAuthValidateCsrf } from 'lib/utils/security/nextAuthValidateCsrf';
 import { securityHeaders } from 'lib/utils/security/securityHeaders';
 import { validateContentType } from 'lib/utils/security/validateContentType';
-import { Collection, ObjectId } from 'mongodb';
+import { ObjectId } from 'mongodb';
 import { NextResponse } from 'next/server';
-import { UserProfile } from '@/types/type';
-
-interface HandlerContext {
-  requestUserId: string;
-  usersCollection: Collection<UserProfile>;
-}
+import { HandlerContext, UserProfile } from '@/types/type';
 
 /**
  * Handles user profile updates
@@ -52,9 +47,7 @@ export async function patchProfileHandler(
     }
 
     const parsedData = profileSchema.partial().safeParse(updatedFields);
-    console.log('After validation - parsedData:', parsedData);
     if (!parsedData.success) {
-      console.error('Validation failed:', parsedData.error.format());
       return handleError(400, 'Invalid input data');
     }
 

@@ -22,11 +22,6 @@ const nextConfig = {
       },
     ],
   },
-  api: {
-    bodyParser: {
-      sizeLimit: '10mb',
-    },
-  },
 
   webpack(config) {
     config.module.rules.push({

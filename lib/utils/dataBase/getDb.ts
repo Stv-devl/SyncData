@@ -1,6 +1,6 @@
 import { Db, Collection, MongoClient } from 'mongodb';
 import { clientPromise } from '../../mongod';
-import { UserProfile } from '@/types/type';
+import { UserType } from '@/types/type';
 
 const dbName = 'syncData';
 const collectionName = 'users';
@@ -21,8 +21,8 @@ export async function getDb() {
 
     const db: Db = client.db(dbName);
 
-    const usersCollection: Collection<UserProfile> =
-      db.collection<UserProfile>(collectionName);
+    const usersCollection: Collection<UserType> =
+      db.collection<UserType>(collectionName);
 
     await usersCollection.createIndex(
       { 'files.id': 1 },

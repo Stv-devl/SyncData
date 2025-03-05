@@ -29,7 +29,7 @@ export const useUserStore = create<UserState>((set, get) => ({
     if (!userId) {
       set({ error: 'User not logged in', loading: false });
     }
-    return userId;
+    return userId?.toString();
   },
 
   /**
@@ -54,7 +54,7 @@ export const useUserStore = create<UserState>((set, get) => ({
         });
 
         const { setFiles } = useFileStore.getState();
-        setFiles(user.files);
+        setFiles(user.files || []);
       } else {
         set({ user: null, loading: false });
       }

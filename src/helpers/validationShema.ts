@@ -78,16 +78,27 @@ export const profileValidationSchema = Yup.object().shape({
   firstname: Yup.lazy((value) =>
     value === undefined
       ? Yup.string()
-      : Yup.string().min(2, '2 characters minimum').required("Can't be empty")
+      : Yup.string()
+          .trim()
+          .min(2, '2 characters minimum')
+          .test('not-empty', "Can't be empty", (val) => !!val && val.length > 0)
   ),
+
   lastname: Yup.lazy((value) =>
     value === undefined
       ? Yup.string()
-      : Yup.string().min(2, '2 characters minimum').required("Can't be empty")
+      : Yup.string()
+          .trim()
+          .min(2, '2 characters minimum')
+          .test('not-empty', "Can't be empty", (val) => !!val && val.length > 0)
   ),
+
   email: Yup.lazy((value) =>
     value === undefined
       ? Yup.string()
-      : Yup.string().email('Invalid email address').required("Can't be empty")
+      : Yup.string()
+          .trim()
+          .email('Invalid email address')
+          .test('not-empty', "Can't be empty", (val) => !!val && val.length > 0)
   ),
 });

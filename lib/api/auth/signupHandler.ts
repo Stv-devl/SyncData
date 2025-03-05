@@ -60,7 +60,7 @@ export async function signupHandler(request: Request): Promise<NextResponse> {
       profile: {
         firstname: '',
         lastname: '',
-        image: '',
+        image: null,
         email: normalizedEmail,
         subscription: 'free',
       },

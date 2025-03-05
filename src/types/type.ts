@@ -1,12 +1,13 @@
-import { ObjectId } from 'mongodb';
+import { Collection, ObjectId } from 'mongodb';
 import { FormEvent, SVGProps } from 'react';
 
 //user
 export interface UserType {
-  _id: string;
-  credentials: UserCredentials;
-  profile: UserProfile;
-  files: FileType[];
+  _id?: ObjectId;
+  credentials?: UserCredentials;
+  profile?: UserProfile;
+  files?: FileType[];
+  createdAt?: Date;
 }
 
 export interface ProfileType {
@@ -14,17 +15,22 @@ export interface ProfileType {
 }
 
 export interface UserProfile {
-  _id?: ObjectId;
-  firstname: string;
-  lastname: string;
-  email: string;
+  firstname?: string;
+  lastname?: string;
+  email?: string;
   image?: File | string | null;
+  subscription?: string;
 }
 
 export interface UserCredentials {
   email: string;
   password: string;
 }
+
+export type HandlerContext = {
+  usersCollection: Collection<UserType>;
+  requestUserId: string;
+};
 
 //signup
 export interface FormDataSignUp {
@@ -289,6 +295,5 @@ export interface ProfileErrors {
   firstname: string;
   lastname: string;
   email: string;
-  changed: string;
   [key: string]: string;
 }

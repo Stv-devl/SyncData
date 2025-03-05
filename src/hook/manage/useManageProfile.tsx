@@ -10,14 +10,15 @@ import React, {
 import * as Yup from 'yup';
 import { profileValidationSchema } from '../../helpers/validationShema';
 import { useUserStore } from '../../store/useUserStore';
-import useModalStore from '@/store/ui/useModale';
 import { ProfileErrors, UserProfile } from '@/types/type';
 
 const useManageProfile = () => {
   const { profile, updateProfile } = useUserStore();
-
   const initialProfile = useRef(profile);
-  const [localProfile, setLocalProfile] = useState(profile);
+
+  const [localProfile, setLocalProfile] = useState<UserProfile>(
+    profile ?? { firstname: '', lastname: '', email: '', image: null }
+  );
   const [file, setFile] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string | null>(
     profile?.image ? String(profile.image) : null
@@ -44,9 +45,12 @@ const useManageProfile = () => {
    * Handles input field changes (firstname, lastname, email)
    */
   const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    setLocalProfile((prev) =>
-      prev ? { ...prev, [e.target.name]: e.target.value } : null
-    );
+    const { name, value } = e.target;
+
+    setLocalProfile((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
   }, []);
 
   /**
@@ -61,30 +65,25 @@ const useManageProfile = () => {
    * Extracts only the modified fields
    */
   const getUpdatedFields = useCallback(() => {
-    if (!initialProfile.current || !localProfile) return {};
-
-    const updatedFields: Partial<UserProfile> = {};
-
-    if (localProfile.firstname !== initialProfile.current.firstname)
-      updatedFields.firstname = localProfile.firstname;
-
-    if (localProfile.lastname !== initialProfile.current.lastname)
-      updatedFields.lastname = localProfile.lastname;
-
-    if (localProfile.email !== initialProfile.current.email)
-      updatedFields.email = localProfile.email;
-
-    if (file) updatedFields.image = imagePreview;
-
-    return updatedFields;
+    return {
+      firstname: localProfile.firstname?.trim() ?? '',
+      lastname: localProfile.lastname?.trim() ?? '',
+      email: localProfile.email?.trim() ?? '',
+      image: file ? imagePreview ?? null : localProfile.image ?? null,
+    };
   }, [localProfile, file, imagePreview]);
 
   /**
-   * Checks if profile data has changed
+   * Filters unchanged fields
    */
-  const hasChanges = useMemo(() => {
-    return Object.keys(getUpdatedFields()).length > 0;
-  }, [getUpdatedFields]);
+  const filterUnchangedFields = (updatedFields: Partial<UserProfile>) => {
+    return Object.fromEntries(
+      Object.entries(updatedFields).filter(
+        ([key, value]) =>
+          value !== initialProfile.current?.[key as keyof UserProfile]
+      )
+    );
+  };
 
   /**
    * Handles form submission
@@ -100,8 +99,14 @@ const useManageProfile = () => {
       });
 
       const updatedFields = getUpdatedFields();
+      const finalUpdatedFields = filterUnchangedFields(updatedFields);
 
-      if (!hasChanges) {
+      if (
+        Object.keys(finalUpdatedFields).length === 0 &&
+        initialProfile.current?.firstname &&
+        initialProfile.current?.lastname &&
+        initialProfile.current?.email
+      ) {
         setProfilErrors((prev) => ({
           ...prev,
           changed: 'You must make some changes',
@@ -114,31 +119,29 @@ const useManageProfile = () => {
           abortEarly: false,
         });
 
-        updateProfile(updatedFields as UserProfile);
-
+        updateProfile(finalUpdatedFields as UserProfile);
         initialProfile.current = {
           ...initialProfile.current,
-          ...updatedFields,
+          ...finalUpdatedFields,
         } as UserProfile;
         setFile(null);
-
-        console.log('Profil mis à jour:', updatedFields);
+        console.log('Profil mis à jour:', finalUpdatedFields);
       } catch (error) {
         if (error instanceof Yup.ValidationError) {
-          const errors = error.inner.reduce(
-            (acc: ProfileErrors, err) => {
-              if (err.path) acc[err.path as keyof ProfileErrors] = err.message;
-              return acc;
-            },
-            { firstname: '', lastname: '', email: '', changed: '' }
+          setProfilErrors(
+            error.inner.reduce(
+              (acc: ProfileErrors, err) => {
+                if (err.path)
+                  acc[err.path as keyof ProfileErrors] = err.message;
+                return acc;
+              },
+              { firstname: '', lastname: '', email: '', changed: '' }
+            )
           );
-
-          setProfilErrors(errors);
-          console.log('Erreurs de validation:', errors);
         }
       }
     },
-    [hasChanges, getUpdatedFields, updateProfile]
+    [updateProfile, getUpdatedFields]
   );
 
   return {

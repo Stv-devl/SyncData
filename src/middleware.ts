@@ -17,5 +17,5 @@ export default withAuth({
  * @type {Object}
  */
 export const config = {
-  matcher: ['/', '/home', '/profile', '/favorite', '/pricing'],
+  matcher: ['/home', '/profile', '/favorite', '/pricing'],
 };

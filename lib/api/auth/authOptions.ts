@@ -76,7 +76,7 @@ export const authOptions: NextAuthOptions = {
       name: 'next-auth.csrf-token',
       options: {
         httpOnly: true,
-        sameSite: 'lax',
+        sameSite: 'none',
         path: '/',
         secure: process.env.NODE_ENV === 'production',
       },

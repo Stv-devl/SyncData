@@ -81,6 +81,7 @@ export const authOptions: NextAuthOptions = {
         secure: process.env.NODE_ENV === 'production',
       },
     },
+    /*
     sessionToken: {
       name: `next-auth.session-token`,
       options: {
@@ -89,7 +90,7 @@ export const authOptions: NextAuthOptions = {
         path: '/',
         secure: process.env.NODE_ENV === 'production',
       },
-    },
+    },*/
   },
 
   callbacks: {

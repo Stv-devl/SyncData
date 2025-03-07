@@ -45,11 +45,16 @@ export interface ModalState {
 export interface UserState {
   user: UserType | null;
   profile: UserProfile | null;
+  subscription: string;
+  subscriptionId: string | undefined;
   loading: boolean;
   error: string | null;
   fetchData: (userId: string) => Promise<void>;
   getUserId: () => string | undefined;
   updateProfile: (updatedProfile: UserProfile) => Promise<void>;
+  updateSubscription: (plan: string) => Promise<void>;
+  validateSubscription: (sessionId: string) => Promise<void>;
+  cancelSubscription: () => Promise<void>;
 }
 
 export type FilterToolsProps = {

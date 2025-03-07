@@ -41,7 +41,9 @@ const useLogin = (): UseLoginReturn => {
    * Redirects the user to the home page
    */
   const redirectToHome = () => {
-    router.push('/home');
+    setTimeout(() => {
+      router.push('/home');
+    }, 1000);
   };
 
   /**

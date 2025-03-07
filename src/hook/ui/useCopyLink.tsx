@@ -10,8 +10,7 @@ import { useFileStore } from '@/store/useFileStore';
  */
 const useCopyToClipboard = () => {
   const filesRef = useRef(useFileStore.getState().files);
-  const { openModal, closeModal } = useModalStore();
-  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const { openModal } = useModalStore();
 
   /**
    * Copies a file link to the clipboard
@@ -30,19 +29,12 @@ const useCopyToClipboard = () => {
         .writeText(file.url)
         .then(() => {
           openModal('CopyLink', fileId, fileName);
-
-          if (timeoutRef.current) clearTimeout(timeoutRef.current);
-
-          timeoutRef.current = setTimeout(() => {
-            closeModal();
-            timeoutRef.current = null;
-          }, 1000);
         })
         .catch((err) => {
           console.error(`Failed to copy link for ${fileName}:`, err);
         });
     },
-    [openModal, closeModal]
+    [openModal]
   );
 
   return { copyToClipboard };

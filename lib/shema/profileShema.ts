@@ -8,4 +8,6 @@ export const profileSchema = z.object({
   lastname: z.string().min(2, 'Lastname is required').max(50).optional(),
   email: z.string().email('Invalid email format').max(50).optional(),
   image: z.union([z.string(), z.null()]).optional(),
+  subscription: z.string().optional(),
+  subscriptionId: z.string().optional(),
 });

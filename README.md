@@ -31,6 +31,7 @@ The user can:
 - View files in both list and grid layouts
 - Manage files with basic operations (rename, delete, etc.)
 - Manage their profile (edit firstname, lastname, picture and email)
+- Subscribe to premium features using Stripe
 
 ### Screenshot
 
@@ -40,6 +41,7 @@ The user can:
 ![](./public/images/Screenshot_desktop_Files.png)
 ![](./public/images/Screenshot_modale.png)
 ![](./public/images/Screenshot_userProfile.png)
+![](./public/images/Screenshot_pricing.png)
 
 ### Links
 
@@ -88,6 +90,11 @@ password: 0000
   - Edit user profile details (name, email, etc.)
   - Update profile image
 
+    - **Premium Feature**
+
+- Subscription plans for additional storage and advanced features
+- Secure payment processing via Stripe
+
 - **Security**
 
   - JWT authentication
@@ -101,10 +108,10 @@ password: 0000
 - MongoDB integration and data modeling
 - Cloud storage implementation
 - TypeScript best practices
+- Implementing Stripe for handling subscriptions
 
 ### Continued development
 
-- Add stripe subscription for premium features
 - Implement file sharing between users
 - Add file preview capabilities
 - Add collaborative features

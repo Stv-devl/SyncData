@@ -1,4 +1,5 @@
 import React from 'react';
+import useAutoCloseModal from '@/hook/ui/useAutoCloseModal';
 
 /**
  * CopyLink component that displays a success message when a link is copied
@@ -6,6 +7,8 @@ import React from 'react';
  */
 
 const CopyLink = () => {
+  useAutoCloseModal(1500);
+
   return (
     <>
       <p className="text-darkest-blue mt-4 text-center font-medium">

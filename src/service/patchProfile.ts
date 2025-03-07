@@ -29,6 +29,14 @@ const patchProfile = async (userId: string, updatedProfile: UserProfile) => {
       profilFormData.append('email', updatedProfile.email);
     }
 
+    if (updatedProfile.subscription !== undefined) {
+      profilFormData.append('subscription', updatedProfile.subscription);
+    }
+
+    if (updatedProfile.subscriptionId !== undefined) {
+      profilFormData.append('subscriptionId', updatedProfile.subscriptionId);
+    }
+
     let imageFile: File | null = null;
 
     if (updatedProfile.image) {

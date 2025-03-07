@@ -20,6 +20,7 @@ export interface UserProfile {
   email?: string;
   image?: File | string | null;
   subscription?: string;
+  subscriptionId?: string;
 }
 
 export interface UserCredentials {
@@ -296,4 +297,14 @@ export interface ProfileErrors {
   lastname: string;
   email: string;
   [key: string]: string;
+}
+
+//stripe plan
+export interface Plan {
+  key: string;
+  name?: string;
+  price: string;
+  storage?: string;
+  features?: string[];
+  buttonLabel?: string;
 }

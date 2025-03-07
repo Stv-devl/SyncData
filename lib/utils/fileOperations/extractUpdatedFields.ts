@@ -20,5 +20,13 @@ export function extractUpdatedFields(formData: FormData): Partial<UserProfile> {
   const email = formData.get('email');
   if (email !== null) updatedFields.email = email as string;
 
+  const subscription = formData.get('subscription');
+  if (subscription !== null)
+    updatedFields.subscription = subscription as string;
+
+  const subscriptionId = formData.get('subscriptionId');
+  if (subscriptionId !== null)
+    updatedFields.subscriptionId = subscriptionId as string;
+
   return updatedFields;
 }

@@ -25,8 +25,9 @@ const useModalStore = create<ModalState>((set) => ({
       fileName,
     });
   },
-  closeModal: () =>
-    set({ isOpen: false, type: null, fileId: null, fileName: null }),
+  closeModal: () => {
+    set({ isOpen: false, type: null, fileId: null, fileName: null });
+  },
 }));
 
 export default useModalStore;

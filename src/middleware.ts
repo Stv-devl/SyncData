@@ -1,11 +1,12 @@
 import { withAuth } from 'next-auth/middleware';
 
-/**
- * Middleware for authentication.
- */
 export default withAuth({
   callbacks: {
-    authorized: ({ token }) => {
+    authorized: ({ req, token }) => {
+      if (req.nextUrl.pathname === '/home') {
+        return req.method === 'GET';
+      }
+
       return !!token;
     },
   },

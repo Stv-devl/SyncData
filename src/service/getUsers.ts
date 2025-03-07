@@ -9,8 +9,6 @@ import { UserType } from '../types/type';
  */
 const getUsers = async (userId: string): Promise<UserType | null> => {
   const url = `${process.env.NEXT_PUBLIC_API_URL}/users?userId=${userId}`;
-  console.log(`fetching user with id ${userId}`);
-  console.log('request url', url);
 
   try {
     const response = await fetch(url);

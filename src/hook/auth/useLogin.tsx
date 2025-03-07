@@ -40,10 +40,9 @@ const useLogin = (): UseLoginReturn => {
   /**
    * Redirects the user to the home page
    */
-  const redirectToHome = () => {
-    setTimeout(() => {
-      router.push('/home');
-    }, 1000);
+  const redirectToHome = async () => {
+    console.log('redirectToHome ');
+    router.push('/home');
   };
 
   /**

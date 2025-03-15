@@ -1,8 +1,6 @@
 'use client';
 import Button from '../button/Button';
-import RemovePayement from '../modal/modaleType/RemovePayement';
 import { plans } from '@/constantes/constantes';
-import { modalsMap } from '@/constantes/modalsMap';
 import useModalStore from '@/store/ui/useModale';
 import { useUserStore } from '@/store/useUserStore';
 
@@ -14,12 +12,12 @@ export default function PricingCardWrapper() {
   };
 
   return (
-    <div className="flex flex-row flex-wrap items-center justify-center gap-6 p-6 lg:mt-5">
+    <div className="flex flex-row flex-wrap items-center justify-center gap-6 rounded-lg p-6 sm:gap-[4%] lg:mt-5">
       {plans &&
         plans.map((plan, index) => (
           <div
             key={index}
-            className="border-regular-gray shadow-custom-gray flex min-h-[300px] min-w-[300px] flex-col justify-between rounded-xl border bg-white p-5  sm:min-w-[241px]"
+            className="border-regular-gray shadow-custom-gray flex min-h-[300px] min-w-[300px] flex-col justify-between rounded-xl border bg-white p-5 "
           >
             <div>
               <h2 className="text-darkest-blue text-center text-xl font-semibold">

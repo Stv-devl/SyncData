@@ -1,6 +1,5 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
 import { signIn } from 'next-auth/react';
 import { FormEvent, useState } from 'react';
 import * as Yup from 'yup';
@@ -25,8 +24,6 @@ const useLogin = (): UseLoginReturn => {
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  const router = useRouter();
-
   /**
    * Handles input changes in the login form
    * @param {React.ChangeEvent<HTMLInputElement>} e - The change event
@@ -35,14 +32,6 @@ const useLogin = (): UseLoginReturn => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
     setLoginErrors({ email: '', password: '', general: '' });
-  };
-
-  /**
-   * Redirects the user to the home page
-   */
-  const redirectToHome = async () => {
-    console.log('redirectToHome ');
-    router.push('/home');
   };
 
   /**
@@ -75,9 +64,10 @@ const useLogin = (): UseLoginReturn => {
       await loginSchema.validate(formData, { abortEarly: false });
 
       const result = await signIn('credentials', {
-        redirect: false,
+        redirect: true,
         email: formData.email,
         password: formData.password,
+        callbackUrl: '/home',
       });
 
       if (result?.error) {
@@ -85,12 +75,9 @@ const useLogin = (): UseLoginReturn => {
           ...prev,
           general: result.error || 'Failed to log in',
         }));
-      } else {
-        redirectToHome();
       }
     } catch (error) {
       handleError(error);
-    } finally {
       setIsLoading(false);
     }
   };
@@ -103,18 +90,12 @@ const useLogin = (): UseLoginReturn => {
     setIsLoading(true);
 
     try {
-      const result = await signIn('google', { callbackUrl: '/home' });
-      if (result?.error) {
-        setLoginErrors((prev) => ({
-          ...prev,
-          general: result.error || 'Failed to log in with Google',
-        }));
-      } else {
-        redirectToHome();
-      }
+      await signIn('google', {
+        redirect: true,
+        callbackUrl: '/home',
+      });
     } catch (error) {
       handleError(error);
-    } finally {
       setIsLoading(false);
     }
   };

@@ -2,11 +2,7 @@ import { withAuth } from 'next-auth/middleware';
 
 export default withAuth({
   callbacks: {
-    authorized: ({ req, token }) => {
-      if (req.nextUrl.pathname === '/home') {
-        return req.method === 'GET';
-      }
-
+    authorized: ({ token }) => {
       return !!token;
     },
   },

@@ -1,8 +1,6 @@
-'use client';
-
-import { SessionProvider } from 'next-auth/react';
 import React from 'react';
 import '../../src/globals.css';
+import SessionWrapper from '@/context/sessionWrappers';
 
 /**
  * RootLayout component serves as the main layout wrapper for the application.
@@ -19,17 +17,15 @@ const RootLayout: React.FC<{ children: React.ReactNode }> = ({
 }: {
   children: React.ReactNode;
 }): JSX.Element => (
-  <SessionProvider>
-    <html lang="en">
-      <head>
-        <title>SyncData</title>
-        <meta name="description" content="SyncData app" />
-      </head>
-      <body className="text-dark-gray bg-lightest-gray text- leading-12 flex h-screen w-screen max-w-[1950px] flex-col p-0 text-base sm:p-5">
-        {children}
-      </body>
-    </html>
-  </SessionProvider>
+  <html lang="en">
+    <head>
+      <title>SyncData</title>
+      <meta name="description" content="SyncData app" />
+    </head>
+    <body className="text-dark-gray bg-lightest-gray text- leading-12 flex h-screen w-screen max-w-[1950px] flex-col p-0 text-base sm:p-5">
+      <SessionWrapper>{children}</SessionWrapper>
+    </body>
+  </html>
 );
 
 export default RootLayout;

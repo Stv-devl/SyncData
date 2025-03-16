@@ -15,6 +15,11 @@ export const sortAndSearchFilters = (
 ): FileType[] => {
   const { searchbar, headerType, upselected } = filterTools;
 
+  /*
+  console.log('files dans sortAndSearchFilters', files);
+  console.log('flattenedFiles dans sortAndSearchFilters', flattenedFiles);
+  console.log('filterTools dans sortAndSearchFilters', filterTools);*/
+
   const filteredFiles =
     searchbar && flattenedFiles
       ? flattenedFiles.filter((file) => {

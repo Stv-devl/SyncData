@@ -12,8 +12,13 @@ import { useFileStore } from '@/store/useFileStore';
  */
 
 const Favorite = () => {
-  const { files, setDisplayFavoritesFile, setIsFavoritePage, setCurrentPage } =
-    useFileStore();
+  const {
+    files,
+    setDisplayFavoritesFile,
+    setIsFavoritePage,
+    setCurrentPage,
+    resetToRoot,
+  } = useFileStore();
 
   useEffect(() => {
     if (!files) return;
@@ -22,6 +27,7 @@ const Favorite = () => {
 
     return () => {
       setIsFavoritePage(false);
+      resetToRoot();
     };
   }, [files, setDisplayFavoritesFile, setIsFavoritePage, setCurrentPage]);
 

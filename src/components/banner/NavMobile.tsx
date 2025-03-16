@@ -44,6 +44,7 @@ const NavMobile = () => {
             type={item.type}
             isSelected={pathname === item.path}
             link={item.path}
+            onClick={toggleBurger}
           />
         ))}
       </div>

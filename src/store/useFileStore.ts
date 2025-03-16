@@ -111,6 +111,10 @@ export const useFileStore = create<FileState>()(
           displayFavoritesFiles,
         } = get();
 
+        //flattenedFile est bon trouver l'autre erreur
+        console.log('files dans updateDisplayFiles', files);
+        console.log('flattended files dans updateDisplayFiles', flattenedFiles);
+        console.log('filterTools dans updateDisplayFiles', filterTools);
         const newDisplayFiles = getDisplayFiles(
           files,
           flattenedFiles,
@@ -118,6 +122,8 @@ export const useFileStore = create<FileState>()(
           currentPage,
           entriesPerPage
         );
+
+        console.log('newDisplayFiles dans updateDisplayFiles', newDisplayFiles);
 
         const currentFiles = isFavoritePage
           ? displayFavoritesFiles
@@ -148,7 +154,13 @@ export const useFileStore = create<FileState>()(
        */
       setDisplayFavoritesFile: (files: FileType[]) => {
         if (!files) return;
+        const { isFavoritePage } = get();
+        if (!isFavoritePage) return;
         const favoriteFiles = findFavoriteFiles(files);
+        console.log(
+          'favoriteFiles dans setDisplayFavoritesFile',
+          favoriteFiles
+        );
         get().updateDisplayFiles(favoriteFiles);
         set({ flattenedFiles: flattenedFiles(favoriteFiles) });
       },
@@ -158,6 +170,7 @@ export const useFileStore = create<FileState>()(
        */
       resetToRoot: () => {
         const { files } = get();
+
         set({
           parentFolderId: 'root',
           folderStack: [],

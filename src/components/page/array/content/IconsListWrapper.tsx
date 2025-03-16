@@ -1,5 +1,3 @@
-'use client';
-
 import React, { useRef } from 'react';
 import { arrayIcone } from '@/constantes/constantes';
 import { iconsMap } from '@/constantes/iconsMap';

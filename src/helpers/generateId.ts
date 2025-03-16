@@ -1,5 +1,3 @@
-'use client';
-
 /**
  * Generates a unique identifier string.
  * The ID is a random string consisting of letters and numbers.

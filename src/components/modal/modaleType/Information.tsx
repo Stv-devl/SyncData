@@ -1,5 +1,3 @@
-'use client';
-
 import { findFileRecursive } from 'lib/utils/fileOperations/findFileRecursive';
 import React, { useMemo } from 'react';
 import { useFileStore } from '@/store/useFileStore';

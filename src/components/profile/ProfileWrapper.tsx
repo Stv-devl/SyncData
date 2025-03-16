@@ -1,4 +1,3 @@
-'use client';
 import React from 'react';
 import { ProfileWrapperProps } from '../../types/type';
 import Input from '../form/Input';

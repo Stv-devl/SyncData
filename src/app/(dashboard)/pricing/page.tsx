@@ -1,5 +1,3 @@
-'use client';
-
 import PricingCardWrapper from '@/components/price/PricingCardWrapper';
 
 export default function Pricing() {

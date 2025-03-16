@@ -1,12 +1,4 @@
-'use client';
-
-import React, {
-  useCallback,
-  useEffect,
-  useState,
-  useMemo,
-  useRef,
-} from 'react';
+import React, { useCallback, useEffect, useState, useRef } from 'react';
 import * as Yup from 'yup';
 import { profileValidationSchema } from '../../helpers/validationShema';
 import { useUserStore } from '../../store/useUserStore';

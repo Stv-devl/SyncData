@@ -1,5 +1,3 @@
-'use client';
-
 import React from 'react';
 import useAutoCloseModal from '@/hook/ui/useAutoCloseModal';
 import { ModaleFileProps } from '@/types/type';

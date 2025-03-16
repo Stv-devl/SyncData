@@ -1,5 +1,3 @@
-'use client';
-
 import { signIn } from 'next-auth/react';
 import { FormEvent, useState } from 'react';
 import * as Yup from 'yup';

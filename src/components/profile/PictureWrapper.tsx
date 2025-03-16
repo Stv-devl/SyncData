@@ -1,5 +1,3 @@
-'use client';
-
 import Image from 'next/image';
 import React, { useRef, useCallback } from 'react';
 import IconUploadImage from '../../icones/iconUploadImage';

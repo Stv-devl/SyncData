@@ -1,5 +1,3 @@
-'use client';
-
 import clsx from 'clsx';
 import React, { useCallback, useEffect, useMemo } from 'react';
 import { twMerge } from 'tailwind-merge';

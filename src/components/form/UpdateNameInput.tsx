@@ -1,5 +1,3 @@
-'use client';
-
 import React from 'react';
 import { twMerge } from 'tailwind-merge';
 import IconCrossCircle from '@/icones/IconCrossCircle';

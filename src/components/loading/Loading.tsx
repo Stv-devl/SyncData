@@ -1,4 +1,3 @@
-'use client';
 import React from 'react';
 /**
  * The component is a loader who is active when we waiting for'data'

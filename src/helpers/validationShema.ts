@@ -1,5 +1,3 @@
-'use client';
-
 import * as Yup from 'yup';
 
 /**

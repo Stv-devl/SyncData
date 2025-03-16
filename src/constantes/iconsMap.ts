@@ -1,5 +1,3 @@
-'use client';
-
 import IconAddFile from '../icones/IconAddFile';
 import IconAddTeam from '../icones/IconAddTeam';
 import IconBin from '../icones/IconBin';

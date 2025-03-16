@@ -1,5 +1,3 @@
-'use client';
-
 import React from 'react';
 import { iconsMap } from '../../constantes/iconsMap';
 import { FilterSortProps } from '@/types/type';

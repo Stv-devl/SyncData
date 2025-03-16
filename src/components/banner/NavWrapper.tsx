@@ -22,7 +22,7 @@ const NavWrapper: React.FC<NavWrapperProps> = ({
   return (
     <Link
       className={twMerge(
-        ' lex items-center justify-start lg:w-full sm:h-[40px] lg:h-[60px] p-4 hover:bg-light-blue transition ease-in-out duration-700 rounded-lg',
+        ' flex items-center justify-start lg:w-full sm:h-[40px] lg:h-[60px] p-4 hover:bg-light-blue transition ease-in-out duration-700 rounded-lg',
         clsx({ 'bg-light-blue': isSelected })
       )}
       href={link}

@@ -85,7 +85,7 @@ export interface NavWrapperProps {
   type: string;
   isSelected: boolean;
   link: string;
-  onClick: () => void;
+  onClick?: () => void;
 }
 
 //input props

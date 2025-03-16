@@ -111,10 +111,6 @@ export const useFileStore = create<FileState>()(
           displayFavoritesFiles,
         } = get();
 
-        //flattenedFile est bon trouver l'autre erreur
-        console.log('files dans updateDisplayFiles', files);
-        console.log('flattended files dans updateDisplayFiles', flattenedFiles);
-        console.log('filterTools dans updateDisplayFiles', filterTools);
         const newDisplayFiles = getDisplayFiles(
           files,
           flattenedFiles,
@@ -122,8 +118,6 @@ export const useFileStore = create<FileState>()(
           currentPage,
           entriesPerPage
         );
-
-        console.log('newDisplayFiles dans updateDisplayFiles', newDisplayFiles);
 
         const currentFiles = isFavoritePage
           ? displayFavoritesFiles
@@ -154,13 +148,7 @@ export const useFileStore = create<FileState>()(
        */
       setDisplayFavoritesFile: (files: FileType[]) => {
         if (!files) return;
-        const { isFavoritePage } = get();
-        if (!isFavoritePage) return;
         const favoriteFiles = findFavoriteFiles(files);
-        console.log(
-          'favoriteFiles dans setDisplayFavoritesFile',
-          favoriteFiles
-        );
         get().updateDisplayFiles(favoriteFiles);
         set({ flattenedFiles: flattenedFiles(favoriteFiles) });
       },
@@ -243,8 +231,13 @@ export const useFileStore = create<FileState>()(
        * @param {string} fileId - The ID of the file to toggle.
        */
       toggleFavoriteFiles: async (fileId) => {
-        const { files, displayFavoritesFiles, parentFolderId, currentPage } =
-          get();
+        const {
+          files,
+          displayFavoritesFiles,
+          parentFolderId,
+          currentPage,
+          isFavoritePage,
+        } = get();
 
         const userId = useUserStore.getState().getUserId();
         if (!userId || !files) return;
@@ -267,7 +260,10 @@ export const useFileStore = create<FileState>()(
           const changeCurrentPage = updatePageStatus(screenFiles, currentPage);
 
           get().setCurrentPage(changeCurrentPage);
-          get().setDisplayFavoritesFile(updatedFavorites);
+
+          if (isFavoritePage) {
+            get().setDisplayFavoritesFile(updatedFavorites);
+          }
         } catch (error) {
           console.error('Error toggling favorite:', error);
           set({ error: 'Error toggling favorite' });

@@ -1,11 +1,11 @@
 import bcrypt from 'bcryptjs';
+import { NextResponse } from 'next/server';
 import { corsMiddleware } from 'lib/middleware/corsMiddleware';
 import { rateLimitMiddleware } from 'lib/middleware/rateLimitMiddleware';
 import { signupSchema } from 'lib/shema/signupShema';
 import { getDb } from 'lib/utils/dataBase/getDb';
 import { handleError } from 'lib/utils/errors/handleError';
 import { securityHeaders } from 'lib/utils/security/securityHeaders';
-import { NextResponse } from 'next/server';
 
 const saltRounds = 10;
 
@@ -62,7 +62,7 @@ export async function signupHandler(request: Request): Promise<NextResponse> {
         lastname: '',
         image: null,
         email: normalizedEmail,
-        subscription: 'free',
+        subscription: 'basic',
       },
       files: [],
       createdAt: new Date(),

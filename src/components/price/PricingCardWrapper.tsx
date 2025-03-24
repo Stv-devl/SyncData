@@ -1,9 +1,9 @@
 'use client';
 
-import Button from '../button/Button';
 import { plans } from '@/constantes/constantes';
 import useModalStore from '@/store/ui/useModale';
 import { useUserStore } from '@/store/useUserStore';
+import Button from '../button/Button';
 
 export default function PricingCardWrapper() {
   const { profile, updateSubscription } = useUserStore();
@@ -18,13 +18,13 @@ export default function PricingCardWrapper() {
         plans.map((plan, index) => (
           <div
             key={index}
-            className="border-regular-gray shadow-custom-gray flex min-h-[300px] min-w-[300px] flex-col justify-between rounded-xl border bg-white p-5 "
+            className="flex min-h-[300px] min-w-[300px] flex-col justify-between rounded-xl border border-regular-gray bg-white p-5 shadow-custom-gray "
           >
             <div>
-              <h2 className="text-darkest-blue text-center text-xl font-semibold">
+              <h2 className="text-center text-xl font-semibold text-darkest-blue">
                 {plan.name}
               </h2>
-              <p className="text-darkest-blue mt-1 text-center text-3xl font-bold">
+              <p className="mt-1 text-center text-3xl font-bold text-darkest-blue">
                 {plan.price}
               </p>
               <p className="text-center text-sm ">{plan.storage}</p>
@@ -32,7 +32,7 @@ export default function PricingCardWrapper() {
               <ul className="mt-4 space-y-2">
                 {plan.features.map((feature, idx) => (
                   <li key={idx} className="flex items-center gap-2">
-                    <span className="bg-dark-blue size-2 rounded-full"></span>
+                    <span className="size-2 rounded-full bg-dark-blue"></span>
                     {feature}
                   </li>
                 ))}
@@ -41,7 +41,7 @@ export default function PricingCardWrapper() {
 
             <div className="h-[36px] w-full">
               {plan.key === profile?.subscription ? (
-                <div className="bg-darkest-gray flex size-full items-center justify-center rounded-lg font-bold text-white">
+                <div className="flex size-full items-center justify-center rounded-lg bg-darkest-gray font-bold text-white">
                   Current
                 </div>
               ) : profile?.subscription !== 'basic' && plan.key === 'basic' ? (

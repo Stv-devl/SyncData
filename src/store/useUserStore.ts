@@ -74,9 +74,6 @@ export const useUserStore = create<UserState>((set, get) => ({
   updateProfile: async (updatedProfile: UserProfile): Promise<void> => {
     const userId = get().getUserId();
     if (!userId) return;
-
-    console.log('updatedProfile', updatedProfile);
-
     try {
       const response = await patchProfile(userId, updatedProfile);
       const updatedProfileData = response.updatedData;

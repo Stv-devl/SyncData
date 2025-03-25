@@ -26,8 +26,8 @@ const Button: React.FC<ButtonComponent> = ({
 }: ButtonComponent): JSX.Element => {
   const colorStyle = clsx(
     color === 'empty'
-      ? 'text-darkest-blue border-darkest-blue hover:bg-light-blue border bg-white'
-      : 'bg-regular-blue hover:bg-dark-blue text-white'
+      ? 'border border-darkest-blue bg-white text-darkest-blue hover:bg-light-blue'
+      : 'bg-regular-blue text-white hover:bg-dark-blue'
   );
 
   return (

@@ -1,4 +1,5 @@
 import { Collection, ObjectId } from 'mongodb';
+import Image from 'next/image';
 import { FormEvent, SVGProps } from 'react';
 
 //user
@@ -308,4 +309,16 @@ export interface Plan {
   storage?: string;
   features?: string[];
   buttonLabel?: string;
+}
+
+export interface Testimonial {
+  name: string;
+  company: string;
+  comment: string;
+  rating: number;
+  image: string;
+}
+
+export interface TestimonialCardProps {
+  testimonial: Testimonial;
 }

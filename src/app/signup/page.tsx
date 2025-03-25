@@ -2,11 +2,11 @@
 
 import Link from 'next/link';
 import React from 'react';
+import Loading from '@/components/loading/Loading';
+import { iconsMap } from '@/constantes/iconsMap';
 import Button from '../../components/button/Button';
 import Input from '../../components/form/Input';
 import useSignUp from '../../hook/auth/useSignup';
-import Loading from '@/components/loading/Loading';
-import { iconsMap } from '@/constantes/iconsMap';
 
 /**
  * Signup page component
@@ -25,12 +25,12 @@ const SignUp = (): JSX.Element => {
 
   return (
     <main>
-      <section className="sm:bg-lightest-gray flex h-screen w-full flex-col bg-white sm:mt-5 ">
+      <section className="flex h-screen w-full flex-col bg-white sm:mt-5 sm:bg-lightest-gray ">
         <div className="sm:mt:0 mt-5 flex w-full flex-col items-center gap-[51px]  sm:px-0">
           <iconsMap.Iconlogo />
           <div className="flex w-full flex-col items-start gap-[40px] bg-white px-[5%] sm:w-[476px] sm:rounded-lg sm:p-[40px]">
             <div className="flex flex-col gap-[24px]">
-              <h1 className="text-titleSmall sm:text-title text-darkest-blue">
+              <h1 className="text-titleSmall text-darkest-blue sm:text-title">
                 Create account
               </h1>
               <p>Let&apos;s get you started sharing your links!</p>
@@ -100,7 +100,7 @@ const SignUp = (): JSX.Element => {
               <p className="px-[5%] text-center text-base sm:px-[10%] ">
                 Already have an account?{' '}
                 <Link href="/login">
-                  <span className="text-darkest-blue font-semibold">Login</span>
+                  <span className="font-semibold text-darkest-blue">Login</span>
                 </Link>
               </p>
             </form>

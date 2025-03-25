@@ -34,7 +34,7 @@ const IconsListWrapper: React.FC<IconsListWrapperProps> = ({
               onClick={() => handleIconClick(icon, file)}
             >
               <IconComponent
-                className="text-regular-blue hover:text-dark-blue z-20 size-6 transition-colors duration-300"
+                className="z-20 size-6 text-regular-blue transition-colors duration-300 hover:text-dark-blue"
                 onMouseEnter={(e) =>
                   handleMouseEnter(e, icon.type, 'translate(-40%, -110%)')
                 }
@@ -54,7 +54,7 @@ const IconsListWrapper: React.FC<IconsListWrapperProps> = ({
             handleClickOpen(e, file.filename, rect, file.id);
           }}
         >
-          <iconsMap.IconInfo className="text-regular-blue hover:text-dark-blue size-6 cursor-pointer transition-colors duration-300" />
+          <iconsMap.IconInfo className="size-6 cursor-pointer text-regular-blue transition-colors duration-300 hover:text-dark-blue" />
         </li>
       </ul>
     </>

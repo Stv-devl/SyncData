@@ -1,11 +1,11 @@
 import clsx from 'clsx';
 import { usePathname } from 'next/navigation';
 import React from 'react';
+import { iconsMap } from '@/constantes/iconsMap';
+import useBurgerStore from '@/store/ui/useBurgerMenu';
 import { navItems } from '../../constantes/constantes';
 import NavWrapper from './NavWrapper';
 import ProfileWrapper from './ProfileWrapper';
-import { iconsMap } from '@/constantes/iconsMap';
-import useBurgerStore from '@/store/ui/useBurgerMenu';
 
 /**
  * NavMobile component that displays the mobile navigation bar
@@ -33,7 +33,7 @@ const NavMobile = () => {
 
       <div
         className={clsx(
-          'text-darkest-blue fixed left-0 top-0 z-[100] flex w-[150px] flex-col gap-7 rounded-r-lg bg-white py-10 font-semibold transition-transform ease-in-out',
+          'fixed left-0 top-0 z-[100] flex w-[150px] flex-col gap-7 rounded-r-lg bg-white py-10 font-semibold text-darkest-blue transition-transform ease-in-out',
           isOpen ? 'translate-x-0' : '-translate-x-full',
           'duration-400'
         )}
@@ -51,7 +51,7 @@ const NavMobile = () => {
 
       {isOpen && (
         <div
-          className="bg-darkest-gray fixed left-0 top-0 z-[99] h-screen w-screen opacity-60"
+          className="fixed left-0 top-0 z-[99] h-screen w-screen bg-darkest-gray opacity-60"
           onClick={toggleBurger}
         ></div>
       )}

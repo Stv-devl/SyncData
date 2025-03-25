@@ -1,3 +1,15 @@
+import IconCross from '@/icones/IconCross';
+import IconCrossCircle from '@/icones/IconCrossCircle';
+import IconUnknown from '@/icones/iconeFiles/IconUnknown';
+import IconFavorite from '@/icones/IconFavorite';
+import IconCollaboration from '@/icones/iconFeatures/IconCollaboration';
+import IconSecurity from '@/icones/iconFeatures/IconSecurity';
+import IconStorage from '@/icones/iconFeatures/IconStorage';
+import IconSync from '@/icones/iconFeatures/IconSync';
+import IconSortDown from '@/icones/IconSortDown';
+import IconSortList from '@/icones/IconSortList';
+import IconSortUp from '@/icones/iconSortUp';
+import IconValidate from '@/icones/IconValidate';
 import IconAddFile from '../icones/IconAddFile';
 import IconAddTeam from '../icones/IconAddTeam';
 import IconBin from '../icones/IconBin';
@@ -15,6 +27,7 @@ import IconImage from '../icones/iconeFiles/IconImage';
 import IconPdf from '../icones/iconeFiles/IconPdf';
 import Iconemail from '../icones/IconEmail';
 import IconEmpty from '../icones/iconEmpty';
+import IconFavorited from '../icones/iconFavorited';
 import IconFriends from '../icones/IconFriends';
 import Icongoogle from '../icones/IconGoogle';
 import IconInfo from '../icones/IconInfo';
@@ -30,15 +43,6 @@ import IconSort from '../icones/iconSort';
 import IconSortFiles from '../icones/IconSortFiles';
 import IconUpload from '../icones/IconUpload';
 import IconVector from '../icones/IconVector';
-import IconCross from '@/icones/IconCross';
-import IconCrossCircle from '@/icones/IconCrossCircle';
-import IconUnknown from '@/icones/iconeFiles/IconUnknown';
-import IconFavorite from '@/icones/IconFavorite';
-import IconFavorited from '@/icones/iconFavorited';
-import IconSortDown from '@/icones/IconSortDown';
-import IconSortList from '@/icones/IconSortList';
-import IconSortUp from '@/icones/iconSortUp';
-import IconValidate from '@/icones/IconValidate';
 
 /**
  * iconsMap constant that defines the icons map for the application
@@ -87,4 +91,8 @@ export const iconsMap = {
   IconFavorited,
   IconValidate,
   IconCrossCircle,
+  IconSync,
+  IconSecurity,
+  IconCollaboration,
+  IconStorage,
 };

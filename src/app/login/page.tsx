@@ -2,11 +2,11 @@
 
 import Link from 'next/link';
 import React from 'react';
+import Loading from '@/components/loading/Loading';
 import Button from '../../components/button/Button';
 import Input from '../../components/form/Input';
 import { iconsMap } from '../../constantes/iconsMap';
 import useLogin from '../../hook/auth/useLogin';
-import Loading from '@/components/loading/Loading';
 
 /**
  * Login page component that handles user authentication
@@ -26,12 +26,12 @@ const Login = (): JSX.Element => {
 
   return (
     <main>
-      <section className="sm:bg-lightest-gray flex h-screen w-full flex-col bg-white sm:mt-10 sm:rounded-lg">
+      <section className="flex h-screen w-full flex-col bg-white sm:mt-10 sm:rounded-lg sm:bg-lightest-gray">
         <div className="sm:mt:0 mt-5  flex w-full flex-col items-center gap-[51px] px-[5%] sm:mt-10 sm:px-0">
           <iconsMap.Iconlogo />
           <div className="flex flex-col items-start gap-[40px] bg-white sm:w-[476px] sm:p-[40px]">
             <div className="flex flex-col gap-[24px]">
-              <h1 className="text-titleSmall sm:text-title text-darkest-blue">
+              <h1 className="text-titleSmall text-darkest-blue sm:text-title">
                 Login
               </h1>
               <p>Add your details below to get back into the app</p>
@@ -92,7 +92,7 @@ const Login = (): JSX.Element => {
               <p className="px-[5%] text-center text-base sm:px-[10%] ">
                 Don&apos;t have an account?{' '}
                 <Link href="/signup">
-                  <span className="text-darkest-blue font-semibold">
+                  <span className="font-semibold text-darkest-blue">
                     Create account
                   </span>
                 </Link>

@@ -3,9 +3,9 @@ import Link from 'next/link';
 import { signOut } from 'next-auth/react';
 import React, { useState } from 'react';
 import { useMediaQuery } from 'react-responsive';
-import { iconsMap } from '../../constantes/iconsMap';
 import usePopupStore from '@/store/ui/usePopup';
 import { useUserStore } from '@/store/useUserStore';
+import { iconsMap } from '../../constantes/iconsMap';
 
 /**
  * ProfileWrapper component that displays the profile information
@@ -41,7 +41,7 @@ const ProfileWrapper = () => {
             src={profileImage}
             width={48}
             height={48}
-            className="text-darkest-blue size-[40px] rounded-full border-2 object-cover"
+            className="size-[40px] rounded-full border-2 object-cover text-darkest-blue"
             alt="Profile"
             priority
             onError={() => setImageError(true)}

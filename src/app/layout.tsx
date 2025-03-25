@@ -22,7 +22,7 @@ const RootLayout: React.FC<{ children: React.ReactNode }> = ({
       <title>SyncData</title>
       <meta name="description" content="SyncData app" />
     </head>
-    <body className="text-dark-gray bg-lightest-gray text- leading-12 flex h-screen w-screen max-w-[1950px] flex-col p-0 text-base sm:p-5">
+    <body className="text- leading-12 flex h-screen w-screen max-w-[1950px] flex-col bg-lightest-gray p-0 text-base text-dark-gray sm:p-5">
       <SessionWrapper>{children}</SessionWrapper>
     </body>
   </html>

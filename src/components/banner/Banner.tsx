@@ -36,7 +36,7 @@ const Banner = () => {
               <div className="flex items-center justify-center lg:mb-11">
                 <iconsMap.Iconlogo className="size-[80px] lg:h-[110px] lg:w-[105px]" />
               </div>
-              <div className="text-darkest-blue boxShadow-custom-gray ml-7 flex w-full flex-row items-center gap-3 font-semibold lg:ml-0 lg:flex-col lg:gap-5">
+              <div className="boxShadow-custom-gray ml-7 flex w-full flex-row items-center gap-3 font-semibold text-darkest-blue lg:ml-0 lg:flex-col lg:gap-5">
                 {navItems.map((item) => (
                   <NavWrapper
                     key={item.path}

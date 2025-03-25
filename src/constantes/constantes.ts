@@ -137,3 +137,59 @@ export const plans: Plan[] = [
     buttonLabel: 'Register',
   },
 ] as const;
+
+/**
+ * Features data for the product showcase
+ */
+export const landingPageFeatures = [
+  {
+    title: 'Real-time Synchronization',
+    description: 'Instantly sync your files across all your devices',
+    icon: 'IconSync',
+  },
+  {
+    title: 'Enhanced Security',
+    description: 'Protect your files with enhanced security',
+    icon: 'IconSecurity',
+  },
+  {
+    title: 'Simplified Collaboration',
+    description: 'Share and collaborate on your projects with ease',
+    icon: 'IconCollaboration',
+  },
+  {
+    title: 'Flexible Storage',
+    description: 'Different storage plans to meet your needs',
+    icon: 'IconStorage',
+  },
+];
+
+/**
+ * Testimonials data for the product showcase
+ */
+export const testimonials = [
+  {
+    name: 'Marie Djon',
+    company: 'Tech Solutions',
+    comment:
+      'SyncData has transformed how we work. Upload and download are fast, reliable, and the interface is intuitive. Highly recommended!',
+    rating: 5,
+    image: '/images/RhodeDubois.jpg',
+  },
+  {
+    name: 'Emily Johnson',
+    company: 'Creative Design Co.',
+    comment:
+      'As a designer, I need to access my files from anywhere. SyncData makes this process seamless and secure.',
+    rating: 5,
+    image: '/images/MimiKeel.jpg',
+  },
+  {
+    name: 'Michael Brown',
+    company: 'Data Analytics Ltd.',
+    comment:
+      'The collaborative features in SyncData have improved our team productivity by 30%. Great service!',
+    rating: 4,
+    image: '/images/TracyGalindo.jpg',
+  },
+];
